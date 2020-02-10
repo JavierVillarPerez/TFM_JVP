@@ -1,3 +1,8 @@
-TFM: Diseño e implementación de un “Dongle” para comunicaciones mediante radio cognitiva.
+Trabajo Fin de Máster.
 
-Javier Villar Pérez.
+Universidad: Universidad Politécnica de Madrid - Madrid.
+Titulación: Ingeniería en Sistemas Electrónicos.
+
+Título: Diseño e implementación de un “Dongle” para comunicaciones mediante radio cognitiva.
+
+Autor: Javier Villar Pérez.
