@@ -1,0 +1,6 @@
+S2LP_Timer_ex.c:45:6:S2LPTimerSetRxTimerMs	16	static
+S2LP_Timer_ex.c:50:6:S2LPTimerGetRxTimer	32	static
+S2LP_Timer_ex.c:59:6:S2LPTimerSetWakeUpTimerMs	16	static
+S2LP_Timer_ex.c:64:6:S2LPTimerSetWakeUpTimerReloadMs	16	static
+S2LP_Timer_ex.c:69:6:S2LPTimerGetWakeUpTimer	32	static
+S2LP_Timer_ex.c:78:6:S2LPTimerGetWakeUpTimerReload	32	static

@@ -1,0 +1,11 @@
+S2LP_Fifo.c:102:9:S2LPFifoReadNumberBytesRxFifo	16	static
+S2LP_Fifo.c:116:9:S2LPFifoReadNumberBytesTxFifo	16	static
+S2LP_Fifo.c:133:6:S2LPFifoSetAlmostFullThresholdRx	24	static
+S2LP_Fifo.c:156:9:S2LPFifoGetAlmostFullThresholdRx	16	static
+S2LP_Fifo.c:173:6:S2LPFifoSetAlmostEmptyThresholdRx	24	static
+S2LP_Fifo.c:194:9:S2LPFifoGetAlmostEmptyThresholdRx	16	static
+S2LP_Fifo.c:213:6:S2LPFifoSetAlmostFullThresholdTx	24	static
+S2LP_Fifo.c:236:9:S2LPFifoGetAlmostFullThresholdTx	16	static
+S2LP_Fifo.c:253:6:S2LPFifoSetAlmostEmptyThresholdTx	24	static
+S2LP_Fifo.c:276:9:S2LPFifoGetAlmostEmptyThresholdTx	16	static
+S2LP_Fifo.c:292:6:S2LPFifoMuxRxFifoIrqEnable	24	static

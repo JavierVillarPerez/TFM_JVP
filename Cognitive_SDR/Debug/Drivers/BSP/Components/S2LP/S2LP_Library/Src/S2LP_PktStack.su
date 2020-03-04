@@ -1,0 +1,15 @@
+S2LP_PktStack.c:83:6:S2LPPktStackInit	24	static
+S2LP_PktStack.c:166:6:S2LPPktStackGetInfo	24	static
+S2LP_PktStack.c:211:6:S2LPPktStackAddressesInit	24	static
+S2LP_PktStack.c:262:6:S2LPPktStackGetAddressesInfo	24	static
+S2LP_PktStack.c:283:6:S2LPPktStackSetFormat	16	static
+S2LP_PktStack.c:314:6:S2LPPktStackSetPayloadLength	24	static
+S2LP_PktStack.c:334:10:S2LPPktStackGetPayloadLength	16	static
+S2LP_PktStack.c:352:10:S2LPPktStackGetReceivedPktLength	16	static
+S2LP_PktStack.c:370:6:S2LPPktStackAutoAck	24	static
+S2LP_PktStack.c:392:6:S2LPPktStackNRetx	24	static
+S2LP_PktStack.c:410:13:S2LPPktStackGetTXAckRequest	16	static
+S2LP_PktStack.c:426:6:S2LPPktStackAckRequest	24	static
+S2LP_PktStack.c:448:6:S2LPPktStackPiggybacking	24	static
+S2LP_PktStack.c:471:6:S2LPPktStackSeqNumForReload	24	static
+S2LP_PktStack.c:487:9:S2LPPktStackGetNReTx	16	static

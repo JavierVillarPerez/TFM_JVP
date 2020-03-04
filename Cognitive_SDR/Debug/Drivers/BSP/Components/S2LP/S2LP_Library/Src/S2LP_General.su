@@ -1,0 +1,5 @@
+S2LP_General.c:104:6:S2LPGeneralSetExtRef	24	static
+S2LP_General.c:127:12:S2LPGeneralGetExtRef	16	static
+S2LP_General.c:140:9:S2LPGeneralGetDevicePN	16	static
+S2LP_General.c:152:9:S2LPGeneralGetVersion	16	static
+S2LP_General.c:166:6:S2LPRadioSetExternalSmpsMode	24	static

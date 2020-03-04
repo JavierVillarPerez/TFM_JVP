@@ -1,0 +1,10 @@
+S2LP_Gpio.c:168:6:S2LPGpioInit	24	static
+S2LP_Gpio.c:195:6:S2LPGpioSetLevel	24	static
+S2LP_Gpio.c:226:13:S2LPGpioGetLevel	24	static
+S2LP_Gpio.c:253:6:S2LPGpioIrqDeInit	24	static
+S2LP_Gpio.c:280:6:S2LPGpioIrqInit	32	static
+S2LP_Gpio.c:303:6:S2LPGpioIrqConfig	32	static
+S2LP_Gpio.c:352:6:S2LPGpioIrqGetMask	32	static
+S2LP_Gpio.c:383:6:S2LPGpioIrqGetStatus	32	static
+S2LP_Gpio.c:403:6:S2LPGpioIrqClearStatus	16	static
+S2LP_Gpio.c:418:7:S2LPGpioIrqCheckFlag	32	static
