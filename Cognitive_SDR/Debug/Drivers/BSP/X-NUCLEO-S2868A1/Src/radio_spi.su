@@ -1,7 +1,0 @@
-radio_spi.c:192:6:SdkEvalSpiSetBaudrate	16	static
-radio_spi.c:279:13:RadioSpiWriteRegisters	296	static,ignoring_inline_asm
-radio_spi.c:312:13:RadioSpiReadRegisters	296	static,ignoring_inline_asm
-radio_spi.c:336:13:RadioSpiCommandStrobes	40	static,ignoring_inline_asm
-radio_spi.c:361:13:RadioSpiWriteFifo	168	static,ignoring_inline_asm
-radio_spi.c:387:13:RadioSpiReadFifo	168	static,ignoring_inline_asm
-radio_spi.c:408:20:SdkEvalSpiGetStruct	4	static

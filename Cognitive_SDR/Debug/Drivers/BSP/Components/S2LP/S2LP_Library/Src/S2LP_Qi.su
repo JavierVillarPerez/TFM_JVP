@@ -1,9 +1,0 @@
-S2LP_Qi.c:109:9:S2LPRadioGetRssidBm	16	static
-S2LP_Qi.c:121:9:S2LPRadioGetRssidBmRun	16	static
-S2LP_Qi.c:139:6:S2LPRadioSetRssiThreshdBm	24	static
-S2LP_Qi.c:155:6:S2LPRadioRssiInit	24	static
-S2LP_Qi.c:183:6:S2LPRadioGetRssiInfo	24	static
-S2LP_Qi.c:201:6:S2LPRadioCsBlanking	24	static
-S2LP_Qi.c:224:6:S2LPRadioAntennaSwitching	24	static
-S2LP_Qi.c:247:6:S2LPRadioSetPqiCheck	24	static
-S2LP_Qi.c:265:13:S2LPQiGetCs	16	static

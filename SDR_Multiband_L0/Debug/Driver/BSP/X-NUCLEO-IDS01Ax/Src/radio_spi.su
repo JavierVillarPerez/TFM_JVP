@@ -1,0 +1,9 @@
+radio_spi.c:125:6:RadioSpiInit	8	static
+radio_spi.c:154:6:HAL_SPI_MspInit	64	static
+radio_spi.c:210:13:SPI_Write	32	static
+radio_spi.c:231:13:SPI_Error	8	static
+radio_spi.c:248:13:RadioSpiWriteRegisters	56	static
+radio_spi.c:298:13:RadioSpiReadRegisters	56	static
+radio_spi.c:347:13:RadioSpiCommandStrobes	48	static
+radio_spi.c:390:13:RadioSpiWriteFifo	56	static
+radio_spi.c:438:13:RadioSpiReadFifo	56	static
