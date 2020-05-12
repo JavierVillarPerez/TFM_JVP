@@ -32,11 +32,6 @@
 /** @addtogroup Template_Project
 * @{
 */
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-extern uint16_t counter;
-extern uint8_t firstinterrupt;
-#endif
-
 
 /* Private typedef -----------------------------------------------------------*/
 /* Private define ------------------------------------------------------------*/
@@ -147,67 +142,11 @@ void PendSV_Handler(void)
 * @retval None
 */
 
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-volatile uint32_t lSystickCounter=0;
-#endif
 void SysTick_Handler(void)
 {
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  lSystickCounter++; //indar
-#endif
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
 }
-
-
-
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-
-extern volatile uint32_t lSystickCounter;
-#ifdef USE_SYSTICK_DELAY
-
-
-/**
-* @brief  This function implements return the current
-*         systick with a step of 1 ms.
-* @param  lTimeMs desired delay expressed in ms.
-* @retval None
-*/
-uint32_t SdkGetCurrentSysTick(void)
-{
-  return lSystickCounter;
-  
-}
-
-void SdkStartSysTick(void)
-{
-  SysTick_Config(32000);
-  lSystickCounter = 0;
-  
-}
-
-/**
-* @brief  This function implements a delay using the microcontroller
-*         Systick with a step of 1 ms.
-* @param  lTimeMs desired delay expressed in ms.
-* @retval None
-*/
-void SdkDelayMs(volatile uint32_t lTimeMs)
-{
-  uint32_t nWaitPeriod = ~lSystickCounter;
-  
-  if(nWaitPeriod<lTimeMs) {
-    while( lSystickCounter != 0xFFFFFFFF);
-    nWaitPeriod = lTimeMs-nWaitPeriod;
-  }
-  else
-    nWaitPeriod = lTimeMs+ ~nWaitPeriod;
-  
-  while( lSystickCounter != nWaitPeriod ) ;
-  
-}
-#endif
-#endif
 
 /*******************************************************************************
 * Function Name  : USB_LP_IRQHandler
@@ -227,10 +166,6 @@ void EXTI0_1_IRQHandler(void)
   if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_0) != RESET) 
   {
     HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
-    
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-    P2PInterruptHandler();
-#endif
   }
   
   if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_1) != RESET) 
@@ -270,67 +205,6 @@ void EXTI4_15_IRQHandler(void)
   
   HAL_GPIO_EXTI_IRQHandler(KEY_BUTTON_PIN);
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_4) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_4);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_5) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_6) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_7) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_7);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_8) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_8);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_9) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_9);
-  }
-  
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_10) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_11) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_11);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_12) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_12);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_13) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_14) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_14);
-  }
-  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_15) != RESET) 
-  {
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_15);
-  }
- 
-  
-  //###################################################
-  
-  
-  
-  
-#endif
-  
-
-
 }
 
 

@@ -5,23 +5,11 @@
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #include "SPIRIT1_Util.h"
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-#include "s2lp_interface.h"
-#include "S2LP_Util.h"
-#include "S2LP_Config.h"
-#endif
 /*---------appli.h-----*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 //#define       RADIO_Csma.h      SPIRIT_Csma
 
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-//#define      RADIO_Csma      S2LP_Csma
-
-
-#endif    
-
-
 
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 
@@ -84,68 +72,5 @@
 
 
 #endif  
-
-
-
-
-
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-
-#define        HAL_Radio_Init(void)          HAL_S2LP_Init(void)          
-
-#define        RadioPacketConfig                S2LP_PacketConfig
-#define        RadioSetPayloadlength            S2LP_SetPayloadlength
-#define        RadioEnableTxIrq                 S2LP_EnableTxIrq
-#define        RadioEnableRxIrq                 S2LP_EnableRxIrq
-#define        RadioSetDestinationAddress       S2LP_SetDestinationAddress   
-#define        RadioSetRxTimeout                S2LP_SetRxTimeout
-#define        RadioEnableSQI                   S2LP_EnableSQI
-#define        RadioStartRx                     S2LP_StartRx
-#define        RadioStartTx                     S2LP_StartTx
-#define        RadioGetRxPacket                 S2LP_GetRxPacket         
-
-
-#define    RADIO_GPIO_MODE_DIGITAL_OUTPUT_LP      S2LP_GPIO_MODE_DIGITAL_OUTPUT_LP
-#define    RADIO_GPIO_DIG_OUT_IRQ                 S2LP_GPIO_DIG_OUT_IRQ
-
-#define    RadioCsmaInit                 SCsmaInit
-
-#define    RadioIrqs                 S2LPIrqs
-
-#define    RadioGetReceivedDestinationAddress()    S2LPGetReceivedDestinationAddress()
-
-#define    Radio_PktStackAddressesInit             S2LP_PktStackAddressesInit
-
-#define    Radio_PktStackLlpInit                S2LP_PktStackLlpInit
-#define    RadioPktBasicAddressesInit            S2LPPktBasicAddressesInit
-
-
-#define    Radio_PktStackFilterOnSourceAddress                S2LP_PktStackFilterOnSourceAddress
-#define    Radio_PktStackSetRxSourceMask                    S2LP_PktStackSetRxSourceMask
-#define    Radio_PktStackSetSourceReferenceAddress          S2LP_PktStackSetSourceReferenceAddress
-
-#define    RadioPktStackInit                S2LPPktStackInit
-#define    RadioPktBasicInit                S2LPPktBasicInit
-
-#define    RadioCmdStrobeReady                S2LPCmdStrobeReady
-#define    RadioRefreshStatus                 S2LPRefreshStatus
-//#define    RadioEnterShutdown()               S2LPEnterShutdown()
-#define    RadioCmdStrobeStandby()            S2LPCmdStrobeStandby()
-#define    RadioCmdStrobeSleep()              S2LPCmdStrobeSleep()
-#define    RadioCmdStrobeSabort()              S2LPCmdStrobeSabort()
-#define    RadioCmdStrobeRx()              S2LPCmdStrobeRx()
-
-#define    RadioGpioIrqGetStatus              S2LPGpioIrqGetStatus
-
-
-#define    RadioCsma                         S2LPCsma
-#define    RadioRadioPersistenRx             S2LPPacketHandlerSetRxPersistentMode
-#define    RadioRadioCsBlanking              S2LPRadioCsBlanking
-
-#define    RadioQiSetRssiThresholddBm       S2LPRadioSetRssiThreshdBm
-
-
-#endif
-
 
 #endif //_P2P_LIB_H_

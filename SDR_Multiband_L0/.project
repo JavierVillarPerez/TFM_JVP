@@ -32,41 +32,6 @@
 			<locationURI>PARENT-3-PROJECT_LOC/readme.txt</locationURI>
 		</link>
 		<link>
-			<name>Application/USER/s2lp_interface.c</name>
-			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/Src/s2lp_interface.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/lis3dh_driver.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/lis3dh_driver.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/radio_eeprom.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/radio_eeprom.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/radio_gpio.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/radio_gpio.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/radio_shield_config.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/radio_shield_config.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/radio_spi.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/radio_spi.c</locationURI>
-		</link>
-		<link>
-			<name>Driver/BSP/X-NUCLEO-S2868A1/radio_timer.c</name>
-			<type>1</type>
-			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/X-NUCLEO-S2868A1/Src/radio_timer.c</locationURI>
-		</link>
-		<link>
 			<name>Driver/BSP/Components/S2LP/S2LP_Library/S2LP_Commands.c</name>
 			<type>1</type>
 			<locationURI>PARENT-7-PROJECT_LOC/Drivers/BSP/Components/S2LP/S2LP_Library/Src/S2LP_Commands.c</locationURI>

@@ -54,11 +54,6 @@
 
 /*******Platform definition : Uncomment the expansion board to be used*********/
 
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-#define STEVAL_FKI868V1		
-//#define STEVAL_FKI915V1
-#endif
-
 #define BSP_LED_Init                                    BSP_LED_Init
 #define BSP_LED_Toggle                                  BSP_LED_Toggle
 #define BSP_LED_On                                      BSP_LED_On
@@ -111,10 +106,6 @@
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #include "SPIRIT_Csma.h"
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-#include "S2LP_Csma.h"
-#endif
-
 
 /* CSMA configuration parameters */
   #define PERSISTENT_MODE_EN              S_DISABLE
@@ -122,11 +113,6 @@
   #define CS_PERIOD                       TBIT_TIME_64
   #define CS_TIMEOUT                      TCCA_TIME_3
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  #define CS_PERIOD                       CSMA_PERIOD_64TBIT
-  #define CS_TIMEOUT                      3
-#endif
-
   #define MAX_NB                          5
   #define BU_COUNTER_SEED                 0xFA21
   #define CU_PRESCALER                    32
@@ -139,9 +125,9 @@ extern RadioCsmaInit xCsmaInit;
 
 #if defined(X_NUCLEO_IDS01A3)
 	 #define USE_RADIO_433MHz
-#elif defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_S2868A1)
+#elif defined(X_NUCLEO_IDS01A4)
          #define USE_RADIO_868MHz
-#elif defined(X_NUCLEO_IDS01A5) || defined(X_NUCLEO_S2915A1)
+#elif defined(X_NUCLEO_IDS01A5)
          #define USE_RADIO_915MHz
 #else
 #error RADIO Nucleo Shield undefined or unsupported
@@ -203,21 +189,6 @@ extern RadioCsmaInit xCsmaInit;
 #define CONTROL_LENGTH              PKT_CONTROL_LENGTH_0BYTES
 
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-#define MODULATION_SELECT           MOD_2FSK
-#define POWER_DBM                   12.0
-#define PREAMBLE_LENGTH             PREAMBLE_BYTE(4)
-#define SYNC_LENGTH                 SYNC_BYTE(4)
-#define CONTROL_LENGTH              0x00 //PKT_CONTROL_LENGTH_0BYTES
-#define VARIABLE_LENGTH             S_ENABLE
-#define EXTENDED_LENGTH_FIELD       S_DISABLE
-
-#define PREAMBLE_BYTE(v)        (4*v)
-#define SYNC_BYTE(v)            (8*v)
-#define VARIABLE_LENGTH             S_ENABLE
-
-#endif
-
 
 #ifndef USE_BASIC_PROTOCOL_ADDRESS
   /*  Addresses configuration parameters  */

@@ -55,10 +55,6 @@ by the user
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #include "SPIRIT1_Util.h"
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-#include "S2LP_Util.h"
-#include "S2LP_Timer_ex.h"
-#endif
 
 
 /** @addtogroup USER
@@ -133,16 +129,9 @@ RadioLowPowerMode_t Radio_LPM_cb =
 * @brief GPIO structure fitting
 */
 SGpioInit xGpioIRQ={
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  SPIRIT_GPIO_IRQ,
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LP_GPIO_3,
-#endif
-  
-  RADIO_GPIO_MODE_DIGITAL_OUTPUT_LP,
-  RADIO_GPIO_DIG_OUT_IRQ
-    
+  SPIRIT_GPIO_IRQ, /*SPIRIT_GPIO_3*/
+  SPIRIT_GPIO_MODE_DIGITAL_OUTPUT_LP,
+  SPIRIT_GPIO_DIG_OUT_IRQ
 };
 
 /**
@@ -214,10 +203,6 @@ PktBasicInit xBasicInit={
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   LENGTH_TYPE,
   LENGTH_WIDTH,
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  VARIABLE_LENGTH,
-  EXTENDED_LENGTH_FIELD,
 #endif
   CRC_MODE,
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
@@ -298,29 +283,6 @@ uint16_t dataSendCounter = 0x00;
 
 /* Private function prototypes -----------------------------------------------*/
 
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-
-void HAL_S2LP_Init(void);
-void Enter_LP_mode(void);
-void Exit_LP_mode(void);
-void MCU_Enter_StopMode(void);
-void MCU_Enter_StandbyMode(void);
-void MCU_Enter_SleepMode(void);
-void RadioPowerON(void);
-void RadioPowerOFF(void);
-void RadioStandBy(void);
-void RadioSleep(void);
-void AppliSendBuff(AppliFrame_t *xTxFrame, uint8_t cTxlen);
-void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen);
-void P2P_Init(void);
-void STackProtocolInit(void);
-void BasicProtocolInit(void);
-void P2PInterruptHandler(void);
-void Set_KeyStatus(FlagStatus val);
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-void HAL_SYSTICK_Callback(void);
-#endif
-
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup S2LP_APPLI_Private_Functions
@@ -337,9 +299,6 @@ void HAL_Radio_Init(void)
   pRadioDriver = &radio_cb;
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   pRadioDriver->Init( ); 
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LPInterfaceInit(); 
 #endif
 }
 
@@ -360,6 +319,7 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
   uint8_t xIndex = 0;
   uint8_t ledToggleCtr = 0;
   uint8_t  dest_addr;
+  uint8_t temp_DataBuff[]={0x00};
   /*float rRSSIValue = 0;*/
   
   switch(SM_State)
@@ -378,6 +338,8 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
       if((rx_timeout==SET)||(exitTime==RESET))
       {
         rx_timeout = RESET;
+
+        /*NEED TO CHANGE LED FOR PCB*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
         BSP_LED_Toggle(LED2);
 #endif
@@ -393,11 +355,7 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
     
   case SM_STATE_DATA_RECEIVED:
     {
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-      pRadioDriver = &radio_cb; 
-#endif
-      
-      pRadioDriver->GetRxPacket(pRxBuff,&cRxlen); 
+      Spirit1GetRxPacket(pRxBuff,&cRxlen);
       /*rRSSIValue = Spirit1GetRssiTH();*/
       /*rRSSIValue = S2LPGetRssiTH();*/
       xRxFrame.Cmd = pRxBuff[0];
@@ -406,10 +364,12 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
       xRxFrame.CmdType = pRxBuff[3];
       xRxFrame.DataLen = pRxBuff[4];
       
-      for (xIndex = 5; xIndex < cRxlen; xIndex++)
+      /*FIXED BUG IN DATA RECEPTION*/
+      for (xIndex = 0; xIndex < (cRxlen-5); xIndex++)
       {
-        xRxFrame.DataBuff[xIndex] = pRxBuff[xIndex];
+        temp_DataBuff[xIndex] = pRxBuff[xIndex+5];
       }
+      xRxFrame.DataBuff = temp_DataBuff;
       if(xRxFrame.Cmd == LED_TOGGLE)
       {
         SM_State = SM_STATE_TOGGLE_LED; 
@@ -472,28 +432,21 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
   case SM_STATE_ACK_RECEIVED:
     for(; ledToggleCtr<5; ledToggleCtr++)
     {
+    	/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
       RadioShieldLedToggle(RADIO_SHIELD_LED);
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-      //RadioShieldLedToggle(RADIO_SHIELD_LED);
-      BSP_LED_Toggle(LED2);
-#endif
-      
       HAL_Delay(DELAY_RX_LED_TOGGLE);
     }
     SM_State = SM_STATE_IDLE;   
     break;
     
   case SM_STATE_TOGGLE_LED:
+  	/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
     RadioShieldLedOn(RADIO_SHIELD_LED);
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-    //RadioShieldLedOn(RADIO_SHIELD_LED);
-    BSP_LED_On(LED2);
-#endif
-    dest_addr = RadioGetReceivedDestinationAddress();
+    dest_addr = SpiritPktCommonGetReceivedDestAddress();
     
     if ((dest_addr == MULTICAST_ADDRESS) || (dest_addr == BROADCAST_ADDRESS))
     {
@@ -508,18 +461,12 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
     break;
     
   case SM_STATE_IDLE:
+/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
     RadioShieldLedOff(RADIO_SHIELD_LED);
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-    //RadioShieldLedoff(RADIO_SHIELD_LED);
-#endif
     BSP_LED_Off(LED2); 
     SM_State = SM_STATE_START_RX;
-    
-#if defined(USE_LOW_POWER_MODE)
-    Enter_LP_mode();
-#endif     
     break;
   }
 }
@@ -534,53 +481,9 @@ void AppliSendBuff(AppliFrame_t *xTxFrame, uint8_t cTxlen)
 {
   uint8_t xIndex = 0;
   uint8_t trxLength = 0;
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  pRadioDriver = &radio_cb; 
-#endif
-  
-#ifdef USE_STack_PROTOCOL
-  
-  PktStackAddressesInit xAddressInit=
-  {
-    .xFilterOnMyAddress = S_ENABLE,
-    .cMyAddress = MY_ADDRESS,
-    .xFilterOnMulticastAddress = S_DISABLE,
-    .cMulticastAddress = MULTICAST_ADDRESS,
-    .xFilterOnBroadcastAddress = S_ENABLE,
-    .cBroadcastAddress = BROADCAST_ADDRESS
-  };
-  Radio_PktStackAddressesInit(&xAddressInit);
-  
-  
-  
-#ifdef USE_STack_LLP
-  
-  /* LLP structure fitting */
-  PktStackLlpInit xStackLLPInit=
-  {
-    .xAutoAck = S_DISABLE,                
-    .xPiggybacking = S_DISABLE,              
-    .xNMaxRetx = PKT_N_RETX_2
-  }; 
-  
-#else
-  
-  /* LLP structure fitting */
-  PktStackLlpInit xStackLLPInit=
-  {
-    .xAutoAck = S_DISABLE,                
-    .xPiggybacking = S_DISABLE,              
-    .xNMaxRetx = PKT_DISABLE_RETX
-  }; 
-#endif
-  
-  Radio_PktStackLlpInit(&xStackLLPInit);
-  
-  
-#endif
   
 #ifdef USE_BASIC_PROTOCOL
-  RadioPktBasicAddressesInit(&xAddressInit);
+  SpiritPktBasicAddressesInit(&xAddressInit);
 #endif  
   
   TxFrameBuff[0] = xTxFrame->Cmd;
@@ -588,47 +491,27 @@ void AppliSendBuff(AppliFrame_t *xTxFrame, uint8_t cTxlen)
   TxFrameBuff[2] = xTxFrame->Cmdtag;
   TxFrameBuff[3] = xTxFrame->CmdType;
   TxFrameBuff[4] = xTxFrame->DataLen;
-  // #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   for(; xIndex < xTxFrame->DataLen; xIndex++)
-    //#endif
-    //#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-    //  for(; xIndex < cTxlen; xIndex++)
-    //#endif
-    
   {
     TxFrameBuff[xIndex+5] =  xTxFrame->DataBuff[xIndex];
   }
-  
-  
+
   trxLength = (xIndex+5);
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+
   /* Spirit IRQs disable */
-  pRadioDriver->DisableIrq();
+  Spirit1DisableIrq();
   /* Spirit IRQs enable */
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LPGpioIrqDeInit(NULL);
-#endif
-  
-  pRadioDriver->EnableTxIrq();
+  Spirit1EnableTxIrq();
   /* payload length config */
-  pRadioDriver->SetPayloadLen(trxLength);  
+  Spirit1SetPayloadlength(trxLength);
   /* rx timeout config */
-  pRadioDriver->SetRxTimeout(RECEIVE_TIMEOUT);
+  Spirit1SetRxTimeout(RECEIVE_TIMEOUT);
   /* IRQ registers blanking */
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  pRadioDriver->ClearIrqStatus();
+  Spirit1ClearIRQ();
   /* destination address */
-  pRadioDriver->SetDestinationAddress(DestinationAddr);
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LPGpioIrqClearStatus();
-  /* destination address */
-  pRadioDriver->SetDestinationAddress(DESTINATION_ADDRESS);
-  Config_RangeExt(PA_TX,S2LPManagementGetRangeExtender());
-#endif  
+  Spirit1SetDestinationAddress(DestinationAddr);
   /* send the TX command */
-  pRadioDriver->StartTx(TxFrameBuff, trxLength);
+  Spirit1StartTx(TxFrameBuff, trxLength);
 }
 
 
@@ -643,94 +526,23 @@ void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen)
   /*float rRSSIValue = 0;*/
   exitTime = SET;
   exitCounter = TIME_TO_EXIT_RX;
-  
-#ifdef USE_STack_PROTOCOL
-  
-#ifdef USE_STack_LLP
-  /* LLP structure fitting */
-  PktStackLlpInit xStackLLPInit=
-  {
-    .xAutoAck = S_ENABLE,                
-    .xPiggybacking = S_ENABLE,              
-    .xNMaxRetx = PKT_DISABLE_RETX
-  }; 
-#else
-  /* LLP structure fitting */
-  PktStackLlpInit xStackLLPInit=
-  {
-    .xAutoAck = S_DISABLE,                
-    .xPiggybacking = S_DISABLE,              
-    .xNMaxRetx = PKT_DISABLE_RETX
-  }; 
-#endif
-  
-  Radio_PktStackLlpInit(&xStackLLPInit);
-  
-  PktStackAddressesInit xAddressInit=
-  {
-    .xFilterOnMyAddress = S_ENABLE,
-    .cMyAddress = MY_ADDRESS,
-    .xFilterOnMulticastAddress = S_DISABLE,
-    .cMulticastAddress = MULTICAST_ADDRESS,
-    .xFilterOnBroadcastAddress = S_ENABLE,
-    .cBroadcastAddress = BROADCAST_ADDRESS
-  };
-  
-  Radio_PktStackAddressesInit(&xAddressInit);
-  if(EN_FILT_SOURCE_ADDRESS)
-  {
-    Radio_PktStackFilterOnSourceAddress(S_ENABLE);
-    Radio_PktStackSetRxSourceMask(SOURCE_ADDR_MASK);
-    Radio_PktStackSetSourceReferenceAddress (SOURCE_ADDR_REF);
-    
-    
-    
-  }
-  else
-  {
-    RadioPktStackFilterOnSourceAddress(S_DISABLE);    
-  }
-#endif
-  
-  RadioPktBasicAddressesInit(&xAddressInit);
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  pRadioDriver->DisableIrq();
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  pRadioDriver = &radio_cb;  
-  /* S2LP IRQs disable */
-  S2LPGpioIrqDeInit(NULL);
-  /* S2LP IRQs enable */
-#endif
-  pRadioDriver->EnableRxIrq();
+  SpiritPktBasicAddressesInit(&xAddressInit);
+
+  Spirit1DisableIrq();
+  Spirit1EnableRxIrq();
+
   /* payload length config */
-  pRadioDriver->SetPayloadLen(PAYLOAD_LEN);
+  Spirit1SetPayloadlength(PAYLOAD_LEN);
+
   /* rx timeout config */
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  pRadioDriver->SetRxTimeout(RECEIVE_TIMEOUT);
-#endif
-  
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LPTimerSetRxTimerMs(700.0);
-  SET_INFINITE_RX_TIMEOUT();  
-#endif
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+  Spirit1SetRxTimeout(RECEIVE_TIMEOUT);
+
   /* destination address */
-  pRadioDriver->SetDestinationAddress(DestinationAddr);  
+  Spirit1SetDestinationAddress(DestinationAddr);
   /* IRQ registers blanking */
-  pRadioDriver->ClearIrqStatus(); 
-  /* RX command */
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  /* destination address */
-  pRadioDriver->SetDestinationAddress(DESTINATION_ADDRESS);
-  /* IRQ registers blanking */
-  S2LPGpioIrqClearStatus(); 
-  
-  Config_RangeExt(PA_RX,S2LPManagementGetRangeExtender());
-#endif
+  Spirit1ClearIRQ();
   /* RX command */ 
-  pRadioDriver->StartRx(); 
+  Spirit1StartRx();
 }
 
 /**
@@ -742,52 +554,14 @@ void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen)
 void P2P_Init(void)
 {
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  DestinationAddr=DESTINATION_ADDRESS;
+  DestinationAddr = DESTINATION_ADDRESS;
   pRadioDriver->GpioIrq(&xGpioIRQ);
-  pRadioDriver->RadioInit(&xRadioInit);
-  pRadioDriver->SetRadioPower(POWER_INDEX, POWER_DBM);  
+  Spirit1RadioInit(&xRadioInit);
+  Spirit1SetPower(POWER_INDEX, POWER_DBM);
 #endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  pRadioDriver = &radio_cb;
-  
-  /* S2LP IRQ config */
-  S2LPGpioInit(&xGpioIRQ);
-  
-  /* S2LP Radio config */    
-  S2LPRadioInit(&xRadioInit);
-  
-  
-  /* S2LP Radio set power */
-  S2LPRadioSetMaxPALevel(S_DISABLE);  
-  
-  if(!S2LPManagementGetRangeExtender())
-  {
-    /* if we haven't an external PA, use the library function */
-    S2LPRadioSetPALeveldBm(POWER_INDEX,POWER_DBM);
-  }
-  else
-  { 
-    /* in case we are using the PA board, the S2LPRadioSetPALeveldBm will be not functioning because
-    the output power is affected by the amplification of this external component.
-    Set the raw register. */
-    uint8_t paLevelValue=0x25; /* for example, this value will give 23dBm about */
-    S2LPSpiWriteRegisters(PA_POWER8_ADDR, 1, &paLevelValue);
-  }
-  S2LPRadioSetPALevelMaxIndex(POWER_INDEX); 
-#endif
-  
-  
-  /* S2LP Packet config */  
-  pRadioDriver->PacketConfig();
-  
-  pRadioDriver->EnableSQI();
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  pRadioDriver->SetRssiThreshold(RSSI_THRESHOLD);
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  S2LPRadioSetRssiThreshdBm(RSSI_THRESHOLD);
-#endif
-  
+  Spirit1PacketConfig();
+  Spirit1EnableSQI();
+  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
 }
 
 /**
@@ -808,10 +582,6 @@ void STackProtocolInit(void)
     .xFixVarLength = LENGTH_TYPE,
     .cPktLengthWidth = 8, 
 #endif   
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-    .xFixVarLength = S_ENABLE,
-    .cExtendedPktLenField = S_DISABLE,
-#endif
     .xCrcMode = CRC_MODE,
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
     .xControlLength = CONTROL_LENGTH,
@@ -1114,9 +884,6 @@ void HAL_SYSTICK_Callback(void)
 * @retval None
 */
 
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-extern uint16_t M2S_GPIO_PIN_IRQ;
-#endif
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
   
@@ -1138,9 +905,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   /* Initialize LEDs*/
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   RadioShieldLedInit(RADIO_SHIELD_LED);
-#endif
-#if defined(X_NUCLEO_S2868A1) || defined(X_NUCLEO_S2915A1)
-  // RadioShieldLedInit(RADIO_SHIELD_LED);
 #endif
   BSP_LED_Init(LED2);
   
