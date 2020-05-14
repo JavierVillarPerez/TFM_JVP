@@ -281,6 +281,8 @@ uint16_t txCounter = 0;
 uint16_t wakeupCounter = 0;
 uint16_t dataSendCounter = 0x00;
 
+uint8_t temp_DataBuff[]={0x00};
+
 /* Private function prototypes -----------------------------------------------*/
 
 /* Private functions ---------------------------------------------------------*/
@@ -319,7 +321,7 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
   uint8_t xIndex = 0;
   uint8_t ledToggleCtr = 0;
   uint8_t  dest_addr;
-  uint8_t temp_DataBuff[]={0x00};
+
   /*float rRSSIValue = 0;*/
   
   switch(SM_State)
@@ -365,11 +367,18 @@ void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRx
       xRxFrame.DataLen = pRxBuff[4];
       
       /*FIXED BUG IN DATA RECEPTION*/
-      for (xIndex = 0; xIndex < (cRxlen-5); xIndex++)
+      for (xIndex = 5; xIndex < cRxlen; xIndex++)
       {
-        temp_DataBuff[xIndex] = pRxBuff[xIndex+5];
+    	  temp_DataBuff[xIndex] = pRxBuff[xIndex];
       }
-      xRxFrame.DataBuff = temp_DataBuff;
+
+      xRxFrame.DataBuff= temp_DataBuff;
+
+      /*CALL DECODING AND USB FUNCTION*/
+
+
+
+
       if(xRxFrame.Cmd == LED_TOGGLE)
       {
         SM_State = SM_STATE_TOGGLE_LED; 
