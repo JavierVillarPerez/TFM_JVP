@@ -294,7 +294,6 @@ Discarded input sections
  .group         0x0000000000000000        0xc Application/USER/main.o
  .group         0x0000000000000000        0xc Application/USER/main.o
  .group         0x0000000000000000        0xc Application/USER/main.o
- .group         0x0000000000000000        0xc Application/USER/main.o
  .text          0x0000000000000000        0x0 Application/USER/main.o
  .debug_macro   0x0000000000000000      0xa78 Application/USER/main.o
  .debug_macro   0x0000000000000000       0xaf Application/USER/main.o
@@ -360,7 +359,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x11e Application/USER/main.o
  .debug_macro   0x0000000000000000      0x165 Application/USER/main.o
  .debug_macro   0x0000000000000000      0x1a0 Application/USER/main.o
- .group         0x0000000000000000        0xc Application/USER/radio_appli.o
  .group         0x0000000000000000        0xc Application/USER/radio_appli.o
  .group         0x0000000000000000        0xc Application/USER/radio_appli.o
  .group         0x0000000000000000        0xc Application/USER/radio_appli.o
@@ -540,10 +538,8 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x42 Application/USER/radio_appli.o
  .debug_macro   0x0000000000000000      0x198 Application/USER/radio_appli.o
  .debug_macro   0x0000000000000000       0x1c Application/USER/radio_appli.o
- .debug_macro   0x0000000000000000      0x100 Application/USER/radio_appli.o
  .debug_macro   0x0000000000000000       0x3a Application/USER/radio_appli.o
  .debug_macro   0x0000000000000000      0x171 Application/USER/radio_appli.o
- .group         0x0000000000000000        0xc Application/USER/stm32l0xx_it.o
  .group         0x0000000000000000        0xc Application/USER/stm32l0xx_it.o
  .group         0x0000000000000000        0xc Application/USER/stm32l0xx_it.o
  .group         0x0000000000000000        0xc Application/USER/stm32l0xx_it.o
@@ -726,7 +722,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x33 Application/USER/stm32l0xx_it.o
  .debug_macro   0x0000000000000000      0x1b5 Application/USER/stm32l0xx_it.o
  .debug_macro   0x0000000000000000       0x42 Application/USER/stm32l0xx_it.o
- .debug_macro   0x0000000000000000      0x100 Application/USER/stm32l0xx_it.o
  .debug_macro   0x0000000000000000       0x3a Application/USER/stm32l0xx_it.o
  .debug_macro   0x0000000000000000      0x171 Application/USER/stm32l0xx_it.o
  .group         0x0000000000000000        0xc Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Aes.o
@@ -2733,7 +2728,6 @@ Discarded input sections
  .debug_macro   0x0000000000000000      0x145 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
  .debug_macro   0x0000000000000000      0xef6 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
  .debug_macro   0x0000000000000000       0x1e Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
- .group         0x0000000000000000        0xc Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
  .group         0x0000000000000000        0xc Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
  .group         0x0000000000000000        0xc Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
  .group         0x0000000000000000        0xc Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
@@ -11509,9 +11503,9 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
  .text.Clock_Enable
                 0x000000000800302c       0x74 Application/USER/main.o
                 0x000000000800302c                Clock_Enable
- .text.HAL_Spirit1_Init
+ .text.HAL_Radio_Init
                 0x00000000080030a0       0x20 Application/USER/radio_appli.o
-                0x00000000080030a0                HAL_Spirit1_Init
+                0x00000000080030a0                HAL_Radio_Init
  .text.P2P_Process
                 0x00000000080030c0      0x2ec Application/USER/radio_appli.o
                 0x00000000080030c0                P2P_Process
@@ -12497,69 +12491,69 @@ OUTPUT(SDR_Multiband_L0.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000001258      0x150 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
 
-.debug_str      0x0000000000000000    0x93bf8
+.debug_str      0x0000000000000000    0x93734
  .debug_str     0x0000000000000000       0x92 Application/SW4STM32/startup_stm32l053xx.o
  .debug_str     0x0000000000000092    0x7f55b Application/USER/cube_hal_l0.o
                                       0x7fd31 (size before relaxing)
- .debug_str     0x000000000007f5ed     0xcd18 Application/USER/main.o
-                                      0x8c83b (size before relaxing)
- .debug_str     0x000000000008c305     0x1409 Application/USER/radio_appli.o
-                                      0x8dcd4 (size before relaxing)
- .debug_str     0x000000000008d70e       0xe3 Application/USER/stm32l0xx_it.o
-                                      0x8c7cb (size before relaxing)
- .debug_str     0x000000000008d7f1      0x1e1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+ .debug_str     0x000000000007f5ed     0xc618 Application/USER/main.o
+                                      0x8c13b (size before relaxing)
+ .debug_str     0x000000000008bc05     0x145a Application/USER/radio_appli.o
+                                      0x8d5d2 (size before relaxing)
+ .debug_str     0x000000000008d05f       0xe3 Application/USER/stm32l0xx_it.o
+                                      0x8c0cb (size before relaxing)
+ .debug_str     0x000000000008d142      0x1e1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
                                        0xd4dd (size before relaxing)
- .debug_str     0x000000000008d9d2       0x75 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+ .debug_str     0x000000000008d323       0x75 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
                                        0xd9c1 (size before relaxing)
- .debug_str     0x000000000008da47      0x1eb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+ .debug_str     0x000000000008d398      0x1f6 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
                                        0xd8de (size before relaxing)
- .debug_str     0x000000000008dc32      0x26e Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+ .debug_str     0x000000000008d58e      0x26e Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
                                        0xd76b (size before relaxing)
- .debug_str     0x000000000008dea0      0x374 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+ .debug_str     0x000000000008d7fc      0x374 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
                                        0xe7fb (size before relaxing)
- .debug_str     0x000000000008e214      0x112 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+ .debug_str     0x000000000008db70      0x125 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
                                        0xdbab (size before relaxing)
- .debug_str     0x000000000008e326      0x1f7 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
+ .debug_str     0x000000000008dc95      0x1f7 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
                                        0xd4be (size before relaxing)
- .debug_str     0x000000000008e51d      0x29b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+ .debug_str     0x000000000008de8c      0x29b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
                                       0x136e7 (size before relaxing)
- .debug_str     0x000000000008e7b8      0x1b6 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+ .debug_str     0x000000000008e127      0x1e5 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
                                        0xf62d (size before relaxing)
- .debug_str     0x000000000008e96e      0x8cb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+ .debug_str     0x000000000008e30c      0x8cb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
                                        0xec87 (size before relaxing)
- .debug_str     0x000000000008f239      0x3e4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+ .debug_str     0x000000000008ebd7      0x400 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
                                        0xdb2b (size before relaxing)
- .debug_str     0x000000000008f61d     0x15d0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .debug_str     0x000000000008efd7     0x15fd Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
                                       0x14c73 (size before relaxing)
- .debug_str     0x0000000000090bed      0x487 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+ .debug_str     0x00000000000905d4      0x487 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
                                       0x1387e (size before relaxing)
- .debug_str     0x0000000000091074       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+ .debug_str     0x0000000000090a5b       0x58 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
                                        0xd2ec (size before relaxing)
- .debug_str     0x00000000000910b8      0x322 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                                      0x8d653 (size before relaxing)
- .debug_str     0x00000000000913da      0xba0 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+ .debug_str     0x0000000000090ab3      0x463 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                                      0x8cf53 (size before relaxing)
+ .debug_str     0x0000000000090f16      0xba0 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
                                       0x80816 (size before relaxing)
- .debug_str     0x0000000000091f7a      0x172 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+ .debug_str     0x0000000000091ab6      0x172 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
                                       0x808cf (size before relaxing)
- .debug_str     0x00000000000920ec       0xa7 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+ .debug_str     0x0000000000091c28       0xa7 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
                                       0x7fcfa (size before relaxing)
- .debug_str     0x0000000000092193      0x793 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+ .debug_str     0x0000000000091ccf      0x793 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
                                       0x8c3e6 (size before relaxing)
- .debug_str     0x0000000000092926       0xa8 Driver/CMSIS/Include/system_stm32l0xx.o
+ .debug_str     0x0000000000092462       0xa8 Driver/CMSIS/Include/system_stm32l0xx.o
                                       0x7f032 (size before relaxing)
- .debug_str     0x00000000000929ce      0x3b0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+ .debug_str     0x000000000009250a      0x3b0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
                                       0x7f5f8 (size before relaxing)
- .debug_str     0x0000000000092d7e      0x242 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+ .debug_str     0x00000000000928ba      0x242 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
                                       0x7f440 (size before relaxing)
- .debug_str     0x0000000000092fc0      0x1fb Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+ .debug_str     0x0000000000092afc      0x1fb Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
                                       0x7f2d5 (size before relaxing)
- .debug_str     0x00000000000931bb       0x62 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
+ .debug_str     0x0000000000092cf7       0x62 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
                                       0x7ef64 (size before relaxing)
- .debug_str     0x000000000009321d      0x28d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+ .debug_str     0x0000000000092d59      0x28d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
                                       0x7f289 (size before relaxing)
- .debug_str     0x00000000000934aa      0x3b7 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+ .debug_str     0x0000000000092fe6      0x3b7 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
                                       0x7f5d5 (size before relaxing)
- .debug_str     0x0000000000093861      0x397 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+ .debug_str     0x000000000009339d      0x397 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
                                       0x7f6c3 (size before relaxing)
 
 .debug_ranges   0x0000000000000000     0x11b0
@@ -12596,7 +12590,7 @@ OUTPUT(SDR_Multiband_L0.elf elf32-littlearm)
  .debug_ranges  0x0000000000000ff8       0x78 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
  .debug_ranges  0x0000000000001070      0x140 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
 
-.debug_macro    0x0000000000000000    0x1acfa
+.debug_macro    0x0000000000000000    0x1aae6
  .debug_macro   0x0000000000000000      0x33a Application/USER/cube_hal_l0.o
  .debug_macro   0x000000000000033a      0xa78 Application/USER/cube_hal_l0.o
  .debug_macro   0x0000000000000db2       0xaf Application/USER/cube_hal_l0.o
@@ -12662,76 +12656,74 @@ OUTPUT(SDR_Multiband_L0.elf elf32-littlearm)
  .debug_macro   0x0000000000012cdf      0x11e Application/USER/cube_hal_l0.o
  .debug_macro   0x0000000000012dfd      0x165 Application/USER/cube_hal_l0.o
  .debug_macro   0x0000000000012f62      0x1a0 Application/USER/cube_hal_l0.o
- .debug_macro   0x0000000000013102      0x470 Application/USER/main.o
- .debug_macro   0x0000000000013572       0x28 Application/USER/main.o
- .debug_macro   0x000000000001359a      0xef6 Application/USER/main.o
- .debug_macro   0x0000000000014490       0x24 Application/USER/main.o
- .debug_macro   0x00000000000144b4       0x10 Application/USER/main.o
- .debug_macro   0x00000000000144c4       0x87 Application/USER/main.o
- .debug_macro   0x000000000001454b       0x2c Application/USER/main.o
- .debug_macro   0x0000000000014577       0x16 Application/USER/main.o
- .debug_macro   0x000000000001458d       0x2a Application/USER/main.o
- .debug_macro   0x00000000000145b7       0x39 Application/USER/main.o
- .debug_macro   0x00000000000145f0       0x12 Application/USER/main.o
- .debug_macro   0x0000000000014602       0x41 Application/USER/main.o
- .debug_macro   0x0000000000014643       0x10 Application/USER/main.o
- .debug_macro   0x0000000000014653       0x57 Application/USER/main.o
- .debug_macro   0x00000000000146aa      0x170 Application/USER/main.o
- .debug_macro   0x000000000001481a       0x10 Application/USER/main.o
- .debug_macro   0x000000000001482a      0x1d8 Application/USER/main.o
- .debug_macro   0x0000000000014a02       0x33 Application/USER/main.o
- .debug_macro   0x0000000000014a35      0x1b5 Application/USER/main.o
- .debug_macro   0x0000000000014bea       0x42 Application/USER/main.o
- .debug_macro   0x0000000000014c2c      0x198 Application/USER/main.o
- .debug_macro   0x0000000000014dc4       0x1c Application/USER/main.o
- .debug_macro   0x0000000000014de0      0x100 Application/USER/main.o
- .debug_macro   0x0000000000014ee0       0x3a Application/USER/main.o
- .debug_macro   0x0000000000014f1a      0x171 Application/USER/main.o
- .debug_macro   0x000000000001508b      0x471 Application/USER/radio_appli.o
- .debug_macro   0x00000000000154fc       0x22 Application/USER/radio_appli.o
- .debug_macro   0x000000000001551e      0x45e Application/USER/stm32l0xx_it.o
- .debug_macro   0x000000000001597c       0x22 Application/USER/stm32l0xx_it.o
- .debug_macro   0x000000000001599e      0x1ef Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
- .debug_macro   0x0000000000015b8d      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
- .debug_macro   0x0000000000015d7b       0x81 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
- .debug_macro   0x0000000000015dfc      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
- .debug_macro   0x0000000000015fea       0x26 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
- .debug_macro   0x0000000000016010      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
- .debug_macro   0x00000000000161fe       0x24 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
- .debug_macro   0x0000000000016222      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
- .debug_macro   0x0000000000016410       0x33 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
- .debug_macro   0x0000000000016443      0x1f3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
- .debug_macro   0x0000000000016636      0x1ef Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
- .debug_macro   0x0000000000016825      0x2b0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
- .debug_macro   0x0000000000016ad5      0x1f7 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
- .debug_macro   0x0000000000016ccc      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
- .debug_macro   0x0000000000016eba       0x51 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
- .debug_macro   0x0000000000016f0b      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
- .debug_macro   0x00000000000170f9       0x2d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
- .debug_macro   0x0000000000017126      0x2c1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
- .debug_macro   0x00000000000173e7      0x1e1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
- .debug_macro   0x00000000000175c8      0x2ac Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
- .debug_macro   0x0000000000017874       0x3b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
- .debug_macro   0x00000000000178af      0x1e9 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
- .debug_macro   0x0000000000017a98       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
- .debug_macro   0x0000000000017ad4      0x478 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_macro   0x0000000000017f4c       0xaf Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_macro   0x0000000000017ffb      0x192 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_macro   0x000000000001818d      0x106 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_macro   0x0000000000018293      0x356 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
- .debug_macro   0x00000000000185e9      0x19a Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
- .debug_macro   0x0000000000018783      0x34f Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
- .debug_macro   0x0000000000018ad2      0x349 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
- .debug_macro   0x0000000000018e1b      0x428 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
- .debug_macro   0x0000000000019243       0xff Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
- .debug_macro   0x0000000000019342      0x323 Driver/CMSIS/Include/system_stm32l0xx.o
- .debug_macro   0x0000000000019665      0x341 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
- .debug_macro   0x00000000000199a6      0x31d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
- .debug_macro   0x0000000000019cc3      0x355 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
- .debug_macro   0x000000000001a018      0x31d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
- .debug_macro   0x000000000001a335      0x335 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
- .debug_macro   0x000000000001a66a      0x36b Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
- .debug_macro   0x000000000001a9d5      0x325 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+ .debug_macro   0x0000000000013102      0x46b Application/USER/main.o
+ .debug_macro   0x000000000001356d       0x28 Application/USER/main.o
+ .debug_macro   0x0000000000013595      0xef6 Application/USER/main.o
+ .debug_macro   0x000000000001448b       0x24 Application/USER/main.o
+ .debug_macro   0x00000000000144af       0x10 Application/USER/main.o
+ .debug_macro   0x00000000000144bf       0x87 Application/USER/main.o
+ .debug_macro   0x0000000000014546       0x2c Application/USER/main.o
+ .debug_macro   0x0000000000014572       0x16 Application/USER/main.o
+ .debug_macro   0x0000000000014588       0x2a Application/USER/main.o
+ .debug_macro   0x00000000000145b2       0x39 Application/USER/main.o
+ .debug_macro   0x00000000000145eb       0x12 Application/USER/main.o
+ .debug_macro   0x00000000000145fd       0x41 Application/USER/main.o
+ .debug_macro   0x000000000001463e       0x10 Application/USER/main.o
+ .debug_macro   0x000000000001464e       0x57 Application/USER/main.o
+ .debug_macro   0x00000000000146a5      0x170 Application/USER/main.o
+ .debug_macro   0x0000000000014815       0x10 Application/USER/main.o
+ .debug_macro   0x0000000000014825      0x1d8 Application/USER/main.o
+ .debug_macro   0x00000000000149fd       0x33 Application/USER/main.o
+ .debug_macro   0x0000000000014a30      0x1b5 Application/USER/main.o
+ .debug_macro   0x0000000000014be5       0x42 Application/USER/main.o
+ .debug_macro   0x0000000000014c27      0x198 Application/USER/main.o
+ .debug_macro   0x0000000000014dbf       0x1c Application/USER/main.o
+ .debug_macro   0x0000000000014ddb       0x3a Application/USER/main.o
+ .debug_macro   0x0000000000014e15      0x171 Application/USER/main.o
+ .debug_macro   0x0000000000014f86      0x46c Application/USER/radio_appli.o
+ .debug_macro   0x00000000000153f2       0x22 Application/USER/radio_appli.o
+ .debug_macro   0x0000000000015414      0x459 Application/USER/stm32l0xx_it.o
+ .debug_macro   0x000000000001586d       0x22 Application/USER/stm32l0xx_it.o
+ .debug_macro   0x000000000001588f      0x1ef Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+ .debug_macro   0x0000000000015a7e      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+ .debug_macro   0x0000000000015c6c       0x81 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+ .debug_macro   0x0000000000015ced      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+ .debug_macro   0x0000000000015edb       0x26 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+ .debug_macro   0x0000000000015f01      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+ .debug_macro   0x00000000000160ef       0x24 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+ .debug_macro   0x0000000000016113      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+ .debug_macro   0x0000000000016301       0x33 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+ .debug_macro   0x0000000000016334      0x1f3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+ .debug_macro   0x0000000000016527      0x1ef Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
+ .debug_macro   0x0000000000016716      0x2b0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+ .debug_macro   0x00000000000169c6      0x1f7 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+ .debug_macro   0x0000000000016bbd      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+ .debug_macro   0x0000000000016dab       0x51 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+ .debug_macro   0x0000000000016dfc      0x1ee Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+ .debug_macro   0x0000000000016fea       0x2d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+ .debug_macro   0x0000000000017017      0x2c1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .debug_macro   0x00000000000172d8      0x1e1 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .debug_macro   0x00000000000174b9      0x2ac Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+ .debug_macro   0x0000000000017765       0x3b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+ .debug_macro   0x00000000000177a0      0x1e9 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+ .debug_macro   0x0000000000017989       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+ .debug_macro   0x00000000000179c5      0x479 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+ .debug_macro   0x0000000000017e3e       0xaf Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+ .debug_macro   0x0000000000017eed      0x192 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+ .debug_macro   0x000000000001807f      0x356 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+ .debug_macro   0x00000000000183d5      0x19a Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+ .debug_macro   0x000000000001856f      0x34f Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+ .debug_macro   0x00000000000188be      0x349 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+ .debug_macro   0x0000000000018c07      0x428 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+ .debug_macro   0x000000000001902f       0xff Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+ .debug_macro   0x000000000001912e      0x323 Driver/CMSIS/Include/system_stm32l0xx.o
+ .debug_macro   0x0000000000019451      0x341 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+ .debug_macro   0x0000000000019792      0x31d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+ .debug_macro   0x0000000000019aaf      0x355 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+ .debug_macro   0x0000000000019e04      0x31d Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
+ .debug_macro   0x000000000001a121      0x335 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+ .debug_macro   0x000000000001a456      0x36b Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+ .debug_macro   0x000000000001a7c1      0x325 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
 
 .comment        0x0000000000000000       0x7b
  .comment       0x0000000000000000       0x7b Application/USER/cube_hal_l0.o

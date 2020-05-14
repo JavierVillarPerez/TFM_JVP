@@ -1,4 +1,4 @@
-radio_appli.c:299:6:HAL_Spirit1_Init	8	static
+radio_appli.c:299:6:HAL_Radio_Init	8	static
 radio_appli.c:319:6:P2P_Process	40	static
 radio_appli.c:489:6:AppliSendBuff	32	static
 radio_appli.c:533:6:AppliReceiveBuff	16	static

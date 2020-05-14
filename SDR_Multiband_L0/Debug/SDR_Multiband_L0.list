@@ -29,15 +29,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  12 .debug_aranges 000013a8  00000000  00000000  00057c80  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_str    00093bf8  00000000  00000000  00059028  2**0
+ 13 .debug_str    00093734  00000000  00000000  00059028  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_ranges 000011b0  00000000  00000000  000ecc20  2**3
+ 14 .debug_ranges 000011b0  00000000  00000000  000ec760  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_macro  0001acfa  00000000  00000000  000eddd0  2**0
+ 15 .debug_macro  0001aae6  00000000  00000000  000ed910  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .comment      0000007b  00000000  00000000  00108aca  2**0
+ 16 .comment      0000007b  00000000  00000000  001083f6  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00004854  00000000  00000000  00108b48  2**2
+ 17 .debug_frame  00004854  00000000  00000000  00108474  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -6205,7 +6205,7 @@ int main(void)
  8002ff2:	2000      	movs	r0, #0
  8002ff4:	f003 fcda 	bl	80069ac <BSP_LED_Init>
   HAL_Radio_Init();
- 8002ff8:	f000 f852 	bl	80030a0 <HAL_Spirit1_Init>
+ 8002ff8:	f000 f852 	bl	80030a0 <HAL_Radio_Init>
   
   /* Initialize Buttons*/
   BSP_PB_Init(BUTTON_KEY, BUTTON_MODE_EXTI);
@@ -6304,7 +6304,7 @@ void Clock_Enable(void)
  800309a:	46c0      	nop			; (mov r8, r8)
  800309c:	40021000 	.word	0x40021000
 
-080030a0 <HAL_Spirit1_Init>:
+080030a0 <HAL_Radio_Init>:
 * @brief  Initializes RF Transceiver's HAL.
 * @param  None
 * @retval None.
@@ -6314,12 +6314,12 @@ void HAL_Radio_Init(void)
  80030a0:	b580      	push	{r7, lr}
  80030a2:	af00      	add	r7, sp, #0
   pRadioDriver = &radio_cb;
- 80030a4:	4b04      	ldr	r3, [pc, #16]	; (80030b8 <HAL_Spirit1_Init+0x18>)
- 80030a6:	4a05      	ldr	r2, [pc, #20]	; (80030bc <HAL_Spirit1_Init+0x1c>)
+ 80030a4:	4b04      	ldr	r3, [pc, #16]	; (80030b8 <HAL_Radio_Init+0x18>)
+ 80030a6:	4a05      	ldr	r2, [pc, #20]	; (80030bc <HAL_Radio_Init+0x1c>)
  80030a8:	601a      	str	r2, [r3, #0]
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   pRadioDriver->Init( ); 
- 80030aa:	4b03      	ldr	r3, [pc, #12]	; (80030b8 <HAL_Spirit1_Init+0x18>)
+ 80030aa:	4b03      	ldr	r3, [pc, #12]	; (80030b8 <HAL_Radio_Init+0x18>)
  80030ac:	681b      	ldr	r3, [r3, #0]
  80030ae:	681b      	ldr	r3, [r3, #0]
  80030b0:	4798      	blx	r3
@@ -7054,7 +7054,7 @@ void BasicProtocolInit(void)
  8003548:	b580      	push	{r7, lr}
  800354a:	af00      	add	r7, sp, #0
   /* RAdio Packet config */
-  RadioPktBasicInit(&xBasicInit);
+	SpiritPktBasicInit(&xBasicInit);
  800354c:	4b03      	ldr	r3, [pc, #12]	; (800355c <BasicProtocolInit+0x14>)
  800354e:	0018      	movs	r0, r3
  8003550:	f000 ff32 	bl	80043b8 <SpiritPktBasicInit>
@@ -7127,7 +7127,7 @@ void RadioPowerON(void)
  800358c:	b580      	push	{r7, lr}
  800358e:	b082      	sub	sp, #8
  8003590:	af00      	add	r7, sp, #0
-  RadioCmdStrobeReady();   
+	SpiritCmdStrobeReady();
  8003592:	2062      	movs	r0, #98	; 0x62
  8003594:	f000 fa4c 	bl	8003a30 <SpiritCmdStrobeCommand>
   
@@ -7153,7 +7153,7 @@ void RadioPowerON(void)
     
     /* Reads the MC_STATUS register */
     
-    RadioRefreshStatus();
+    SpiritRefreshStatus();
  80035b8:	f002 ffe0 	bl	800657c <SpiritRefreshStatus>
     
     
@@ -7201,7 +7201,7 @@ void RadioStandBy(void)
 {
  80035e6:	b580      	push	{r7, lr}
  80035e8:	af00      	add	r7, sp, #0
-  RadioCmdStrobeStandby();  
+	SpiritCmdStrobeStandby();
  80035ea:	2063      	movs	r0, #99	; 0x63
  80035ec:	f000 fa20 	bl	8003a30 <SpiritCmdStrobeCommand>
 }
@@ -7218,7 +7218,7 @@ void RadioSleep(void)
 {
  80035f6:	b580      	push	{r7, lr}
  80035f8:	af00      	add	r7, sp, #0
-  RadioCmdStrobeSleep(); 
+	SpiritCmdStrobeSleep();
  80035fa:	2064      	movs	r0, #100	; 0x64
  80035fc:	f000 fa18 	bl	8003a30 <SpiritCmdStrobeCommand>
 }
@@ -7268,7 +7268,7 @@ void P2PInterruptHandler(void)
 {
  8003630:	b580      	push	{r7, lr}
  8003632:	af00      	add	r7, sp, #0
-  RadioGpioIrqGetStatus(&xIrqStatus);
+	SpiritIrqGetStatus(&xIrqStatus);
  8003634:	4b2a      	ldr	r3, [pc, #168]	; (80036e0 <P2PInterruptHandler+0xb0>)
  8003636:	0018      	movs	r0, r3
  8003638:	f000 fbca 	bl	8003dd0 <SpiritIrqGetStatus>
@@ -7299,13 +7299,13 @@ void P2PInterruptHandler(void)
          )
   {
 #ifdef CSMA_ENABLE
-    RadioCsma(S_DISABLE);  
+	SpiritCsma(S_DISABLE);
  8003658:	2000      	movs	r0, #0
  800365a:	f000 fa73 	bl	8003b44 <SpiritCsma>
-    RadioRadioPersistenRx(S_ENABLE);
+	SpiritRadioPersistenRx(S_ENABLE);
  800365e:	2001      	movs	r0, #1
  8003660:	f002 fc84 	bl	8005f6c <SpiritRadioPersistenRx>
-    RadioRadioCsBlanking(S_ENABLE);
+	SpiritRadioCsBlanking(S_ENABLE);
  8003664:	2001      	movs	r0, #1
  8003666:	f002 fc49 	bl	8005efc <SpiritRadioCsBlanking>
     
@@ -7318,13 +7318,13 @@ void P2PInterruptHandler(void)
  8003674:	2b00      	cmp	r3, #0
  8003676:	d002      	beq.n	800367e <P2PInterruptHandler+0x4e>
     {
-      RadioCmdStrobeSabort();
+    	SpiritCmdStrobeSabort();
  8003678:	2067      	movs	r0, #103	; 0x67
  800367a:	f000 f9d9 	bl	8003a30 <SpiritCmdStrobeCommand>
       
       
     }
-    RadioQiSetRssiThresholddBm(RSSI_THRESHOLD);
+    SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
  800367e:	2378      	movs	r3, #120	; 0x78
  8003680:	425b      	negs	r3, r3
  8003682:	0018      	movs	r0, r3
@@ -7369,7 +7369,7 @@ void P2PInterruptHandler(void)
  80036b0:	4b0e      	ldr	r3, [pc, #56]	; (80036ec <P2PInterruptHandler+0xbc>)
  80036b2:	2201      	movs	r2, #1
  80036b4:	701a      	strb	r2, [r3, #0]
-    RadioCmdStrobeRx();
+    SpiritCmdStrobeRx();
  80036b6:	f000 fe4f 	bl	8004358 <SpiritManagementWaCmdStrobeRx>
  80036ba:	2061      	movs	r0, #97	; 0x61
  80036bc:	f000 f9b8 	bl	8003a30 <SpiritCmdStrobeCommand>
@@ -7387,7 +7387,7 @@ void P2PInterruptHandler(void)
  80036cc:	d004      	beq.n	80036d8 <P2PInterruptHandler+0xa8>
   {      
     /* RX command - to ensure the device will be ready for the next reception */
-    RadioCmdStrobeRx();
+	  SpiritCmdStrobeRx();
  80036ce:	f000 fe43 	bl	8004358 <SpiritManagementWaCmdStrobeRx>
  80036d2:	2061      	movs	r0, #97	; 0x61
  80036d4:	f000 f9ac 	bl	8003a30 <SpiritCmdStrobeCommand>

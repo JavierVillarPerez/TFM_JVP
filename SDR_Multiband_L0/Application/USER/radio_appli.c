@@ -76,28 +76,28 @@ by the user
 RadioDriver_t radio_cb =
 {
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  .Init = RadioInterfaceInit, 
-  .GpioIrq = RadioGpioIrqInit,
-  .RadioInit = RadioRadioInit,
-  .SetRadioPower = RadioSetPower,
+  .Init = Spirit1InterfaceInit,
+  .GpioIrq = Spirit1GpioIrqInit,
+  .RadioInit = Spirit1RadioInit,
+  .SetRadioPower = Spirit1SetPower,
 #endif
-  .PacketConfig = RadioPacketConfig,
-  .SetPayloadLen = RadioSetPayloadlength,
-  .SetDestinationAddress = RadioSetDestinationAddress,
-  .EnableTxIrq = RadioEnableTxIrq,
-  .EnableRxIrq = RadioEnableRxIrq,
+  .PacketConfig = Spirit1PacketConfig,
+  .SetPayloadLen = Spirit1SetPayloadlength,
+  .SetDestinationAddress = Spirit1SetDestinationAddress,
+  .EnableTxIrq = Spirit1EnableTxIrq,
+  .EnableRxIrq = Spirit1EnableRxIrq,
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5) 
-  .DisableIrq = RadioDisableIrq,
+  .DisableIrq = Spirit1DisableIrq,
 #endif
-  .SetRxTimeout = RadioSetRxTimeout,
-  .EnableSQI = RadioEnableSQI,
+  .SetRxTimeout = Spirit1SetRxTimeout,
+  .EnableSQI = Spirit1EnableSQI,
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  .SetRssiThreshold = RadioSetRssiTH,
-  .ClearIrqStatus = RadioClearIRQ,
+  .SetRssiThreshold = Spirit1SetRssiTH,
+  .ClearIrqStatus = Spirit1ClearIRQ,
 #endif
-  .StartRx = RadioStartRx,
-  .StartTx = RadioStartTx,
-  .GetRxPacket = RadioGetRxPacket
+  .StartRx = Spirit1StartRx,
+  .StartTx = Spirit1StartTx,
+  .GetRxPacket = Spirit1GetRxPacket
 };
 
 
@@ -231,7 +231,7 @@ PktBasicAddressesInit xAddressInit={
 /**
 * @brief CSMA structure fitting
 */
-RadioCsmaInit xCsmaInit={
+CsmaInit xCsmaInit={
   
   PERSISTENT_MODE_EN, /* CCA may optionally be persistent, i.e., rather than 
   entering backoff when the channel is found busy, CCA continues until the 
@@ -268,7 +268,7 @@ volatile FlagStatus xStartRx=RESET, rx_timeout=RESET, exitTime=RESET;
 volatile FlagStatus PushButtonStatusWakeup=RESET;
 volatile FlagStatus PushButtonStatusData=RESET;
 /*IRQ status struct declaration*/
-RadioIrqs xIrqStatus;
+SpiritIrqs xIrqStatus;
 
 __IO uint32_t KEYStatusData = 0x00;
 static AppliFrame_t xTxFrame, xRxFrame;
@@ -599,7 +599,7 @@ void STackProtocolInit(void)
     .xDataWhitening = EN_WHITENING
   };  
   /* Radio Packet config */
-  RadioPktStackInit (&xStackInit);
+  SpiritPktStackInit (&xStackInit);
 }  
 
 
@@ -611,7 +611,7 @@ void STackProtocolInit(void)
 void BasicProtocolInit(void)
 {
   /* RAdio Packet config */
-  RadioPktBasicInit(&xBasicInit);
+	SpiritPktBasicInit(&xBasicInit);
 }
 
 /**
@@ -711,7 +711,7 @@ void MCU_Enter_SleepMode(void)
 */
 void RadioPowerON(void)
 {
-  RadioCmdStrobeReady();   
+	SpiritCmdStrobeReady();
   
   do{
     /* Delay for state transition */
@@ -719,7 +719,7 @@ void RadioPowerON(void)
     
     /* Reads the MC_STATUS register */
     
-    RadioRefreshStatus();
+    SpiritRefreshStatus();
     
     
   }
@@ -749,7 +749,7 @@ void RadioPowerOFF(void)
 */
 void RadioStandBy(void)
 {
-  RadioCmdStrobeStandby();  
+	SpiritCmdStrobeStandby();
 }
 
 /**
@@ -760,7 +760,7 @@ void RadioStandBy(void)
 */
 void RadioSleep(void)
 {
-  RadioCmdStrobeSleep(); 
+	SpiritCmdStrobeSleep();
 }
 
 /**
@@ -784,7 +784,7 @@ void Set_KeyStatus(FlagStatus val)
 */
 void P2PInterruptHandler(void)
 {
-  RadioGpioIrqGetStatus(&xIrqStatus);
+	SpiritIrqGetStatus(&xIrqStatus);
   
   
   /* Check the S2LP TX_DATA_SENT IRQ flag */
@@ -797,17 +797,17 @@ void P2PInterruptHandler(void)
          )
   {
 #ifdef CSMA_ENABLE
-    RadioCsma(S_DISABLE);  
-    RadioRadioPersistenRx(S_ENABLE);
-    RadioRadioCsBlanking(S_ENABLE);
+	SpiritCsma(S_DISABLE);
+	SpiritRadioPersistenRx(S_ENABLE);
+	SpiritRadioCsBlanking(S_ENABLE);
     
     if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
     {
-      RadioCmdStrobeSabort();
+    	SpiritCmdStrobeSabort();
       
       
     }
-    RadioQiSetRssiThresholddBm(RSSI_THRESHOLD);
+    SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
     
     
 #endif
@@ -825,7 +825,7 @@ void P2PInterruptHandler(void)
   if (xIrqStatus.IRQ_RX_TIMEOUT)
   {
     rx_timeout = SET; 
-    RadioCmdStrobeRx();
+    SpiritCmdStrobeRx();
     
   }
   
@@ -833,7 +833,7 @@ void P2PInterruptHandler(void)
   if(xIrqStatus.IRQ_RX_DATA_DISC)
   {      
     /* RX command - to ensure the device will be ready for the next reception */
-    RadioCmdStrobeRx();
+	  SpiritCmdStrobeRx();
     
   }  
 }

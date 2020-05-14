@@ -117,7 +117,7 @@
   #define BU_COUNTER_SEED                 0xFA21
   #define CU_PRESCALER                    32
 
-extern RadioCsmaInit xCsmaInit;
+extern CsmaInit xCsmaInit;
  #endif
 
 /*************** Radio CSMA Settings end ************************************/

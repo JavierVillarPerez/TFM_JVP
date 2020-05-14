@@ -250,6 +250,7 @@ RadioGpioPin;
   
   
 /* Exported functions ------------------------------------------------------- */
+void HAL_Radio_Init(void);
 FlagStatus RadioGpioGetLevel(RadioGpioPin xGpio);
 void RadioGpioSetLevel(RadioGpioPin xGpio, GPIO_PinState xState);
 void RadioEnterShutdown(void);
