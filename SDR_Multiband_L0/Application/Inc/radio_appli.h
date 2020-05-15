@@ -48,7 +48,6 @@
 #endif
 
 #include "MCU_Interface.h" 
-#include "p2p_lib.h"
 
 /* Exported macro ------------------------------------------------------------*/
 
@@ -249,6 +248,7 @@ typedef enum {
    SM_STATE_WAIT_FOR_RX_DONE,
    SM_STATE_DATA_RECEIVED,
    SM_STATE_SEND_DATA,
+   SM_STATE_TX_DONE,
    SM_STATE_WAIT_FOR_TX_DONE,
    SM_STATE_ACK_RECEIVED,
    SM_STATE_SEND_ACK,
@@ -320,7 +320,7 @@ typedef struct
 
 /* Exported functions ------------------------------------------------------- */
 void  HAL_Radio_Init(void);
-void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRxlen);
+void P2P_Process(void);
 void Enter_LP_mode(void);
 void Exit_LP_mode(void);
 void MCU_Enter_StopMode(void);
@@ -337,6 +337,9 @@ void STackProtocolInit(void);
 void BasicProtocolInit(void);
 void P2PInterruptHandler(void);
 void Set_KeyStatus(FlagStatus val);
+
+FlagStatus Rx_flag_status(void);
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 void HAL_SYSTICK_Callback(void);
 

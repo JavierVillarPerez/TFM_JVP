@@ -39,7 +39,8 @@
 #include "cube_hal.h"
 #include "radio_shield_config.h"
 #include "radio_appli.h"
-#include "p2p_lib.h"
+
+#include "fsm.h"
 
 /** @addtogroup USER
 * @{
@@ -47,17 +48,9 @@
 
 /* Private typedef -----------------------------------------------------------*/ 
 /* Private define ------------------------------------------------------------*/
-#define TX_BUFFER_SIZE   20
-#define RX_BUFFER_SIZE   96
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-uint8_t TxLength = TX_BUFFER_SIZE;
-uint8_t RxLength = 0;
-uint8_t aTransmitBuffer[TX_BUFFER_SIZE] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,\
-  16,17,18,19,20};
-uint8_t aReceiveBuffer[RX_BUFFER_SIZE] = {0x00};
-
 /* Private function prototypes -----------------------------------------------*/
 
 #if defined(USE_LOW_POWER_MODE)
@@ -66,6 +59,7 @@ static void SystemPower_Config(void);
 int main(void);
 
 void Clock_Enable(void);
+
 
 /* Private functions ---------------------------------------------------------*/
 /**
@@ -76,7 +70,7 @@ void Clock_Enable(void);
 int main(void)
 {
   /* MCU Configuration----------------------------------------------------------*/
-  
+
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
   
@@ -114,8 +108,7 @@ int main(void)
   while (1)
   { 
     /* Data communication start */   
-    P2P_Process(aTransmitBuffer, TxLength, aReceiveBuffer, RxLength);
-     
+    P2P_Process();
   } 
 }
 

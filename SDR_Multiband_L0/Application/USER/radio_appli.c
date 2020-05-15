@@ -49,8 +49,8 @@ by the user
 #include "radio_appli.h"
 #include "cube_hal.h"
 #include "MCU_Interface.h" 
-#include "p2p_lib.h" 
 #include "radio_gpio.h" 
+#include "fsm.h"
 
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #include "SPIRIT1_Util.h"
@@ -75,26 +75,20 @@ by the user
 
 RadioDriver_t radio_cb =
 {
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   .Init = Spirit1InterfaceInit,
   .GpioIrq = Spirit1GpioIrqInit,
   .RadioInit = Spirit1RadioInit,
   .SetRadioPower = Spirit1SetPower,
-#endif
   .PacketConfig = Spirit1PacketConfig,
   .SetPayloadLen = Spirit1SetPayloadlength,
   .SetDestinationAddress = Spirit1SetDestinationAddress,
   .EnableTxIrq = Spirit1EnableTxIrq,
   .EnableRxIrq = Spirit1EnableRxIrq,
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5) 
   .DisableIrq = Spirit1DisableIrq,
-#endif
   .SetRxTimeout = Spirit1SetRxTimeout,
   .EnableSQI = Spirit1EnableSQI,
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   .SetRssiThreshold = Spirit1SetRssiTH,
   .ClearIrqStatus = Spirit1ClearIRQ,
-#endif
   .StartRx = Spirit1StartRx,
   .StartTx = Spirit1StartTx,
   .GetRxPacket = Spirit1GetRxPacket
@@ -138,20 +132,15 @@ SGpioInit xGpioIRQ={
 * @brief Radio structure fitting
 */
 SRadioInit xRadioInit = {
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   XTAL_OFFSET_PPM,
-#endif
   BASE_FREQUENCY,
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5) 
   CHANNEL_SPACE,
   CHANNEL_NUMBER,
-#endif  
   MODULATION_SELECT,
   DATARATE,
   FREQ_DEVIATION,
   BANDWIDTH
 };
-
 
 
 #if defined(USE_STack_PROTOCOL)
@@ -255,10 +244,20 @@ CsmaInit xCsmaInit={
 
 /* Private define ------------------------------------------------------------*/
 #define TIME_UP                                         0x01
+#define TX_BUFFER_SIZE   20
+#define RX_BUFFER_SIZE   96
 
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+uint8_t TxLength = TX_BUFFER_SIZE;
+uint8_t RxLength = 0;
+uint8_t aTransmitBuffer[TX_BUFFER_SIZE] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,\
+  16,17,18,19,20};
+uint8_t aReceiveBuffer[RX_BUFFER_SIZE] = {0x00};
+
+
+
 RadioDriver_t *pRadioDriver;
 MCULowPowerMode_t *pMCU_LPM_Comm;
 RadioLowPowerMode_t  *pRadio_LPM_Comm;
@@ -267,6 +266,7 @@ volatile FlagStatus xRxDoneFlag = RESET, xTxDoneFlag=RESET, cmdFlag=RESET;
 volatile FlagStatus xStartRx=RESET, rx_timeout=RESET, exitTime=RESET;
 volatile FlagStatus PushButtonStatusWakeup=RESET;
 volatile FlagStatus PushButtonStatusData=RESET;
+FlagStatus ACK_Process, IDLE_Process, tx_value = RESET;
 /*IRQ status struct declaration*/
 SpiritIrqs xIrqStatus;
 
@@ -282,9 +282,213 @@ uint16_t wakeupCounter = 0;
 uint16_t dataSendCounter = 0x00;
 
 uint8_t temp_DataBuff[]={0x00};
+uint8_t  dest_addr;
+
+fsm_t* radio_fsm;
+
 
 /* Private function prototypes -----------------------------------------------*/
+static int time_out_rx(fsm_t* this)
+{
+	return ((rx_timeout)||(!exitTime));
+}
 
+static int tx_flag(fsm_t* this)
+{
+	return tx_value;
+}
+
+static int rx_flag(fsm_t* this)
+{
+	return xRxDoneFlag;
+}
+
+
+static int data_recived(fsm_t* this)
+{
+	if(xRxFrame.Cmd == LED_TOGGLE) return 1;
+	else return 0;
+}
+
+static int ack_recived(fsm_t* this)
+{
+    if(xRxFrame.Cmd == ACK_OK) return 1;
+    else return 0;
+}
+
+static int multicast(fsm_t* this)
+{
+
+	if ((dest_addr == MULTICAST_ADDRESS) || (dest_addr == BROADCAST_ADDRESS)) return 1;
+	else return 0;
+
+}
+
+static int address_known(fsm_t* this)
+{
+	if ((dest_addr != MULTICAST_ADDRESS) && (dest_addr != BROADCAST_ADDRESS)) return 1;
+	else return 0;
+
+}
+
+static int tx_received(fsm_t* this)
+{
+	return xTxDoneFlag;
+}
+
+static int msg_command(fsm_t* this)
+{
+	if (xTxFrame.Cmd == LED_TOGGLE) return 1;
+	else return 0;
+}
+
+static int ack_command(fsm_t* this)
+{
+	if (xTxFrame.Cmd == ACK_OK) return 1;
+	else return 0;
+
+}
+
+static int restart(fsm_t* this)
+{
+	return IDLE_Process;
+}
+
+static int ACK_confirm (fsm_t* this)
+{
+	return ACK_Process;
+}
+
+void EN_Rx(fsm_t* this)
+{
+    AppliReceiveBuff(aReceiveBuffer, RxLength);
+    rx_timeout = RESET;
+    BSP_LED_Toggle(LED2);
+}
+
+void send_data(fsm_t* this)
+{
+	tx_value = RESET;
+	xTxFrame.Cmd = LED_TOGGLE;
+	xTxFrame.CmdLen = 0x01;
+	xTxFrame.Cmdtag = txCounter++;
+	xTxFrame.CmdType = APPLI_CMD;
+	xTxFrame.DataBuff = aTransmitBuffer;
+	xTxFrame.DataLen = TxLength;
+
+
+	/*COGNITIVE FUNCTION*/
+
+
+	AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
+
+}
+
+void read_RX_Data(fsm_t* this)
+{
+	xRxDoneFlag = RESET;
+
+	Spirit1GetRxPacket(aReceiveBuffer,&RxLength);
+	/*rRSSIValue = Spirit1GetRssiTH();*/
+	/*rRSSIValue = S2LPGetRssiTH();*/
+	xRxFrame.Cmd = aReceiveBuffer[0];
+	xRxFrame.CmdLen = aReceiveBuffer[1];
+	xRxFrame.Cmdtag = aReceiveBuffer[2];
+	xRxFrame.CmdType = aReceiveBuffer[3];
+	xRxFrame.DataLen = aReceiveBuffer[4];
+
+	/*FIXED BUG IN DATA RECEPTION*/
+	for (uint8_t xIndex = 5; xIndex < RxLength; xIndex++)
+	{
+	  temp_DataBuff[xIndex] = aReceiveBuffer[xIndex];
+	}
+
+	xRxFrame.DataBuff= temp_DataBuff;
+}
+
+void LED_ON(fsm_t* this)
+{
+	/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
+#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+    RadioShieldLedOn(RADIO_SHIELD_LED);
+#endif
+    dest_addr = SpiritPktCommonGetReceivedDestAddress();
+}
+
+void LED_Toggle(fsm_t* this)
+{
+	uint8_t ledToggleCtr = 0;
+
+    dest_addr = SpiritPktCommonGetReceivedDestAddress();
+
+#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+	HAL_Delay(DELAY_TX_LED_GLOW);
+#endif
+	for(; ledToggleCtr<5; ledToggleCtr++)
+	{
+		/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
+		#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+		RadioShieldLedToggle(RADIO_SHIELD_LED);
+		#endif
+		HAL_Delay(DELAY_RX_LED_TOGGLE);
+	}
+#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+    RadioShieldLedOff(RADIO_SHIELD_LED);
+#endif
+    BSP_LED_Off(LED2);
+
+    ACK_Process = SET;
+}
+
+void send_ACK(fsm_t* this)
+{
+	  xTxFrame.Cmd = ACK_OK;
+	  xTxFrame.CmdLen = 0x01;
+	  xTxFrame.Cmdtag = xRxFrame.Cmdtag;
+	  xTxFrame.CmdType = APPLI_CMD;
+	  xTxFrame.DataBuff = aTransmitBuffer;
+	  xTxFrame.DataLen = TxLength;
+	  HAL_Delay(DELAY_TX_LED_GLOW);
+
+	  AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
+}
+
+void clr_tx_flag(fsm_t* this)
+{
+	xTxDoneFlag = RESET;
+}
+
+void reset_state(fsm_t* this)
+{
+#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
+    RadioShieldLedOff(RADIO_SHIELD_LED);
+#endif
+    BSP_LED_Off(LED2);
+
+    ACK_Process = RESET;
+    IDLE_Process = SET;
+}
+
+
+
+
+
+static fsm_trans_t radio_states[] = {
+  { SM_STATE_START_RX, 			time_out_rx,    SM_STATE_START_RX, 			EN_Rx		 },
+  { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data	 },
+  { SM_STATE_SEND_DATA, 		tx_received,    SM_STATE_WAIT_FOR_TX_DONE,  clr_tx_flag	 },
+  { SM_STATE_START_RX, 			rx_flag,        SM_STATE_DATA_RECEIVED, 	read_RX_Data },
+  { SM_STATE_DATA_RECEIVED,     data_recived,   SM_STATE_TOGGLE_LED, 		LED_ON 		 },
+  { SM_STATE_DATA_RECEIVED,     ack_recived,    SM_STATE_ACK_RECEIVED, 		LED_Toggle   },
+  { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_IDLE, 				reset_state	 },
+  { SM_STATE_TOGGLE_LED,    	multicast,   	SM_STATE_IDLE, 				reset_state  },
+  { SM_STATE_TOGGLE_LED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 	 },
+  { SM_STATE_SEND_ACK,    		tx_received,	SM_STATE_WAIT_FOR_TX_DONE, 	clr_tx_flag  },
+  { SM_STATE_WAIT_FOR_TX_DONE,  msg_command,    SM_STATE_START_RX, 			EN_Rx 		 },
+  { SM_STATE_WAIT_FOR_TX_DONE,  ack_command,    SM_STATE_IDLE, 	   			reset_state  },
+  { SM_STATE_IDLE,    			restart,     	SM_STATE_START_RX, 			EN_Rx 		 },
+  {-1, NULL, -1, NULL },
+  };
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup S2LP_APPLI_Private_Functions
@@ -299,185 +503,21 @@ uint8_t temp_DataBuff[]={0x00};
 void HAL_Radio_Init(void)
 {
   pRadioDriver = &radio_cb;
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   pRadioDriver->Init( ); 
-#endif
 }
 
 
 
-SM_State_t SM_State = SM_STATE_START_RX;/* The actual state running */
-
-/**
-* @brief  S2LP P2P Process State machine
-* @param  uint8_t *pTxBuff = Pointer to aTransmitBuffer 
-*         uint8_t cTxlen = length of aTransmitBuffer 
+/* @brief  S2LP P2P Process State machine
+* @param  uint8_t *pTxBuff = Pointer to aTransmitBuffer
+*         uint8_t cTxlen = length of aTransmitBuffer
 *         uint8_t* pRxBuff = Pointer to aReceiveBuffer
 *         uint8_t cRxlen= length of aReceiveBuffer
 * @retval None.
 */
-void P2P_Process(uint8_t *pTxBuff, uint8_t cTxlen, uint8_t* pRxBuff, uint8_t cRxlen)
+void P2P_Process(void)
 {
-  uint8_t xIndex = 0;
-  uint8_t ledToggleCtr = 0;
-  uint8_t  dest_addr;
-
-  /*float rRSSIValue = 0;*/
-  
-  switch(SM_State)
-  {
-  case SM_STATE_START_RX:
-    {      
-      AppliReceiveBuff(pRxBuff, cRxlen);
-      /* wait for data received or timeout period occured */
-      SM_State = SM_STATE_WAIT_FOR_RX_DONE;    
-    }
-    break;
-    
-  case SM_STATE_WAIT_FOR_RX_DONE:
-    if((RESET != xRxDoneFlag)||(RESET != rx_timeout)||(SET != exitTime))
-    {
-      if((rx_timeout==SET)||(exitTime==RESET))
-      {
-        rx_timeout = RESET;
-
-        /*NEED TO CHANGE LED FOR PCB*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-        BSP_LED_Toggle(LED2);
-#endif
-        SM_State = SM_STATE_START_RX;
-      }
-      else if(xRxDoneFlag) 
-      {
-        xRxDoneFlag=RESET;
-        SM_State = SM_STATE_DATA_RECEIVED;
-      }
-    }
-    break;
-    
-  case SM_STATE_DATA_RECEIVED:
-    {
-      Spirit1GetRxPacket(pRxBuff,&cRxlen);
-      /*rRSSIValue = Spirit1GetRssiTH();*/
-      /*rRSSIValue = S2LPGetRssiTH();*/
-      xRxFrame.Cmd = pRxBuff[0];
-      xRxFrame.CmdLen = pRxBuff[1];
-      xRxFrame.Cmdtag = pRxBuff[2];
-      xRxFrame.CmdType = pRxBuff[3];
-      xRxFrame.DataLen = pRxBuff[4];
-      
-      /*FIXED BUG IN DATA RECEPTION*/
-      for (xIndex = 5; xIndex < cRxlen; xIndex++)
-      {
-    	  temp_DataBuff[xIndex] = pRxBuff[xIndex];
-      }
-
-      xRxFrame.DataBuff= temp_DataBuff;
-
-      /*CALL DECODING AND USB FUNCTION*/
-
-
-
-
-      if(xRxFrame.Cmd == LED_TOGGLE)
-      {
-        SM_State = SM_STATE_TOGGLE_LED; 
-      } 
-      if(xRxFrame.Cmd == ACK_OK)
-      {
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-        HAL_Delay(DELAY_TX_LED_GLOW); 
-#endif
-        SM_State = SM_STATE_ACK_RECEIVED;
-      }
-    }
-    break;
-    
-  case SM_STATE_SEND_ACK:
-    {
-      xTxFrame.Cmd = ACK_OK;
-      xTxFrame.CmdLen = 0x01;
-      xTxFrame.Cmdtag = xRxFrame.Cmdtag;
-      xTxFrame.CmdType = APPLI_CMD;
-      xTxFrame.DataBuff = pTxBuff;
-      xTxFrame.DataLen = cTxlen;
-      
-      HAL_Delay(DELAY_TX_LED_GLOW);        
-      AppliSendBuff(&xTxFrame, xTxFrame.DataLen);   
-      SM_State = SM_STATE_WAIT_FOR_TX_DONE;
-    }
-    break;   
-    
-  case SM_STATE_SEND_DATA:
-    {
-      xTxFrame.Cmd = LED_TOGGLE;
-      xTxFrame.CmdLen = 0x01;
-      xTxFrame.Cmdtag = txCounter++;
-      xTxFrame.CmdType = APPLI_CMD;
-      xTxFrame.DataBuff = pTxBuff;
-      xTxFrame.DataLen = cTxlen;
-      AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
-      SM_State = SM_STATE_WAIT_FOR_TX_DONE;
-    }
-    break;
-    
-  case SM_STATE_WAIT_FOR_TX_DONE:
-    /* wait for TX done */    
-    if(xTxDoneFlag)
-    {
-      xTxDoneFlag = RESET;
-      
-      if(xTxFrame.Cmd == LED_TOGGLE)
-      {
-        SM_State = SM_STATE_START_RX;
-      }
-      else if(xTxFrame.Cmd == ACK_OK)
-      {
-        SM_State = SM_STATE_IDLE;  
-      }
-    }
-    break;
-    
-  case SM_STATE_ACK_RECEIVED:
-    for(; ledToggleCtr<5; ledToggleCtr++)
-    {
-    	/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-      RadioShieldLedToggle(RADIO_SHIELD_LED);
-#endif
-      HAL_Delay(DELAY_RX_LED_TOGGLE);
-    }
-    SM_State = SM_STATE_IDLE;   
-    break;
-    
-  case SM_STATE_TOGGLE_LED:
-  	/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOn(RADIO_SHIELD_LED);
-#endif
-    dest_addr = SpiritPktCommonGetReceivedDestAddress();
-    
-    if ((dest_addr == MULTICAST_ADDRESS) || (dest_addr == BROADCAST_ADDRESS))
-    {
-      /* in that case do not send ACK to avoid RF collisions between several RF ACK messages */
-      HAL_Delay(DELAY_TX_LED_GLOW);
-      SM_State = SM_STATE_IDLE;   
-    }
-    else
-    {
-      SM_State = SM_STATE_SEND_ACK;  
-    }
-    break;
-    
-  case SM_STATE_IDLE:
-/*WILL BE NECESSARY CHANGE IT TO PCB LED*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOff(RADIO_SHIELD_LED);
-#endif
-    BSP_LED_Off(LED2); 
-    SM_State = SM_STATE_START_RX;
-    break;
-  }
+	fsm_fire(radio_fsm);
 }
 
 /**
@@ -562,15 +602,16 @@ void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen)
 */
 void P2P_Init(void)
 {
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   DestinationAddr = DESTINATION_ADDRESS;
   pRadioDriver->GpioIrq(&xGpioIRQ);
   Spirit1RadioInit(&xRadioInit);
   Spirit1SetPower(POWER_INDEX, POWER_DBM);
-#endif
   Spirit1PacketConfig();
   Spirit1EnableSQI();
   SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
+
+  radio_fsm = fsm_new (radio_states);
+
 }
 
 /**
@@ -768,13 +809,17 @@ void RadioSleep(void)
 * @param  None
 * @retval None
 */
-void Set_KeyStatus(FlagStatus val)
+FlagStatus Rx_flag_status(void)
 {
-  if(val==SET)
-  {
-    SM_State = SM_STATE_SEND_DATA;
-  }
+	return xRxDoneFlag;
 }
+
+
+void read_data_recived(uint8_t* pRxBuff, uint8_t cRxlen)
+{
+
+}
+
 
 /**
 * @brief  This function handles External interrupt request. In this application it is used
@@ -925,7 +970,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 #endif
   if(GPIO_Pin==USER_BUTTON_PIN)
   {
-    Set_KeyStatus(SET);
+	tx_value = SET;
   } 
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   else 
