@@ -1,0 +1,7 @@
+radio_gpio.c:204:6:RadioGpioInit	48	static
+radio_gpio.c:263:6:RadioGpioInterruptCmd	24	static
+radio_gpio.c:288:12:RadioGpioGetLevel	24	static
+radio_gpio.c:315:6:RadioGpioSetLevel	16	static
+radio_gpio.c:327:6:RadioEnterShutdown	8	static
+radio_gpio.c:340:6:RadioExitShutdown	16	static
+radio_gpio.c:355:12:RadioCheckShutdown	8	static
