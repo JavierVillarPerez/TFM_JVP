@@ -38,6 +38,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "radio_spi.h"
+#include "radio_appli.h"
+
 /**
 * @addtogroup BSP
 * @{
@@ -187,11 +189,17 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* pSpiHandle)
     RADIO_SPI_CS_CLOCK_ENABLE();
     
     /* Configure SPI pin: CS */
-    GPIO_InitStruct.Pin = RADIO_SPI_CS_PIN;
+    GPIO_InitStruct.Pin = RADIO_SPI_H_CS_PIN;
     GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-    HAL_GPIO_Init(RADIO_SPI_CS_PORT, &GPIO_InitStruct);
+    HAL_GPIO_Init(RADIO_SPI_H_CS_PORT, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = RADIO_SPI_S_CS_PIN;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+    HAL_GPIO_Init(RADIO_SPI_S_CS_PORT, &GPIO_InitStruct);
     
     RADIO_SPI_CLK_ENABLE();
   }
@@ -249,6 +257,7 @@ StatusBytes RadioSpiWriteRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_
 {
   uint8_t aHeader[2] = {0};
   uint16_t tmpstatus = 0x0000;
+  radio_select_t selectedBand;
   
   StatusBytes *pStatus=(StatusBytes *)&tmpstatus;
   
@@ -259,7 +268,25 @@ StatusBytes RadioSpiWriteRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_
   SPI_ENTER_CRITICAL();
   
   /* Puts the SPI chip select low to start the transaction */
-  RadioSpiCSLow();
+  selectedBand = bandSelect();
+  if(selectedBand.conf_868 == SET)
+  {
+	  RadioSpiHCSLow();
+	  RadioSpiSCSHigh();
+  }
+  else
+  {
+	  if (selectedBand.conf_433 == SET)
+	  {
+		  RadioSpiHCSHigh();
+		  RadioSpiSCSLow();
+	  }
+	  else /*ERROR FLAG*/
+	  {
+		  RadioSpiHCSLow();
+		  RadioSpiSCSHigh();
+	  }
+  }
   
   for (volatile uint16_t Index = 0; Index < CS_TO_SCLK_DELAY; Index++);
   
@@ -279,7 +306,9 @@ StatusBytes RadioSpiWriteRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_
   /* To be sure to don't rise the Chip Select before the end of last sending */
   while (__HAL_SPI_GET_FLAG(&pSpiHandle, SPI_FLAG_TXE) == RESET);
   /* Puts the SPI chip select high to end the transaction */
-  RadioSpiCSHigh();
+  RadioSpiHCSHigh();
+  RadioSpiSCSHigh();
+
   
   SPI_EXIT_CRITICAL();
   
@@ -298,6 +327,7 @@ StatusBytes RadioSpiWriteRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_
 StatusBytes RadioSpiReadRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_t* pcBuffer)
 {
   uint16_t tmpstatus = 0x00;
+  radio_select_t selectedBand;
   StatusBytes *pStatus = (StatusBytes *)&tmpstatus;
   
   uint8_t aHeader[2] = {0};
@@ -310,7 +340,26 @@ StatusBytes RadioSpiReadRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_t
   SPI_ENTER_CRITICAL();
   
   /* Put the SPI chip select low to start the transaction */
-  RadioSpiCSLow();
+  selectedBand = bandSelect();
+  if(selectedBand.conf_868 == SET)
+  {
+	  RadioSpiHCSLow();
+	  RadioSpiSCSHigh();
+  }
+  else
+  {
+	  if (selectedBand.conf_433 == SET)
+	  {
+		  RadioSpiHCSHigh();
+		  RadioSpiSCSLow();
+	  }
+	  else /*ERROR FLAG*/
+	  {
+		  RadioSpiHCSLow();
+		  RadioSpiSCSHigh();
+	  }
+  }
+
   
   for (volatile uint16_t Index = 0; Index < CS_TO_SCLK_DELAY; Index++);
   
@@ -330,7 +379,8 @@ StatusBytes RadioSpiReadRegisters(uint8_t cRegAddress, uint8_t cNbBytes, uint8_t
   while (__HAL_SPI_GET_FLAG(&pSpiHandle, SPI_FLAG_TXE) == RESET);
   
   /* Put the SPI chip select high to end the transaction */
-  RadioSpiCSHigh();
+  RadioSpiHCSHigh();
+  RadioSpiSCSHigh();
   
   SPI_EXIT_CRITICAL();
   
@@ -348,6 +398,7 @@ StatusBytes RadioSpiCommandStrobes(uint8_t cCommandCode)
 {
   uint8_t aHeader[2] = {0};
   uint16_t tmpstatus = 0x0000;
+  radio_select_t selectedBand;
   
   StatusBytes *pStatus = (StatusBytes *)&tmpstatus;
   
@@ -358,8 +409,26 @@ StatusBytes RadioSpiCommandStrobes(uint8_t cCommandCode)
   SPI_ENTER_CRITICAL();
   
   /* Puts the SPI chip select low to start the transaction */
-  RadioSpiCSLow();
-  
+  selectedBand = bandSelect();
+  if(selectedBand.conf_868 == SET)
+  {
+	  RadioSpiHCSLow();
+	  RadioSpiSCSHigh();
+  }
+  else
+  {
+	  if (selectedBand.conf_433 == SET)
+	  {
+		  RadioSpiHCSHigh();
+		  RadioSpiSCSLow();
+	  }
+	  else /*ERROR FLAG*/
+	  {
+		  RadioSpiHCSLow();
+		  RadioSpiSCSHigh();
+	  }
+  }
+
   for (volatile uint16_t Index = 0; Index < CS_TO_SCLK_DELAY; Index++);
   /* Write the aHeader bytes and read the SPIRIT1 status bytes */
   HAL_SPI_TransmitReceive(&pSpiHandle, (uint8_t *)&aHeader[0], (uint8_t *)&tmpstatus, 1, SpiTimeout);
@@ -372,8 +441,9 @@ StatusBytes RadioSpiCommandStrobes(uint8_t cCommandCode)
   while (__HAL_SPI_GET_FLAG(&pSpiHandle, SPI_FLAG_TXE) == RESET);
   
   /* Puts the SPI chip select high to end the transaction */
-  RadioSpiCSHigh();
-  
+  RadioSpiHCSHigh();
+  RadioSpiSCSHigh();
+
   SPI_EXIT_CRITICAL();
   
   return *pStatus;
@@ -390,6 +460,8 @@ StatusBytes RadioSpiCommandStrobes(uint8_t cCommandCode)
 StatusBytes RadioSpiWriteFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
 {
   uint16_t tmpstatus = 0x0000;
+  radio_select_t selectedBand;
+
   StatusBytes *pStatus = (StatusBytes *)&tmpstatus;
   
   uint8_t aHeader[2] = {0};
@@ -401,7 +473,26 @@ StatusBytes RadioSpiWriteFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
   SPI_ENTER_CRITICAL();
   
   /* Put the SPI chip select low to start the transaction */
-  RadioSpiCSLow();
+  selectedBand = bandSelect();
+  if(selectedBand.conf_868 == SET)
+  {
+	  RadioSpiHCSLow();
+	  RadioSpiSCSHigh();
+  }
+  else
+  {
+	  if (selectedBand.conf_433 == SET)
+	  {
+		  RadioSpiHCSHigh();
+		  RadioSpiSCSLow();
+	  }
+	  else /*ERROR FLAG*/
+	  {
+		  RadioSpiHCSLow();
+		  RadioSpiSCSHigh();
+	  }
+  }
+
   
   for (volatile uint16_t Index = 0; Index < CS_TO_SCLK_DELAY; Index++);
   
@@ -422,7 +513,8 @@ StatusBytes RadioSpiWriteFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
   while (__HAL_SPI_GET_FLAG(&pSpiHandle, SPI_FLAG_TXE) == RESET); 
   
   /* Put the SPI chip select high to end the transaction */
-  RadioSpiCSHigh();
+  RadioSpiHCSHigh();
+  RadioSpiSCSHigh();
   
   SPI_EXIT_CRITICAL();
   
@@ -438,6 +530,7 @@ StatusBytes RadioSpiWriteFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
 StatusBytes RadioSpiReadFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
 {
   uint16_t tmpstatus = 0x0000;
+  radio_select_t selectedBand;
   StatusBytes *pStatus = (StatusBytes *)&tmpstatus;
   
   uint8_t aHeader[2];
@@ -450,7 +543,26 @@ StatusBytes RadioSpiReadFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
   SPI_ENTER_CRITICAL();
   
   /* Put the SPI chip select low to start the transaction */
-  RadioSpiCSLow();
+  selectedBand = bandSelect();
+  if(selectedBand.conf_868 == SET)
+  {
+	  RadioSpiHCSLow();
+	  RadioSpiSCSHigh();
+  }
+  else
+  {
+	  if (selectedBand.conf_433 == SET)
+	  {
+		  RadioSpiHCSHigh();
+		  RadioSpiSCSLow();
+	  }
+	  else /*ERROR FLAG*/
+	  {
+		  RadioSpiHCSLow();
+		  RadioSpiSCSHigh();
+	  }
+  }
+
   
   for (volatile uint16_t Index = 0; Index < CS_TO_SCLK_DELAY; Index++);
   
@@ -470,8 +582,9 @@ StatusBytes RadioSpiReadFifo(uint8_t cNbBytes, uint8_t* pcBuffer)
   while(__HAL_SPI_GET_FLAG(&pSpiHandle, SPI_FLAG_TXE) == RESET);
   
   /* Put the SPI chip select high to end the transaction */
-  RadioSpiCSHigh();
-  
+  RadioSpiHCSHigh();
+  RadioSpiSCSHigh();
+
   SPI_EXIT_CRITICAL();
   
   return *pStatus;  

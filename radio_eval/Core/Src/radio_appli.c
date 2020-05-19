@@ -288,6 +288,7 @@ uint8_t  dest_addr;
 
 fsm_t* radio_fsm;
 
+radio_select_t selectedBand;
 
 /* Private function prototypes -----------------------------------------------*/
 static int time_out_rx(fsm_t* this)
@@ -606,13 +607,32 @@ void P2P_Init(void)
 {
   DestinationAddr = DESTINATION_ADDRESS;
   pRadioDriver->GpioIrq(&xGpioIRQ);
+
+  /*Configure 868 transceiver*/
+  selectedBand.conf_868 = SET;
+  selectedBand.conf_433 = RESET;
   Spirit1RadioInit(&xRadioInit);
   Spirit1SetPower(POWER_INDEX, POWER_DBM);
   Spirit1PacketConfig();
   Spirit1EnableSQI();
   SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
 
+  /*Configure 433 transceiver
+   * It cant be tested on evaluation board*/
+//  selectedBand.conf_868 = RESET;
+//  selectedBand.conf_433 = SET;
+//  Spirit1RadioInit(&xRadioInit);
+//  Spirit1SetPower(POWER_INDEX, POWER_DBM);
+//  Spirit1PacketConfig();
+//  Spirit1EnableSQI();
+//  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
+
+
   radio_fsm = fsm_new (radio_states);
+
+  /*868MHz band as predetermined band*/
+  selectedBand.conf_433 = RESET;
+  selectedBand.conf_868 = SET;
 
 }
 
@@ -656,6 +676,13 @@ void BasicProtocolInit(void)
   /* RAdio Packet config */
 	SpiritPktBasicInit(&xBasicInit);
 }
+
+radio_select_t bandSelect(void)
+{
+	return selectedBand;
+}
+
+
 
 /**
 * @brief  This routine will put the radio and mcu in LPM

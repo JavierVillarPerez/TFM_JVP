@@ -11442,7 +11442,7 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000008000000                g_pfnVectors
                 0x00000000080000c0                . = ALIGN (0x4)
 
-.text           0x00000000080000c0     0x973c
+.text           0x00000000080000c0     0x9768
                 0x00000000080000c0                . = ALIGN (0x4)
  *(.text)
  .text          0x00000000080000c0       0x48 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
@@ -11677,550 +11677,550 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x00000000080038a4       0x38 Application/USER/radio_appli.o
                 0x00000000080038a4                HAL_SYSTICK_Callback
  .text.HAL_GPIO_EXTI_Callback
-                0x00000000080038dc       0x38 Application/USER/radio_appli.o
+                0x00000000080038dc       0x64 Application/USER/radio_appli.o
                 0x00000000080038dc                HAL_GPIO_EXTI_Callback
  .text.NMI_Handler
-                0x0000000008003914        0xa Application/USER/stm32l0xx_it.o
-                0x0000000008003914                NMI_Handler
+                0x0000000008003940        0xa Application/USER/stm32l0xx_it.o
+                0x0000000008003940                NMI_Handler
  .text.HardFault_Handler
-                0x000000000800391e        0x6 Application/USER/stm32l0xx_it.o
-                0x000000000800391e                HardFault_Handler
+                0x000000000800394a        0x6 Application/USER/stm32l0xx_it.o
+                0x000000000800394a                HardFault_Handler
  .text.SVC_Handler
-                0x0000000008003924        0xa Application/USER/stm32l0xx_it.o
-                0x0000000008003924                SVC_Handler
+                0x0000000008003950        0xa Application/USER/stm32l0xx_it.o
+                0x0000000008003950                SVC_Handler
  .text.PendSV_Handler
-                0x000000000800392e        0xa Application/USER/stm32l0xx_it.o
-                0x000000000800392e                PendSV_Handler
+                0x000000000800395a        0xa Application/USER/stm32l0xx_it.o
+                0x000000000800395a                PendSV_Handler
  .text.SysTick_Handler
-                0x0000000008003938       0x12 Application/USER/stm32l0xx_it.o
-                0x0000000008003938                SysTick_Handler
- *fill*         0x000000000800394a        0x2 
+                0x0000000008003964       0x12 Application/USER/stm32l0xx_it.o
+                0x0000000008003964                SysTick_Handler
+ *fill*         0x0000000008003976        0x2 
  .text.EXTI0_1_IRQHandler
-                0x000000000800394c       0x30 Application/USER/stm32l0xx_it.o
-                0x000000000800394c                EXTI0_1_IRQHandler
+                0x0000000008003978       0x30 Application/USER/stm32l0xx_it.o
+                0x0000000008003978                EXTI0_1_IRQHandler
  .text.EXTI2_3_IRQHandler
-                0x000000000800397c       0x30 Application/USER/stm32l0xx_it.o
-                0x000000000800397c                EXTI2_3_IRQHandler
+                0x00000000080039a8       0x30 Application/USER/stm32l0xx_it.o
+                0x00000000080039a8                EXTI2_3_IRQHandler
  .text.EXTI4_15_IRQHandler
-                0x00000000080039ac       0x28 Application/USER/stm32l0xx_it.o
-                0x00000000080039ac                EXTI4_15_IRQHandler
+                0x00000000080039d8       0x28 Application/USER/stm32l0xx_it.o
+                0x00000000080039d8                EXTI4_15_IRQHandler
  .text.SpiritCalibrationVco
-                0x00000000080039d4       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
-                0x00000000080039d4                SpiritCalibrationVco
+                0x0000000008003a00       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+                0x0000000008003a00                SpiritCalibrationVco
  .text.SpiritCalibrationGetVcoCalData
-                0x0000000008003a58       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
-                0x0000000008003a58                SpiritCalibrationGetVcoCalData
+                0x0000000008003a84       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+                0x0000000008003a84                SpiritCalibrationGetVcoCalData
  .text.SpiritCalibrationSetVcoCalDataTx
-                0x0000000008003a94       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
-                0x0000000008003a94                SpiritCalibrationSetVcoCalDataTx
+                0x0000000008003ac0       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+                0x0000000008003ac0                SpiritCalibrationSetVcoCalDataTx
  .text.SpiritCalibrationSetVcoCalDataRx
-                0x0000000008003b08       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
-                0x0000000008003b08                SpiritCalibrationSetVcoCalDataRx
+                0x0000000008003b34       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+                0x0000000008003b34                SpiritCalibrationSetVcoCalDataRx
  .text.SpiritCalibrationSelectVco
-                0x0000000008003b7c       0x6c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
-                0x0000000008003b7c                SpiritCalibrationSelectVco
+                0x0000000008003ba8       0x6c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+                0x0000000008003ba8                SpiritCalibrationSelectVco
  .text.SpiritCmdStrobeCommand
-                0x0000000008003be8       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
-                0x0000000008003be8                SpiritCmdStrobeCommand
+                0x0000000008003c14       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+                0x0000000008003c14                SpiritCmdStrobeCommand
  .text.SpiritCsmaInit
-                0x0000000008003c1c       0xe0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
-                0x0000000008003c1c                SpiritCsmaInit
+                0x0000000008003c48       0xe0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+                0x0000000008003c48                SpiritCsmaInit
  .text.SpiritCsma
-                0x0000000008003cfc       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
-                0x0000000008003cfc                SpiritCsma
+                0x0000000008003d28       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+                0x0000000008003d28                SpiritCsma
  .text.SpiritGeneralSetExtRef
-                0x0000000008003d80       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
-                0x0000000008003d80                SpiritGeneralSetExtRef
+                0x0000000008003dac       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+                0x0000000008003dac                SpiritGeneralSetExtRef
  .text.SpiritGpioInit
-                0x0000000008003df0       0x4c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
-                0x0000000008003df0                SpiritGpioInit
+                0x0000000008003e1c       0x4c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+                0x0000000008003e1c                SpiritGpioInit
  .text.SpiritIrqDeInit
-                0x0000000008003e3c       0x58 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
-                0x0000000008003e3c                SpiritIrqDeInit
+                0x0000000008003e68       0x58 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+                0x0000000008003e68                SpiritIrqDeInit
  .text.SpiritIrq
-                0x0000000008003e94       0xf4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
-                0x0000000008003e94                SpiritIrq
+                0x0000000008003ec0       0xf4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+                0x0000000008003ec0                SpiritIrq
  .text.SpiritIrqGetStatus
-                0x0000000008003f88       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
-                0x0000000008003f88                SpiritIrqGetStatus
+                0x0000000008003fb4       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+                0x0000000008003fb4                SpiritIrqGetStatus
  .text.SpiritIrqClearStatus
-                0x0000000008003ff8       0x30 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
-                0x0000000008003ff8                SpiritIrqClearStatus
+                0x0000000008004024       0x30 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+                0x0000000008004024                SpiritIrqClearStatus
  .text.SpiritLinearFifoReadNumElementsRxFifo
-                0x0000000008004028       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
-                0x0000000008004028                SpiritLinearFifoReadNumElementsRxFifo
+                0x0000000008004054       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
+                0x0000000008004054                SpiritLinearFifoReadNumElementsRxFifo
  .text.SpiritManagementSetFrequencyBase
-                0x0000000008004064      0x274 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
-                0x0000000008004064                SpiritManagementSetFrequencyBase
+                0x0000000008004090      0x274 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+                0x0000000008004090                SpiritManagementSetFrequencyBase
  .text.SpiritManagementWaVcoCalibration
-                0x00000000080042d8      0x1c4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
-                0x00000000080042d8                SpiritManagementWaVcoCalibration
+                0x0000000008004304      0x1c4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+                0x0000000008004304                SpiritManagementWaVcoCalibration
  .text.SpiritManagementWaCmdStrobeTx
-                0x000000000800449c       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
-                0x000000000800449c                SpiritManagementWaCmdStrobeTx
+                0x00000000080044c8       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+                0x00000000080044c8                SpiritManagementWaCmdStrobeTx
  .text.SpiritManagementWaCmdStrobeRx
-                0x0000000008004510       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
-                0x0000000008004510                SpiritManagementWaCmdStrobeRx
+                0x000000000800453c       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+                0x000000000800453c                SpiritManagementWaCmdStrobeRx
  .text.SpiritManagementWaTRxFcMem
-                0x000000000800454c       0x24 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
-                0x000000000800454c                SpiritManagementWaTRxFcMem
+                0x0000000008004578       0x24 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+                0x0000000008004578                SpiritManagementWaTRxFcMem
  .text.SpiritPktBasicInit
-                0x0000000008004570      0x1f8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
-                0x0000000008004570                SpiritPktBasicInit
+                0x000000000800459c      0x1f8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+                0x000000000800459c                SpiritPktBasicInit
  .text.SpiritPktBasicAddressesInit
-                0x0000000008004768      0x108 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
-                0x0000000008004768                SpiritPktBasicAddressesInit
+                0x0000000008004794      0x108 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+                0x0000000008004794                SpiritPktBasicAddressesInit
  .text.SpiritPktBasicGetAddressField
-                0x0000000008004870       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
-                0x0000000008004870                SpiritPktBasicGetAddressField
+                0x000000000800489c       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+                0x000000000800489c                SpiritPktBasicGetAddressField
  .text.SpiritPktBasicSetPayloadLength
-                0x00000000080048b4       0x8c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
-                0x00000000080048b4                SpiritPktBasicSetPayloadLength
+                0x00000000080048e0       0x8c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+                0x00000000080048e0                SpiritPktBasicSetPayloadLength
  .text.SpiritPktCommonGetControlLength
-                0x0000000008004940       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
-                0x0000000008004940                SpiritPktCommonGetControlLength
+                0x000000000800496c       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+                0x000000000800496c                SpiritPktCommonGetControlLength
  .text.SpiritPktCommonFilterOnCrc
-                0x000000000800497c       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
-                0x000000000800497c                SpiritPktCommonFilterOnCrc
+                0x00000000080049a8       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+                0x00000000080049a8                SpiritPktCommonFilterOnCrc
  .text.SpiritPktCommonSetDestinationAddress
-                0x0000000008004a00       0x38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
-                0x0000000008004a00                SpiritPktCommonSetDestinationAddress
+                0x0000000008004a2c       0x38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+                0x0000000008004a2c                SpiritPktCommonSetDestinationAddress
  .text.SpiritPktCommonGetReceivedDestAddress
-                0x0000000008004a38       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
-                0x0000000008004a38                SpiritPktCommonGetReceivedDestAddress
+                0x0000000008004a64       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+                0x0000000008004a64                SpiritPktCommonGetReceivedDestAddress
  .text.SpiritQiSqiCheck
-                0x0000000008004a6c       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
-                0x0000000008004a6c                SpiritQiSqiCheck
+                0x0000000008004a98       0x84 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+                0x0000000008004a98                SpiritQiSqiCheck
  .text.SpiritQiSetSqiThreshold
-                0x0000000008004af0       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
-                0x0000000008004af0                SpiritQiSetSqiThreshold
+                0x0000000008004b1c       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+                0x0000000008004b1c                SpiritQiSetSqiThreshold
  .text.SpiritQiSetRssiThresholddBm
-                0x0000000008004b64       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
-                0x0000000008004b64                SpiritQiSetRssiThresholddBm
+                0x0000000008004b90       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+                0x0000000008004b90                SpiritQiSetRssiThresholddBm
  .text.SpiritRadioInit
-                0x0000000008004ba8      0x460 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008004ba8                SpiritRadioInit
+                0x0000000008004bd4      0x460 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008004bd4                SpiritRadioInit
  .text.SpiritRadioSetXtalFlag
-                0x0000000008005008       0x88 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005008                SpiritRadioSetXtalFlag
+                0x0000000008005034       0x88 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005034                SpiritRadioSetXtalFlag
  .text.SpiritRadioSearchWCP
-                0x0000000008005090      0x178 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005090                SpiritRadioSearchWCP
+                0x00000000080050bc      0x178 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080050bc                SpiritRadioSearchWCP
  .text.SpiritRadioGetSynthWord
-                0x0000000008005208       0x58 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005208                SpiritRadioGetSynthWord
+                0x0000000008005234       0x58 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005234                SpiritRadioGetSynthWord
  .text.SpiritRadioGetBand
-                0x0000000008005260       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005260                SpiritRadioGetBand
+                0x000000000800528c       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x000000000800528c                SpiritRadioGetBand
  .text.SpiritRadioGetChannel
-                0x00000000080052c8       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x00000000080052c8                SpiritRadioGetChannel
+                0x00000000080052f4       0x34 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080052f4                SpiritRadioGetChannel
  .text.SpiritRadioGetChannelSpace
-                0x00000000080052fc       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x00000000080052fc                SpiritRadioGetChannelSpace
+                0x0000000008005328       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005328                SpiritRadioGetChannelSpace
  .text.SpiritRadioGetFrequencyOffset
-                0x0000000008005340       0xa0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005340                SpiritRadioGetFrequencyOffset
+                0x000000000800536c       0xa0 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x000000000800536c                SpiritRadioGetFrequencyOffset
  .text.SpiritRadioSetFrequencyBase
-                0x00000000080053e0      0x2b4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x00000000080053e0                SpiritRadioSetFrequencyBase
+                0x000000000800540c      0x2b4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x000000000800540c                SpiritRadioSetFrequencyBase
  .text.SpiritRadioGetFrequencyBase
-                0x0000000008005694       0x9c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005694                SpiritRadioGetFrequencyBase
+                0x00000000080056c0       0x9c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080056c0                SpiritRadioGetFrequencyBase
  .text.SpiritRadioSearchDatarateME
-                0x0000000008005730      0x1f8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005730                SpiritRadioSearchDatarateME
+                0x000000000800575c      0x1f8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x000000000800575c                SpiritRadioSearchDatarateME
  .text.SpiritRadioSearchChannelBwME
-                0x0000000008005928      0x218 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005928                SpiritRadioSearchChannelBwME
+                0x0000000008005954      0x218 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005954                SpiritRadioSearchChannelBwME
  .text.SpiritRadioSearchFreqDevME
-                0x0000000008005b40      0x180 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005b40                SpiritRadioSearchFreqDevME
+                0x0000000008005b6c      0x180 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005b6c                SpiritRadioSearchFreqDevME
  .text.SpiritRadioGetdBm2Reg
-                0x0000000008005cc0      0x248 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005cc0                SpiritRadioGetdBm2Reg
+                0x0000000008005cec      0x248 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005cec                SpiritRadioGetdBm2Reg
  .text.SpiritRadioSetPALeveldBm
-                0x0000000008005f08       0x64 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005f08                SpiritRadioSetPALeveldBm
+                0x0000000008005f34       0x64 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005f34                SpiritRadioSetPALeveldBm
  .text.SpiritRadioSetPACwc
-                0x0000000008005f6c       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005f6c                SpiritRadioSetPACwc
+                0x0000000008005f98       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008005f98                SpiritRadioSetPACwc
  .text.SpiritRadioSetPALevelMaxIndex
-                0x0000000008005fd4       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008005fd4                SpiritRadioSetPALevelMaxIndex
+                0x0000000008006000       0x68 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006000                SpiritRadioSetPALevelMaxIndex
  .text.SpiritRadioAFCFreezeOnSync
-                0x000000000800603c       0x78 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x000000000800603c                SpiritRadioAFCFreezeOnSync
+                0x0000000008006068       0x78 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006068                SpiritRadioAFCFreezeOnSync
  .text.SpiritRadioCsBlanking
-                0x00000000080060b4       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x00000000080060b4                SpiritRadioCsBlanking
+                0x00000000080060e0       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080060e0                SpiritRadioCsBlanking
  .text.SpiritRadioPersistenRx
-                0x0000000008006124       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008006124                SpiritRadioPersistenRx
+                0x0000000008006150       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006150                SpiritRadioPersistenRx
  .text.SpiritRadioSetRefDiv
-                0x0000000008006194       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008006194                SpiritRadioSetRefDiv
+                0x00000000080061c0       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080061c0                SpiritRadioSetRefDiv
  .text.SpiritRadioGetRefDiv
-                0x0000000008006208       0x48 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008006208                SpiritRadioGetRefDiv
+                0x0000000008006234       0x48 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006234                SpiritRadioGetRefDiv
  .text.SpiritRadioSetDigDiv
-                0x0000000008006250       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008006250                SpiritRadioSetDigDiv
+                0x000000000800627c       0x70 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x000000000800627c                SpiritRadioSetDigDiv
  .text.SpiritRadioGetDigDiv
-                0x00000000080062c0       0x48 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x00000000080062c0                SpiritRadioGetDigDiv
+                0x00000000080062ec       0x48 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x00000000080062ec                SpiritRadioGetDigDiv
  .text.SpiritRadioGetXtalFrequency
-                0x0000000008006308       0x14 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x0000000008006308                SpiritRadioGetXtalFrequency
+                0x0000000008006334       0x14 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006334                SpiritRadioGetXtalFrequency
  .text.SpiritRadioSetXtalFrequency
-                0x000000000800631c       0x1c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
-                0x000000000800631c                SpiritRadioSetXtalFrequency
+                0x0000000008006348       0x1c Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+                0x0000000008006348                SpiritRadioSetXtalFrequency
  .text.SpiritTimerSetRxTimeoutMs
-                0x0000000008006338       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
-                0x0000000008006338                SpiritTimerSetRxTimeoutMs
+                0x0000000008006364       0x44 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+                0x0000000008006364                SpiritTimerSetRxTimeoutMs
  .text.SpiritTimerSetRxTimeoutCounter
-                0x000000000800637c       0x38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
-                0x000000000800637c                SpiritTimerSetRxTimeoutCounter
+                0x00000000080063a8       0x38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+                0x00000000080063a8                SpiritTimerSetRxTimeoutCounter
  .text.SpiritTimerComputeRxTimeoutValues
-                0x00000000080063b4      0x2d4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
-                0x00000000080063b4                SpiritTimerComputeRxTimeoutValues
+                0x00000000080063e0      0x2d4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+                0x00000000080063e0                SpiritTimerComputeRxTimeoutValues
  .text.SpiritTimerSetRxTimeoutStopCondition
-                0x0000000008006688       0xac Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
-                0x0000000008006688                SpiritTimerSetRxTimeoutStopCondition
+                0x00000000080066b4       0xac Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+                0x00000000080066b4                SpiritTimerSetRxTimeoutStopCondition
  .text.SpiritRefreshStatus
-                0x0000000008006734       0x54 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
-                0x0000000008006734                SpiritRefreshStatus
+                0x0000000008006760       0x54 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+                0x0000000008006760                SpiritRefreshStatus
  .text.Spirit1InterfaceInit
-                0x0000000008006788       0x46 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006788                Spirit1InterfaceInit
- *fill*         0x00000000080067ce        0x2 
+                0x00000000080067b4       0x46 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080067b4                Spirit1InterfaceInit
+ *fill*         0x00000000080067fa        0x2 
  .text.SpiritManagementIdentificationRFBoard
-                0x00000000080067d0       0x50 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x00000000080067d0                SpiritManagementIdentificationRFBoard
+                0x00000000080067fc       0x50 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080067fc                SpiritManagementIdentificationRFBoard
  .text.SpiritManagementRangeExtInit
-                0x0000000008006820       0xe0 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006820                SpiritManagementRangeExtInit
+                0x000000000800684c       0xe0 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x000000000800684c                SpiritManagementRangeExtInit
  .text.SpiritManagementGetRangeExtender
-                0x0000000008006900       0x14 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006900                SpiritManagementGetRangeExtender
+                0x000000000800692c       0x14 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x000000000800692c                SpiritManagementGetRangeExtender
  .text.Spirit1GpioIrqInit
-                0x0000000008006914       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006914                Spirit1GpioIrqInit
+                0x0000000008006940       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006940                Spirit1GpioIrqInit
  .text.Spirit1RadioInit
-                0x000000000800692c       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x000000000800692c                Spirit1RadioInit
+                0x0000000008006958       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006958                Spirit1RadioInit
  .text.Spirit1SetPower
-                0x0000000008006944       0x2e Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006944                Spirit1SetPower
+                0x0000000008006970       0x2e Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006970                Spirit1SetPower
  .text.Spirit1PacketConfig
-                0x0000000008006972        0xe Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006972                Spirit1PacketConfig
+                0x000000000800699e        0xe Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x000000000800699e                Spirit1PacketConfig
  .text.Spirit1SetPayloadlength
-                0x0000000008006980       0x20 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006980                Spirit1SetPayloadlength
+                0x00000000080069ac       0x20 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080069ac                Spirit1SetPayloadlength
  .text.Spirit1SetDestinationAddress
-                0x00000000080069a0       0x1e Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x00000000080069a0                Spirit1SetDestinationAddress
+                0x00000000080069cc       0x1e Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080069cc                Spirit1SetDestinationAddress
  .text.Spirit1EnableTxIrq
-                0x00000000080069be       0x12 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x00000000080069be                Spirit1EnableTxIrq
+                0x00000000080069ea       0x12 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080069ea                Spirit1EnableTxIrq
  .text.Spirit1EnableRxIrq
-                0x00000000080069d0       0x26 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x00000000080069d0                Spirit1EnableRxIrq
+                0x00000000080069fc       0x26 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x00000000080069fc                Spirit1EnableRxIrq
  .text.Spirit1DisableIrq
-                0x00000000080069f6       0x10 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x00000000080069f6                Spirit1DisableIrq
+                0x0000000008006a22       0x10 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006a22                Spirit1DisableIrq
  .text.Spirit1SetRxTimeout
-                0x0000000008006a06       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006a06                Spirit1SetRxTimeout
+                0x0000000008006a32       0x3c Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006a32                Spirit1SetRxTimeout
  .text.Spirit1SetRssiTH
-                0x0000000008006a42       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006a42                Spirit1SetRssiTH
+                0x0000000008006a6e       0x18 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006a6e                Spirit1SetRssiTH
  .text.Spirit1EnableSQI
-                0x0000000008006a5a       0x16 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006a5a                Spirit1EnableSQI
+                0x0000000008006a86       0x16 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006a86                Spirit1EnableSQI
  .text.Spirit1StartRx
-                0x0000000008006a70       0x2c Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006a70                Spirit1StartRx
+                0x0000000008006a9c       0x2c Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006a9c                Spirit1StartRx
  .text.Spirit1GetRxPacket
-                0x0000000008006a9c       0x42 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006a9c                Spirit1GetRxPacket
- *fill*         0x0000000008006ade        0x2 
+                0x0000000008006ac8       0x42 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006ac8                Spirit1GetRxPacket
+ *fill*         0x0000000008006b0a        0x2 
  .text.Spirit1StartTx
-                0x0000000008006ae0       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006ae0                Spirit1StartTx
+                0x0000000008006b0c       0x74 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006b0c                Spirit1StartTx
  .text.Spirit1ClearIRQ
-                0x0000000008006b54        0xe Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008006b54                Spirit1ClearIRQ
- *fill*         0x0000000008006b62        0x2 
+                0x0000000008006b80        0xe Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008006b80                Spirit1ClearIRQ
+ *fill*         0x0000000008006b8e        0x2 
  .text.BSP_LED_Init
-                0x0000000008006b64       0x80 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
-                0x0000000008006b64                BSP_LED_Init
+                0x0000000008006b90       0x80 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+                0x0000000008006b90                BSP_LED_Init
  .text.BSP_LED_Off
-                0x0000000008006be4       0x2c Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
-                0x0000000008006be4                BSP_LED_Off
- .text.BSP_LED_Toggle
                 0x0000000008006c10       0x2c Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
-                0x0000000008006c10                BSP_LED_Toggle
+                0x0000000008006c10                BSP_LED_Off
+ .text.BSP_LED_Toggle
+                0x0000000008006c3c       0x2c Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+                0x0000000008006c3c                BSP_LED_Toggle
  .text.BSP_PB_Init
-                0x0000000008006c3c       0xc0 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
-                0x0000000008006c3c                BSP_PB_Init
+                0x0000000008006c68       0xc0 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+                0x0000000008006c68                BSP_PB_Init
  .text.RadioGpioInit
-                0x0000000008006cfc      0x130 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
-                0x0000000008006cfc                RadioGpioInit
+                0x0000000008006d28      0x130 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+                0x0000000008006d28                RadioGpioInit
  .text.RadioGpioInterruptCmd
-                0x0000000008006e2c       0x74 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
-                0x0000000008006e2c                RadioGpioInterruptCmd
+                0x0000000008006e58       0x74 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+                0x0000000008006e58                RadioGpioInterruptCmd
  .text.RadioGpioSetLevel
-                0x0000000008006ea0       0x40 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
-                0x0000000008006ea0                RadioGpioSetLevel
+                0x0000000008006ecc       0x40 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+                0x0000000008006ecc                RadioGpioSetLevel
  .text.RadioEnterShutdown
-                0x0000000008006ee0       0x12 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
-                0x0000000008006ee0                RadioEnterShutdown
- *fill*         0x0000000008006ef2        0x2 
+                0x0000000008006f0c       0x12 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+                0x0000000008006f0c                RadioEnterShutdown
+ *fill*         0x0000000008006f1e        0x2 
  .text.RadioExitShutdown
-                0x0000000008006ef4       0x30 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
-                0x0000000008006ef4                RadioExitShutdown
+                0x0000000008006f20       0x30 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+                0x0000000008006f20                RadioExitShutdown
  .text.RadioShieldLedInit
-                0x0000000008006f24       0x64 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
-                0x0000000008006f24                RadioShieldLedInit
+                0x0000000008006f50       0x64 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+                0x0000000008006f50                RadioShieldLedInit
  .text.RadioShieldLedOn
-                0x0000000008006f88       0x2c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
-                0x0000000008006f88                RadioShieldLedOn
- .text.RadioShieldLedOff
                 0x0000000008006fb4       0x2c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
-                0x0000000008006fb4                RadioShieldLedOff
- .text.RadioShieldLedToggle
+                0x0000000008006fb4                RadioShieldLedOn
+ .text.RadioShieldLedOff
                 0x0000000008006fe0       0x2c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
-                0x0000000008006fe0                RadioShieldLedToggle
+                0x0000000008006fe0                RadioShieldLedOff
+ .text.RadioShieldLedToggle
+                0x000000000800700c       0x2c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+                0x000000000800700c                RadioShieldLedToggle
  .text.RadioSpiInit
-                0x000000000800700c       0x74 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x000000000800700c                RadioSpiInit
+                0x0000000008007038       0x74 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x0000000008007038                RadioSpiInit
  .text.HAL_SPI_MspInit
-                0x0000000008007080      0x128 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x0000000008007080                HAL_SPI_MspInit
+                0x00000000080070ac      0x128 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x00000000080070ac                HAL_SPI_MspInit
  .text.SPI_Write
-                0x00000000080071a8       0x58 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x00000000080071d4       0x58 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
  .text.SPI_Error
-                0x0000000008007200       0x1c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x000000000800722c       0x1c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
  .text.RadioSpiWriteRegisters
-                0x000000000800721c      0x144 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x000000000800721c                RadioSpiWriteRegisters
+                0x0000000008007248      0x144 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x0000000008007248                RadioSpiWriteRegisters
  .text.RadioSpiReadRegisters
-                0x0000000008007360      0x158 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x0000000008007360                RadioSpiReadRegisters
+                0x000000000800738c      0x158 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x000000000800738c                RadioSpiReadRegisters
  .text.RadioSpiCommandStrobes
-                0x00000000080074b8      0x118 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x00000000080074b8                RadioSpiCommandStrobes
+                0x00000000080074e4      0x118 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x00000000080074e4                RadioSpiCommandStrobes
  .text.RadioSpiWriteFifo
-                0x00000000080075d0      0x13c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x00000000080075d0                RadioSpiWriteFifo
+                0x00000000080075fc      0x13c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x00000000080075fc                RadioSpiWriteFifo
  .text.RadioSpiReadFifo
-                0x000000000800770c      0x148 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
-                0x000000000800770c                RadioSpiReadFifo
+                0x0000000008007738      0x148 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+                0x0000000008007738                RadioSpiReadFifo
  .text.SystemInit
-                0x0000000008007854       0x7c Driver/CMSIS/Include/system_stm32l0xx.o
-                0x0000000008007854                SystemInit
+                0x0000000008007880       0x7c Driver/CMSIS/Include/system_stm32l0xx.o
+                0x0000000008007880                SystemInit
  .text.HAL_Init
-                0x00000000080078d0       0x34 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
-                0x00000000080078d0                HAL_Init
+                0x00000000080078fc       0x34 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+                0x00000000080078fc                HAL_Init
  .text.HAL_InitTick
-                0x0000000008007904       0x3c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
-                0x0000000008007904                HAL_InitTick
+                0x0000000008007930       0x3c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+                0x0000000008007930                HAL_InitTick
  .text.HAL_IncTick
-                0x0000000008007940       0x18 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
-                0x0000000008007940                HAL_IncTick
+                0x000000000800796c       0x18 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+                0x000000000800796c                HAL_IncTick
  .text.HAL_GetTick
-                0x0000000008007958       0x14 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
-                0x0000000008007958                HAL_GetTick
+                0x0000000008007984       0x14 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+                0x0000000008007984                HAL_GetTick
  .text.HAL_Delay
-                0x000000000800796c       0x2e Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
-                0x000000000800796c                HAL_Delay
- *fill*         0x000000000800799a        0x2 
+                0x0000000008007998       0x2e Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+                0x0000000008007998                HAL_Delay
+ *fill*         0x00000000080079c6        0x2 
  .text.__NVIC_EnableIRQ
-                0x000000000800799c       0x34 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x00000000080079c8       0x34 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
  .text.__NVIC_DisableIRQ
-                0x00000000080079d0       0x40 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x00000000080079fc       0x40 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
  .text.__NVIC_SetPriority
-                0x0000000008007a10       0xdc Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007a3c       0xdc Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
  .text.SysTick_Config
-                0x0000000008007aec       0x48 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007b18       0x48 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
  .text.HAL_NVIC_SetPriority
-                0x0000000008007b34       0x2a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
-                0x0000000008007b34                HAL_NVIC_SetPriority
+                0x0000000008007b60       0x2a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007b60                HAL_NVIC_SetPriority
  .text.HAL_NVIC_EnableIRQ
-                0x0000000008007b5e       0x20 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
-                0x0000000008007b5e                HAL_NVIC_EnableIRQ
+                0x0000000008007b8a       0x20 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007b8a                HAL_NVIC_EnableIRQ
  .text.HAL_NVIC_DisableIRQ
-                0x0000000008007b7e       0x20 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
-                0x0000000008007b7e                HAL_NVIC_DisableIRQ
+                0x0000000008007baa       0x20 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007baa                HAL_NVIC_DisableIRQ
  .text.HAL_SYSTICK_Config
-                0x0000000008007b9e       0x1a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
-                0x0000000008007b9e                HAL_SYSTICK_Config
+                0x0000000008007bca       0x1a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007bca                HAL_SYSTICK_Config
  .text.HAL_SYSTICK_IRQHandler
-                0x0000000008007bb8        0xe Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
-                0x0000000008007bb8                HAL_SYSTICK_IRQHandler
- *fill*         0x0000000008007bc6        0x2 
+                0x0000000008007be4        0xe Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+                0x0000000008007be4                HAL_SYSTICK_IRQHandler
+ *fill*         0x0000000008007bf2        0x2 
  .text.HAL_GPIO_Init
-                0x0000000008007bc8      0x2ec Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
-                0x0000000008007bc8                HAL_GPIO_Init
+                0x0000000008007bf4      0x2ec Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+                0x0000000008007bf4                HAL_GPIO_Init
  .text.HAL_GPIO_WritePin
-                0x0000000008007eb4       0x3a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
-                0x0000000008007eb4                HAL_GPIO_WritePin
+                0x0000000008007ee0       0x3a Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+                0x0000000008007ee0                HAL_GPIO_WritePin
  .text.HAL_GPIO_TogglePin
-                0x0000000008007eee       0x24 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
-                0x0000000008007eee                HAL_GPIO_TogglePin
- *fill*         0x0000000008007f12        0x2 
+                0x0000000008007f1a       0x24 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+                0x0000000008007f1a                HAL_GPIO_TogglePin
+ *fill*         0x0000000008007f3e        0x2 
  .text.HAL_GPIO_EXTI_IRQHandler
-                0x0000000008007f14       0x38 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
-                0x0000000008007f14                HAL_GPIO_EXTI_IRQHandler
+                0x0000000008007f40       0x38 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+                0x0000000008007f40                HAL_GPIO_EXTI_IRQHandler
  .text.HAL_MspInit
-                0x0000000008007f4c        0xa Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
-                0x0000000008007f4c                HAL_MspInit
- *fill*         0x0000000008007f56        0x2 
+                0x0000000008007f78        0xa Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
+                0x0000000008007f78                HAL_MspInit
+ *fill*         0x0000000008007f82        0x2 
  .text.HAL_PWR_EnterSLEEPMode
-                0x0000000008007f58       0x5c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
-                0x0000000008007f58                HAL_PWR_EnterSLEEPMode
+                0x0000000008007f84       0x5c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+                0x0000000008007f84                HAL_PWR_EnterSLEEPMode
  .text.HAL_PWR_EnterSTOPMode
-                0x0000000008007fb4       0x68 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
-                0x0000000008007fb4                HAL_PWR_EnterSTOPMode
+                0x0000000008007fe0       0x68 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+                0x0000000008007fe0                HAL_PWR_EnterSTOPMode
  .text.HAL_PWR_EnterSTANDBYMode
-                0x000000000800801c       0x2c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
-                0x000000000800801c                HAL_PWR_EnterSTANDBYMode
+                0x0000000008008048       0x2c Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+                0x0000000008008048                HAL_PWR_EnterSTANDBYMode
  .text.HAL_RCC_OscConfig
-                0x0000000008008048      0x754 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
-                0x0000000008008048                HAL_RCC_OscConfig
+                0x0000000008008074      0x754 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+                0x0000000008008074                HAL_RCC_OscConfig
  .text.HAL_RCC_ClockConfig
-                0x000000000800879c      0x238 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
-                0x000000000800879c                HAL_RCC_ClockConfig
+                0x00000000080087c8      0x238 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+                0x00000000080087c8                HAL_RCC_ClockConfig
  .text.HAL_RCC_GetSysClockFreq
-                0x00000000080089d4      0x120 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
-                0x00000000080089d4                HAL_RCC_GetSysClockFreq
+                0x0000000008008a00      0x120 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+                0x0000000008008a00                HAL_RCC_GetSysClockFreq
  .text.RCC_SetFlashLatencyFromMSIRange
-                0x0000000008008af4       0xb0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+                0x0000000008008b20       0xb0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
  .text.HAL_SPI_Init
-                0x0000000008008ba4       0xd8 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008008ba4                HAL_SPI_Init
+                0x0000000008008bd0       0xd8 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x0000000008008bd0                HAL_SPI_Init
  .text.HAL_SPI_DeInit
-                0x0000000008008c7c       0x52 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008008c7c                HAL_SPI_DeInit
+                0x0000000008008ca8       0x52 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x0000000008008ca8                HAL_SPI_DeInit
  .text.HAL_SPI_MspDeInit
-                0x0000000008008cce       0x10 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008008cce                HAL_SPI_MspDeInit
- *fill*         0x0000000008008cde        0x2 
+                0x0000000008008cfa       0x10 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x0000000008008cfa                HAL_SPI_MspDeInit
+ *fill*         0x0000000008008d0a        0x2 
  .text.HAL_SPI_Transmit
-                0x0000000008008ce0      0x2a0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008008ce0                HAL_SPI_Transmit
+                0x0000000008008d0c      0x2a0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x0000000008008d0c                HAL_SPI_Transmit
  .text.HAL_SPI_TransmitReceive
-                0x0000000008008f80      0x4f0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008008f80                HAL_SPI_TransmitReceive
+                0x0000000008008fac      0x4f0 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x0000000008008fac                HAL_SPI_TransmitReceive
  .text.HAL_SPI_GetState
-                0x0000000008009470       0x18 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
-                0x0000000008009470                HAL_SPI_GetState
+                0x000000000800949c       0x18 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x000000000800949c                HAL_SPI_GetState
  .text.SPI_WaitOnFlagUntilTimeout
-                0x0000000008009488      0x154 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+                0x00000000080094b4      0x154 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
  .text.__libc_init_array
-                0x00000000080095dc       0x48 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-init.o)
-                0x00000000080095dc                __libc_init_array
- .text.malloc   0x0000000008009624       0x14 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-malloc.o)
-                0x0000000008009624                malloc
- .text.memcpy   0x0000000008009638       0x12 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-memcpy-stub.o)
-                0x0000000008009638                memcpy
- *fill*         0x000000000800964a        0x2 
+                0x0000000008009608       0x48 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-init.o)
+                0x0000000008009608                __libc_init_array
+ .text.malloc   0x0000000008009650       0x14 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-malloc.o)
+                0x0000000008009650                malloc
+ .text.memcpy   0x0000000008009664       0x12 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000000008009664                memcpy
+ *fill*         0x0000000008009676        0x2 
  .text._malloc_r
-                0x000000000800964c       0xbc d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-nano-mallocr.o)
-                0x000000000800964c                _malloc_r
- .text._sbrk_r  0x0000000008009708       0x24 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-sbrkr.o)
-                0x0000000008009708                _sbrk_r
+                0x0000000008009678       0xbc d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008009678                _malloc_r
+ .text._sbrk_r  0x0000000008009734       0x24 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-sbrkr.o)
+                0x0000000008009734                _sbrk_r
  .text.__malloc_lock
-                0x000000000800972c        0x2 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-mlock.o)
-                0x000000000800972c                __malloc_lock
+                0x0000000008009758        0x2 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-mlock.o)
+                0x0000000008009758                __malloc_lock
  .text.__malloc_unlock
-                0x000000000800972e        0x2 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-mlock.o)
-                0x000000000800972e                __malloc_unlock
- .text.round    0x0000000008009730       0x94 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libm.a(lib_a-s_round.o)
-                0x0000000008009730                round
- .text._sbrk    0x00000000080097c4       0x20 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libnosys.a(sbrk.o)
-                0x00000000080097c4                _sbrk
+                0x000000000800975a        0x2 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libc_nano.a(lib_a-mlock.o)
+                0x000000000800975a                __malloc_unlock
+ .text.round    0x000000000800975c       0x94 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libm.a(lib_a-s_round.o)
+                0x000000000800975c                round
+ .text._sbrk    0x00000000080097f0       0x20 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v6-m\libnosys.a(sbrk.o)
+                0x00000000080097f0                _sbrk
  *(.glue_7)
- .glue_7        0x00000000080097e4        0x0 linker stubs
+ .glue_7        0x0000000008009810        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x00000000080097e4        0x0 linker stubs
+ .glue_7t       0x0000000008009810        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x00000000080097e4        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ .eh_frame      0x0000000008009810        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
  *(.init)
- .init          0x00000000080097e4        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x00000000080097e4                _init
- .init          0x00000000080097e8        0x8 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+ .init          0x0000000008009810        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x0000000008009810                _init
+ .init          0x0000000008009814        0x8 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
  *(.fini)
- .fini          0x00000000080097f0        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
-                0x00000000080097f0                _fini
- .fini          0x00000000080097f4        0x8 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
-                0x00000000080097fc                . = ALIGN (0x4)
-                0x00000000080097fc                _etext = .
+ .fini          0x000000000800981c        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crti.o
+                0x000000000800981c                _fini
+ .fini          0x0000000008009820        0x8 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
+                0x0000000008009828                . = ALIGN (0x4)
+                0x0000000008009828                _etext = .
 
-.vfp11_veneer   0x00000000080097fc        0x0
- .vfp11_veneer  0x00000000080097fc        0x0 linker stubs
+.vfp11_veneer   0x0000000008009828        0x0
+ .vfp11_veneer  0x0000000008009828        0x0 linker stubs
 
-.v4_bx          0x00000000080097fc        0x0
- .v4_bx         0x00000000080097fc        0x0 linker stubs
+.v4_bx          0x0000000008009828        0x0
+ .v4_bx         0x0000000008009828        0x0 linker stubs
 
-.iplt           0x00000000080097fc        0x0
- .iplt          0x00000000080097fc        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.iplt           0x0000000008009828        0x0
+ .iplt          0x0000000008009828        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
-.rodata         0x00000000080097fc      0x328
-                0x00000000080097fc                . = ALIGN (0x4)
+.rodata         0x0000000008009828      0x328
+                0x0000000008009828                . = ALIGN (0x4)
  *(.rodata)
- .rodata        0x00000000080097fc        0x8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
- .rodata        0x0000000008009804      0x154 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
- .rodata        0x0000000008009958       0x1f Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
-                0x0000000008009958                xSpiritVersionMap
- *fill*         0x0000000008009977        0x1 
- .rodata        0x0000000008009978       0x48 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
- .rodata        0x00000000080099c0       0x21 Driver/CMSIS/Include/system_stm32l0xx.o
-                0x00000000080099c0                AHBPrescTable
-                0x00000000080099d0                APBPrescTable
-                0x00000000080099d8                PLLMulTable
- *fill*         0x00000000080099e1        0x3 
- .rodata        0x00000000080099e4       0x80 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(divsf3.o)
- .rodata        0x0000000008009a64       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(mulsf3.o)
- .rodata        0x0000000008009aa4       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(divdf3.o)
- .rodata        0x0000000008009ae4       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(muldf3.o)
+ .rodata        0x0000000008009828        0x8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+ .rodata        0x0000000008009830      0x154 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .rodata        0x0000000008009984       0x1f Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+                0x0000000008009984                xSpiritVersionMap
+ *fill*         0x00000000080099a3        0x1 
+ .rodata        0x00000000080099a4       0x48 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+ .rodata        0x00000000080099ec       0x21 Driver/CMSIS/Include/system_stm32l0xx.o
+                0x00000000080099ec                AHBPrescTable
+                0x00000000080099fc                APBPrescTable
+                0x0000000008009a04                PLLMulTable
+ *fill*         0x0000000008009a0d        0x3 
+ .rodata        0x0000000008009a10       0x80 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(divsf3.o)
+ .rodata        0x0000000008009a90       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(mulsf3.o)
+ .rodata        0x0000000008009ad0       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(divdf3.o)
+ .rodata        0x0000000008009b10       0x40 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m\libgcc.a(muldf3.o)
  *(.rodata*)
-                0x0000000008009b24                . = ALIGN (0x4)
+                0x0000000008009b50                . = ALIGN (0x4)
 
-.rel.dyn        0x0000000008009b24        0x0
- .rel.iplt      0x0000000008009b24        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+.rel.dyn        0x0000000008009b50        0x0
+ .rel.iplt      0x0000000008009b50        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0000000008009b24        0x0
-                0x0000000008009b24                __exidx_start = .
+.ARM            0x0000000008009b50        0x0
+                0x0000000008009b50                __exidx_start = .
  *(.ARM.exidx*)
-                0x0000000008009b24                __exidx_end = .
+                0x0000000008009b50                __exidx_end = .
 
-.preinit_array  0x0000000008009b24        0x0
-                0x0000000008009b24                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0000000008009b50        0x0
+                0x0000000008009b50                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0000000008009b24                PROVIDE (__preinit_array_end = .)
+                0x0000000008009b50                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000008009b24        0x4
-                0x0000000008009b24                PROVIDE (__init_array_start = .)
+.init_array     0x0000000008009b50        0x4
+                0x0000000008009b50                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0000000008009b24        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
-                0x0000000008009b28                PROVIDE (__init_array_end = .)
+ .init_array    0x0000000008009b50        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+                0x0000000008009b54                PROVIDE (__init_array_end = .)
 
-.fini_array     0x0000000008009b28        0x4
+.fini_array     0x0000000008009b54        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x0000000008009b28        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
+ .fini_array    0x0000000008009b54        0x4 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0000000008009b2c                _sidata = LOADADDR (.data)
+                0x0000000008009b58                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000      0x22c load address 0x0000000008009b2c
+.data           0x0000000020000000      0x22c load address 0x0000000008009b58
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -12259,11 +12259,11 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x000000002000022c                . = ALIGN (0x4)
                 0x000000002000022c                _edata = .
 
-.igot.plt       0x000000002000022c        0x0 load address 0x0000000008009d58
+.igot.plt       0x000000002000022c        0x0 load address 0x0000000008009d84
  .igot.plt      0x000000002000022c        0x0 d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtbegin.o
                 0x000000002000022c                . = ALIGN (0x4)
 
-.bss            0x000000002000022c      0x1b0 load address 0x0000000008009d58
+.bss            0x000000002000022c      0x1b0 load address 0x0000000008009d84
                 0x000000002000022c                _sbss = .
                 0x000000002000022c                __bss_start__ = _sbss
  *(.bss)
@@ -12326,7 +12326,7 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x00000000200003dc                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x00000000200003dc      0x904 load address 0x0000000008009d58
+                0x00000000200003dc      0x904 load address 0x0000000008009d84
                 0x00000000200003e0                . = ALIGN (0x8)
  *fill*         0x00000000200003dc        0x4 
                 0x00000000200003e0                PROVIDE (end = .)
@@ -12495,75 +12495,75 @@ LOAD d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.exte
                 0x0000000000000ce0       0x1e d:/st/stm32cubeide_1.3.0/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.win32_1.0.0.201904181610/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v6-m/crtn.o
 OUTPUT(SDR_Multiband_L0.elf elf32-littlearm)
 
-.debug_line     0x0000000000000000    0x13aa5
+.debug_line     0x0000000000000000    0x13ab7
  .debug_line    0x0000000000000000       0x90 Application/SW4STM32/startup_stm32l053xx.o
  .debug_line    0x0000000000000090      0x980 Application/USER/cube_hal_l0.o
  .debug_line    0x0000000000000a10      0x505 Application/USER/fsm.o
  .debug_line    0x0000000000000f15      0xb28 Application/USER/main.o
- .debug_line    0x0000000000001a3d      0xf34 Application/USER/radio_appli.o
- .debug_line    0x0000000000002971      0xbeb Application/USER/stm32l0xx_it.o
- .debug_line    0x000000000000355c      0x6f9 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
- .debug_line    0x0000000000003c55      0x619 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
- .debug_line    0x000000000000426e      0x78b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
- .debug_line    0x00000000000049f9      0x711 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
- .debug_line    0x000000000000510a      0x708 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
- .debug_line    0x0000000000005812      0x702 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
- .debug_line    0x0000000000005f14      0x6cd Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
- .debug_line    0x00000000000065e1      0x86b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
- .debug_line    0x0000000000006e4c      0x793 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
- .debug_line    0x00000000000075df      0xb00 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
- .debug_line    0x00000000000080df      0x7b8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
- .debug_line    0x0000000000008897     0x11b4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
- .debug_line    0x0000000000009a4b      0x9a3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
- .debug_line    0x000000000000a3ee      0x61b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
- .debug_line    0x000000000000aa09      0xda1 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_line    0x000000000000b7aa      0xc18 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
- .debug_line    0x000000000000c3c2      0x9bd Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
- .debug_line    0x000000000000cd7f      0x97a Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
- .debug_line    0x000000000000d6f9      0xcba Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
- .debug_line    0x000000000000e3b3      0x8bb Driver/CMSIS/Include/system_stm32l0xx.o
- .debug_line    0x000000000000ec6e      0xa6f Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
- .debug_line    0x000000000000f6dd      0xaa3 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
- .debug_line    0x0000000000010180      0xa2b Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
- .debug_line    0x0000000000010bab      0x8e7 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
- .debug_line    0x0000000000011492      0x9f4 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
- .debug_line    0x0000000000011e86      0xb52 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
- .debug_line    0x00000000000129d8     0x10cd Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+ .debug_line    0x0000000000001a3d      0xf46 Application/USER/radio_appli.o
+ .debug_line    0x0000000000002983      0xbeb Application/USER/stm32l0xx_it.o
+ .debug_line    0x000000000000356e      0x6f9 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+ .debug_line    0x0000000000003c67      0x619 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+ .debug_line    0x0000000000004280      0x78b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+ .debug_line    0x0000000000004a0b      0x711 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+ .debug_line    0x000000000000511c      0x708 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+ .debug_line    0x0000000000005824      0x702 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+ .debug_line    0x0000000000005f26      0x6cd Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
+ .debug_line    0x00000000000065f3      0x86b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+ .debug_line    0x0000000000006e5e      0x793 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+ .debug_line    0x00000000000075f1      0xb00 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+ .debug_line    0x00000000000080f1      0x7b8 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+ .debug_line    0x00000000000088a9     0x11b4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .debug_line    0x0000000000009a5d      0x9a3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+ .debug_line    0x000000000000a400      0x61b Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+ .debug_line    0x000000000000aa1b      0xda1 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+ .debug_line    0x000000000000b7bc      0xc18 Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+ .debug_line    0x000000000000c3d4      0x9bd Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+ .debug_line    0x000000000000cd91      0x97a Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+ .debug_line    0x000000000000d70b      0xcba Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+ .debug_line    0x000000000000e3c5      0x8bb Driver/CMSIS/Include/system_stm32l0xx.o
+ .debug_line    0x000000000000ec80      0xa6f Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+ .debug_line    0x000000000000f6ef      0xaa3 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+ .debug_line    0x0000000000010192      0xa2b Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+ .debug_line    0x0000000000010bbd      0x8e7 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
+ .debug_line    0x00000000000114a4      0x9f4 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+ .debug_line    0x0000000000011e98      0xb52 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+ .debug_line    0x00000000000129ea     0x10cd Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
 
-.debug_info     0x0000000000000000    0x20c1f
+.debug_info     0x0000000000000000    0x20c36
  .debug_info    0x0000000000000000       0x22 Application/SW4STM32/startup_stm32l053xx.o
  .debug_info    0x0000000000000022      0xe12 Application/USER/cube_hal_l0.o
  .debug_info    0x0000000000000e34      0x9e4 Application/USER/fsm.o
  .debug_info    0x0000000000001818      0xdf2 Application/USER/main.o
- .debug_info    0x000000000000260a     0x206d Application/USER/radio_appli.o
- .debug_info    0x0000000000004677      0xd02 Application/USER/stm32l0xx_it.o
- .debug_info    0x0000000000005379      0xc00 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
- .debug_info    0x0000000000005f79      0xa1d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
- .debug_info    0x0000000000006996      0xe38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
- .debug_info    0x00000000000077ce      0xcbb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
- .debug_info    0x0000000000008489      0xeea Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
- .debug_info    0x0000000000009373      0xf74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
- .debug_info    0x000000000000a2e7      0xb39 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
- .debug_info    0x000000000000ae20      0xce4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
- .debug_info    0x000000000000bb04      0xf7d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
- .debug_info    0x000000000000ca81     0x1744 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
- .debug_info    0x000000000000e1c5      0xf26 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
- .debug_info    0x000000000000f0eb     0x25f3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
- .debug_info    0x00000000000116de      0xfc2 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
- .debug_info    0x00000000000126a0      0x9bb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
- .debug_info    0x000000000001305b     0x1560 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
- .debug_info    0x00000000000145bb     0x1baf Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
- .debug_info    0x000000000001616a      0xf8c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
- .debug_info    0x00000000000170f6      0xca0 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
- .debug_info    0x0000000000017d96     0x156c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
- .debug_info    0x0000000000019302      0xb96 Driver/CMSIS/Include/system_stm32l0xx.o
- .debug_info    0x0000000000019e98      0xf49 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
- .debug_info    0x000000000001ade1     0x1066 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
- .debug_info    0x000000000001be47      0xed1 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
- .debug_info    0x000000000001cd18      0x969 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
- .debug_info    0x000000000001d681      0xda4 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
- .debug_info    0x000000000001e425     0x1131 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
- .debug_info    0x000000000001f556     0x16c9 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
+ .debug_info    0x000000000000260a     0x2084 Application/USER/radio_appli.o
+ .debug_info    0x000000000000468e      0xd02 Application/USER/stm32l0xx_it.o
+ .debug_info    0x0000000000005390      0xc00 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Calibration.o
+ .debug_info    0x0000000000005f90      0xa1d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Commands.o
+ .debug_info    0x00000000000069ad      0xe38 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Csma.o
+ .debug_info    0x00000000000077e5      0xcbb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_General.o
+ .debug_info    0x00000000000084a0      0xeea Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Gpio.o
+ .debug_info    0x000000000000938a      0xf74 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Irq.o
+ .debug_info    0x000000000000a2fe      0xb39 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_LinearFifo.o
+ .debug_info    0x000000000000ae37      0xce4 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Management.o
+ .debug_info    0x000000000000bb1b      0xf7d Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktBasic.o
+ .debug_info    0x000000000000ca98     0x1744 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_PktCommon.o
+ .debug_info    0x000000000000e1dc      0xf26 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Qi.o
+ .debug_info    0x000000000000f102     0x25f3 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Radio.o
+ .debug_info    0x00000000000116f5      0xfc2 Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Timer.o
+ .debug_info    0x00000000000126b7      0x9bb Driver/BSP/Components/spirit1/SPIRIT1_Library/Src/SPIRIT_Types.o
+ .debug_info    0x0000000000013072     0x1560 Driver/BSP/Components/spirit1/SPIRIT1_Util/Src/SPIRIT1_Util.o
+ .debug_info    0x00000000000145d2     0x1baf Driver/BSP/STM32L0xx_Nucleo/stm32l0xx_nucleo.o
+ .debug_info    0x0000000000016181      0xf8c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_gpio.o
+ .debug_info    0x000000000001710d      0xca0 Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_shield_config.o
+ .debug_info    0x0000000000017dad     0x156c Driver/BSP/X-NUCLEO-IDS01Ax/Src/radio_spi.o
+ .debug_info    0x0000000000019319      0xb96 Driver/CMSIS/Include/system_stm32l0xx.o
+ .debug_info    0x0000000000019eaf      0xf49 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal.o
+ .debug_info    0x000000000001adf8     0x1066 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_cortex.o
+ .debug_info    0x000000000001be5e      0xed1 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_gpio.o
+ .debug_info    0x000000000001cd2f      0x969 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_msp_template.o
+ .debug_info    0x000000000001d698      0xda4 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_pwr.o
+ .debug_info    0x000000000001e43c     0x1131 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_rcc.o
+ .debug_info    0x000000000001f56d     0x16c9 Driver/STM32L0xx_HAL_Driver/Src/stm32l0xx_hal_spi.o
 
 .debug_abbrev   0x0000000000000000     0x4a66
  .debug_abbrev  0x0000000000000000       0x12 Application/SW4STM32/startup_stm32l053xx.o

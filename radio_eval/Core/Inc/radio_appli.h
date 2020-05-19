@@ -243,6 +243,14 @@ extern volatile FlagStatus PushButtonStatusData, datasendFlag;
 /**
 * @brief  WMBus Link Layer State Enum.
 */
+
+
+typedef struct sradioSelect{
+	FlagStatus conf_868;
+	FlagStatus conf_433;
+}radio_select_t;
+
+
 typedef enum {
    SM_STATE_START_RX=0,
    SM_STATE_WAIT_FOR_RX_DONE,
@@ -342,6 +350,9 @@ FlagStatus Rx_flag_status(void);
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
 void HAL_SYSTICK_Callback(void);
+
+
+radio_select_t bandSelect(void);
 
 #endif /* __RADIO_APPLI_H */
 

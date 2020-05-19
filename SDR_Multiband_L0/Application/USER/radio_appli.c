@@ -970,7 +970,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 #endif
   if(GPIO_Pin==USER_BUTTON_PIN)
   {
+
+	/*It will be an USB interrupt, not a button*/
 	tx_value = SET;
+
+	for(uint8_t i; i<TX_BUFFER_SIZE; i++)
+	{
+		aTransmitBuffer[i] = i*2;
+	}
   } 
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   else 

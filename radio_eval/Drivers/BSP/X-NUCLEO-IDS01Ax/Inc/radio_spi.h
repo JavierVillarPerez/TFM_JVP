@@ -112,11 +112,30 @@ extern "C" {
 #define RADIO_SPI_SCK_CLOCK_DISABLE()           __GPIOB_CLK_DISABLE()
 
   
-#define RADIO_SPI_CS_PORT                        GPIOB
-#define RADIO_SPI_CS_PIN                         GPIO_PIN_6
+#define RADIO_SPI_S_CS_PORT                        GPIOB
+#define RADIO_SPI_S_CS_PIN                         GPIO_PIN_5
+
+#define RADIO_SPI_H_CS_PORT                        GPIOB
+#define RADIO_SPI_H_CS_PIN                         GPIO_PIN_6
+
 #define RADIO_SPI_CS_CLOCK_ENABLE()            __GPIOB_CLK_ENABLE()
 #define RADIO_SPI_CS_CLOCK_DISABLE()           __GPIOB_CLK_DISABLE()
+
+
+#ifdef DongleUSB
+#define RADIO_SPI_S_CS_PORT                        GPIOB
+#define RADIO_SPI_S_CS_PIN                         GPIO_PIN_0
+#define RADIO_SPI_S_CS_CLOCK_ENABLE()            __GPIOB_CLK_ENABLE()
+#define RADIO_SPI_S_CS_CLOCK_DISABLE()           __GPIOB_CLK_DISABLE()
+
+
+#define RADIO_SPI_H_CS_PORT                        GPIOB
+#define RADIO_SPI_H_CS_PIN                         GPIO_PIN_1
+#define RADIO_SPI_H_CS_CLOCK_ENABLE()            __GPIOB_CLK_ENABLE()
+#define RADIO_SPI_H_CS_CLOCK_DISABLE()           __GPIOB_CLK_DISABLE()
   
+#endif
+
 #else
 
 #define RADIO_SPI_SCK_PORT                        GPIOA
@@ -170,8 +189,12 @@ extern "C" {
 #define ALL_IRQ_DISABLE() __disable_irq()
    
 /* SPIRIT1_Spi_config_Private_Functions */
-#define RadioSpiCSLow()        HAL_GPIO_WritePin(RADIO_SPI_CS_PORT, RADIO_SPI_CS_PIN, GPIO_PIN_RESET)
-#define RadioSpiCSHigh()       HAL_GPIO_WritePin(RADIO_SPI_CS_PORT, RADIO_SPI_CS_PIN, GPIO_PIN_SET)
+//#define RadioSpiCSLow()        HAL_GPIO_WritePin(RADIO_SPI_CS_PORT, RADIO_SPI_CS_PIN, GPIO_PIN_RESET)
+#define RadioSpiHCSLow()        HAL_GPIO_WritePin(RADIO_SPI_H_CS_PORT, RADIO_SPI_H_CS_PIN, GPIO_PIN_RESET)
+#define RadioSpiSCSLow()        HAL_GPIO_WritePin(RADIO_SPI_S_CS_PORT, RADIO_SPI_S_CS_PIN, GPIO_PIN_RESET)
+//#define RadioSpiCSHigh()       HAL_GPIO_WritePin(RADIO_SPI_CS_PORT, RADIO_SPI_CS_PIN, GPIO_PIN_SET)
+#define RadioSpiHCSHigh()       HAL_GPIO_WritePin(RADIO_SPI_H_CS_PORT, RADIO_SPI_H_CS_PIN, GPIO_PIN_SET)
+#define RadioSpiSCSHigh()       HAL_GPIO_WritePin(RADIO_SPI_S_CS_PORT, RADIO_SPI_S_CS_PIN, GPIO_PIN_SET)
   
 /* SPIRIT1_Spi_config_Private_Macros */
 #define BUILT_HEADER(add_comm, w_r) (add_comm | w_r)                             /*!< macro to build the header byte*/
