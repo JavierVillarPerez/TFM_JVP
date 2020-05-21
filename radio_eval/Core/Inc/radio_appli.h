@@ -163,7 +163,7 @@ extern CsmaInit xCsmaInit;
 #define DATARATE                    38400
 #define FREQ_DEVIATION              20e3
 #define BANDWIDTH                   100E3
-#define POWER_INDEX                 7
+#define POWER_INDEX                 7 /*Max Power output. There are 7 levels of power output, where 7 implies the max Pout*/
 #define RECEIVE_TIMEOUT             2000.0 /*change the value for required timeout period*/   
 
 #define RSSI_THRESHOLD              -120  /* Default RSSI at reception, more 
@@ -181,7 +181,7 @@ extern CsmaInit xCsmaInit;
 #define EN_WHITENING                S_ENABLE
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #define MODULATION_SELECT           FSK
-#define POWER_DBM                   11.6
+#define POWER_DBM                   11.6 /*Power output value*/
 #define PREAMBLE_LENGTH             PKT_PREAMBLE_LENGTH_04BYTES
 #define SYNC_LENGTH                 PKT_SYNC_LENGTH_4BYTES
 #define LENGTH_TYPE                 PKT_LENGTH_VAR

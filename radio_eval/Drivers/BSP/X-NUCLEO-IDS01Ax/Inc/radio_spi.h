@@ -85,7 +85,12 @@ extern "C" {
   
 #define RADIO_SPI_MOSI_PORT                      GPIOA
 #define RADIO_SPI_MOSI_PIN                       GPIO_PIN_7
-  
+
+/*En PCB
+#define RADIO_SPI_MOSI_PORT                      GPIOC
+#define RADIO_SPI_MOSI_PIN                       GPIO_PIN_4
+*/
+
 #if defined(USE_STM32F4XX_NUCLEO)||(USE_STM32L1XX_NUCLEO)
 #define RADIO_SPI_MOSI_AF                       GPIO_AF5_SPI1
 #endif
@@ -100,7 +105,12 @@ extern "C" {
   
 #define RADIO_SPI_SCK_PORT                      GPIOB
 #define RADIO_SPI_SCK_PIN                       GPIO_PIN_3
-  
+
+/*En PCB
+#define RADIO_SPI_SCK_PORT                      GPIOA
+#define RADIO_SPI_SCK_PIN                       GPIO_PIN_5
+*/
+
 #if defined(USE_STM32F4XX_NUCLEO)||(USE_STM32L1XX_NUCLEO)
 #define RADIO_SPI_SCK_AF                       GPIO_AF5_SPI1
 #endif
@@ -118,6 +128,13 @@ extern "C" {
 #define RADIO_SPI_H_CS_PORT                        GPIOB
 #define RADIO_SPI_H_CS_PIN                         GPIO_PIN_6
 
+/* En PCB
+#define RADIO_SPI_S_CS_PORT                        GPIOB
+#define RADIO_SPI_S_CS_PIN                         GPIO_PIN_0
+
+#define RADIO_SPI_H_CS_PORT                        GPIOB
+#define RADIO_SPI_H_CS_PIN                         GPIO_PIN_1
+*/
 #define RADIO_SPI_CS_CLOCK_ENABLE()            __GPIOB_CLK_ENABLE()
 #define RADIO_SPI_CS_CLOCK_DISABLE()           __GPIOB_CLK_DISABLE()
 

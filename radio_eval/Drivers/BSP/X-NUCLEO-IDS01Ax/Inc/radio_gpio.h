@@ -193,6 +193,31 @@ RadioGpioPin;
 #define RADIO_GPIO_3_EXTI_PREEMPTION_PRIORITY      2
 #define RADIO_GPIO_3_EXTI_SUB_PRIORITY             2
 
+/*
+ * GPIO3 from PCB for communication flag interrupts
+#define H_RADIO_GPIO_3_PORT                          GPIOB
+#define H_RADIO_GPIO_3_PIN                           GPIO_PIN_10
+#define H_RADIO_GPIO_3_CLOCK_ENABLE()              __GPIOC_CLK_ENABLE()
+#define H_RADIO_GPIO_3_CLOCK_DISABLE()             __GPIOC_CLK_DISABLE()
+#define H_RADIO_GPIO_3_SPEED                         GPIO_SPEED_HIGH
+#define H_RADIO_GPIO_3_PUPD                          GPIO_NOPULL
+#define H_RADIO_GPIO_3_EXTI_LINE                     GPIO_PIN_10
+#define H_RADIO_GPIO_3_EXTI_MODE                     GPIO_MODE_IT_FALLING
+#define H_RADIO_GPIO_3_EXTI_PREEMPTION_PRIORITY      2
+#define H_RADIO_GPIO_3_EXTI_SUB_PRIORITY             2
+
+#define S_RADIO_GPIO_3_PORT                          GPIOA
+#define S_RADIO_GPIO_3_PIN                           GPIO_PIN_4
+#define S_RADIO_GPIO_3_CLOCK_ENABLE()              __GPIOC_CLK_ENABLE()
+#define S_RADIO_GPIO_3_CLOCK_DISABLE()             __GPIOC_CLK_DISABLE()
+#define S_RADIO_GPIO_3_SPEED                         GPIO_SPEED_HIGH
+#define S_RADIO_GPIO_3_PUPD                          GPIO_NOPULL
+#define S_RADIO_GPIO_3_EXTI_LINE                     GPIO_PIN_4
+#define S_RADIO_GPIO_3_EXTI_MODE                     GPIO_MODE_IT_FALLING
+#define S_RADIO_GPIO_3_EXTI_PREEMPTION_PRIORITY      2
+#define S_RADIO_GPIO_3_EXTI_SUB_PRIORITY             2
+
+*/
 #if defined(USE_STM32L0XX_NUCLEO)
 #define RADIO_GPIO_3_EXTI_IRQN                     EXTI4_15_IRQn 
 #define RADIO_GPIO_3_EXTI_IRQ_HANDLER              EXTI4_15_IRQHandler

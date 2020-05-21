@@ -140,9 +140,9 @@ void Spirit1InterfaceInit(void)
 #endif
      
   /* Board management */   
-  SpiritEnterShutdown(); 
-  SpiritExitShutdown();   
-    
+//  SpiritEnterShutdown();
+//  SpiritExitShutdown();
+//
   SpiritManagementIdentificationRFBoard();
     
   /* Initialize the signals to drive the range extender application board */

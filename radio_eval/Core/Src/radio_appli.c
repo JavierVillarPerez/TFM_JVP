@@ -238,7 +238,7 @@ CsmaInit xCsmaInit={
   */
   CS_PERIOD,
   CS_TIMEOUT,
-  MAX_NB,
+  MAX_NB, /*Retries*/
   BU_COUNTER_SEED,
   CU_PRESCALER
 };
@@ -378,10 +378,6 @@ void send_data(fsm_t* this)
 	xTxFrame.CmdType = APPLI_CMD;
 	xTxFrame.DataBuff = aTransmitBuffer;
 	xTxFrame.DataLen = TxLength;
-
-
-	/*COGNITIVE FUNCTION*/
-
 
 	AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
 
@@ -872,14 +868,12 @@ void P2PInterruptHandler(void)
   {
 #ifdef CSMA_ENABLE
 	SpiritCsma(S_DISABLE);
-	SpiritRadioPersistenRx(S_ENABLE);
+	SpiritRadioPersistenRx(S_ENABLE);	/*To comeback to RX state*/
 	SpiritRadioCsBlanking(S_ENABLE);
     
     if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
     {
     	SpiritCmdStrobeSabort();
-      
-      
     }
     SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
     
