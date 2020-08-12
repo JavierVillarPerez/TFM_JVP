@@ -1,6 +1,0 @@
-cube_hal_l0.c:46:6:SystemClock_Config	88	static
-cube_hal_l0.c:87:6:SystemClockConfig_ExitSTOPMode	88	static
-cube_hal_l0.c:134:7:SystemPower_Configuration	56	static
-cube_hal_l0.c:216:6:APPLI_EnterSLEEPMode	8	static
-cube_hal_l0.c:230:6:APPLI_EnterSTOPMode	8	static
-cube_hal_l0.c:243:6:APPLI_EnterSTANDBYMode	8	static
