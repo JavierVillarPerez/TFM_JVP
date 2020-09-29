@@ -372,6 +372,11 @@ FlagStatus check_Rx_count(void)
 	}
 	return retval;
 }
+
+void reset_RX_count(void)
+{
+	Rx_count = 0;
+}
 /* USER CODE END 4 */
 
 /**

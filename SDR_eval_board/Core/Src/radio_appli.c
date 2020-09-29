@@ -308,13 +308,13 @@ static int rx_flag(fsm_t* this)
 }
 
 
-static int data_recived(fsm_t* this)
+static int data_received(fsm_t* this)
 {
 	if(xRxFrame.Cmd == LED_TOGGLE) return 1;
 	else return 0;
 }
 
-static int ack_recived(fsm_t* this)
+static int ack_received(fsm_t* this)
 {
     if(xRxFrame.Cmd == ACK_OK) return 1;
     else return 0;
@@ -350,6 +350,7 @@ void EN_Rx(fsm_t* this)
 {
     AppliReceiveBuff(aReceiveBuffer, RxLength);
     Spirit1_RX_timeout = RESET;
+    reset_RX_count();
     BSP_LED_Toggle(LED2);
 
 	xTxDoneFlag = RESET;
@@ -469,8 +470,8 @@ static fsm_trans_t radio_states[] = {
   { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data	 },
   { SM_STATE_SEND_DATA, 		tx_done,   	 	SM_STATE_START_RX,  	    EN_Rx	 	 },
   { SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data },
-  { SM_STATE_MSG_RECEIVED,      data_recived,   SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
-  { SM_STATE_MSG_RECEIVED,      ack_recived,    SM_STATE_ACK_RECEIVED, 		LED_Toggle   },
+  { SM_STATE_MSG_RECEIVED,      data_received,   SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
+  { SM_STATE_MSG_RECEIVED,      ack_received,    SM_STATE_ACK_RECEIVED, 	LED_Toggle   },
   { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx		 },
   { SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 	 },
   { SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 	 },
