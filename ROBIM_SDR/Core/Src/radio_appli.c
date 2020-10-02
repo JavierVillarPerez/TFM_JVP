@@ -259,6 +259,8 @@ uint8_t aTransmitBuffer[TX_BUFFER_SIZE] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,\
   16,17,18,19,20};
 uint8_t aReceiveBuffer[RX_BUFFER_SIZE] = {0x00};
 
+uint8_t 	CCAxItCount;
+FlagStatus  CCAxItFlag;
 
 
 RadioDriver_t *pRadioDriver;
@@ -288,6 +290,9 @@ uint8_t temp_DataBuff[]={0x00};
 uint8_t  dest_addr;
 
 fsm_t* radio_fsm;
+fsm_t* LED433_fsm;
+fsm_t* LED868_fsm;
+fsm_t* LED1_fsm;
 
 radio_select_t selectedBand;
 
@@ -341,14 +346,24 @@ static int tx_done(fsm_t* this)
 	return xTxDoneFlag;
 }
 
+static int switch_channel(fsm_t* this)
+{
+	return CCAxItFlag;
+}
+
 
 static int ACK_confirm (fsm_t* this)
 {
 	return ACK_Process;
 }
 
+
 void EN_Rx(fsm_t* this)
 {
+
+	selectedBand.conf_433 = !(selectedBand.conf_433);
+	selectedBand.conf_868 = !(selectedBand.conf_868);
+
     AppliReceiveBuff(aReceiveBuffer, RxLength);
     Spirit1_RX_timeout = RESET;
     reset_RX_count();
@@ -367,6 +382,8 @@ void EN_Rx(fsm_t* this)
 
 void send_data(fsm_t* this)
 {
+	CCAxItFlag = RESET;
+
 	tx_value = RESET;
 	xTxFrame.Cmd = LED_TOGGLE;
 	xTxFrame.CmdLen = 0x01;
@@ -379,11 +396,8 @@ void send_data(fsm_t* this)
 
 void read_RX_Data(fsm_t* this)
 {
-	xRxDoneFlag = RESET;
-
 	Spirit1GetRxPacket(aReceiveBuffer,&RxLength);
-	/*rRSSIValue = Spirit1GetRssiTH();*/
-	/*rRSSIValue = S2LPGetRssiTH();*/
+
 	xRxFrame.Cmd = aReceiveBuffer[0];
 	xRxFrame.CmdLen = aReceiveBuffer[1];
 	xRxFrame.Cmdtag = aReceiveBuffer[2];
@@ -399,37 +413,14 @@ void read_RX_Data(fsm_t* this)
 	xRxFrame.DataBuff= temp_DataBuff;
 }
 
-void LED_ON(fsm_t* this)
+void read_address(fsm_t* this)
 {
-	/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOn(RADIO_SHIELD_LED);
-#endif
     dest_addr = SpiritPktCommonGetReceivedDestAddress();
 }
 
-void LED_Toggle(fsm_t* this)
+void read_ACK_address(fsm_t* this)
 {
-	uint8_t ledToggleCtr = 0;
-
     dest_addr = SpiritPktCommonGetReceivedDestAddress();
-
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-	HAL_Delay(DELAY_TX_LED_GLOW);
-#endif
-	for(; ledToggleCtr<5; ledToggleCtr++)
-	{
-		/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
-		#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-		RadioShieldLedToggle(RADIO_SHIELD_LED);
-		#endif
-		HAL_Delay(DELAY_RX_LED_TOGGLE);
-	}
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOff(RADIO_SHIELD_LED);
-#endif
-    BSP_LED_Off(LED2);
-
     ACK_Process = SET;
 }
 
@@ -464,21 +455,108 @@ void reset_state(fsm_t* this)
 
 
 
+/*LED IN/OUT STATE MACHINE*/
+static int TxFlag433(fsm_t* this)
+{
+	return (tx_value && selectedBand.conf_433);
+}
 
+static int RxFlag433(fsm_t* this)
+{
+	return (xRxDoneFlag && selectedBand.conf_433);
+}
+
+static int TxFlag868(fsm_t* this)
+{
+	return (tx_value && selectedBand.conf_868);
+}
+
+static int RxFlag868(fsm_t* this)
+{
+	return (xRxDoneFlag && selectedBand.conf_868);
+}
+
+
+void LED_ON(fsm_t* this)
+{
+	uint8_t ledToggleCtr = 0;
+
+	for(; ledToggleCtr<5; ledToggleCtr++)
+	{
+		if		(selectedBand.conf_433) HAL_GPIO_TogglePin(LED_433_GPIO_Port, LED_433_Pin);
+		else if (selectedBand.conf_868) HAL_GPIO_TogglePin(LED_868_GPIO_Port, LED_868_Pin);
+		else
+		{
+			/*BOTH LEDS ON IF ERROR*/
+			HAL_GPIO_WritePin(LED_433_GPIO_Port, LED_433_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(LED_868_GPIO_Port, LED_868_Pin, GPIO_PIN_RESET);
+		}
+		HAL_Delay(DELAY_RX_LED_TOGGLE);
+	}
+}
+
+void LED_Toggle(fsm_t* this)
+{
+	uint8_t ledToggleCtr = 0;
+
+	for(; ledToggleCtr<5; ledToggleCtr++)
+	{
+		if (xRxDoneFlag)
+		{
+			if		(selectedBand.conf_433) HAL_GPIO_TogglePin(LED_433_GPIO_Port, LED_433_Pin);
+			else if (selectedBand.conf_868) HAL_GPIO_TogglePin(LED_868_GPIO_Port, LED_868_Pin);
+			else
+			{
+				/*BOTH LEDS ON IF ERROR*/
+				HAL_GPIO_WritePin(LED_433_GPIO_Port, LED_433_Pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin(LED_868_GPIO_Port, LED_868_Pin, GPIO_PIN_RESET);
+			}
+			HAL_Delay(DELAY_RX_LED_TOGGLE);
+		}
+		else
+		{
+			 HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+		}
+	}
+    xRxDoneFlag = RESET;
+}
 
 static fsm_trans_t radio_states[] = {
-  { SM_STATE_START_RX, 			time_out_rx,    SM_STATE_START_RX, 			EN_Rx		 },
-  { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data	 },
-  { SM_STATE_SEND_DATA, 		tx_done,   	 	SM_STATE_START_RX,  	    EN_Rx	 	 },
-  { SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data },
-  { SM_STATE_MSG_RECEIVED,      data_received,   SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
-  { SM_STATE_MSG_RECEIVED,      ack_received,    SM_STATE_ACK_RECEIVED, 	LED_Toggle   },
-  { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx		 },
-  { SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 	 },
-  { SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 	 },
-  { SM_STATE_SEND_ACK,    		tx_done,		SM_STATE_START_RX, 			EN_Rx		 },
+  { SM_STATE_START_RX, 			time_out_rx,    SM_STATE_START_RX, 			EN_Rx			 },
+  { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data		 },
+  { SM_STATE_SEND_DATA, 		tx_done,   	 	SM_STATE_START_RX,  	    EN_Rx	 		 },
+  { SM_STATE_SEND_DATA, 		switch_channel, SM_STATE_START_RX,  	    send_data 		 },
+  { SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data	 },
+  { SM_STATE_MSG_RECEIVED,      data_received,  SM_STATE_DATA_RECEIVED, 	read_address 	 },
+  { SM_STATE_MSG_RECEIVED,      ack_received,   SM_STATE_ACK_RECEIVED, 		read_ACK_address },
+  { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx			 },
+  { SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 		 },
+  { SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 		 },
+  { SM_STATE_SEND_ACK,    		tx_done,		SM_STATE_START_RX, 			EN_Rx			 },
   {-1, NULL, -1, NULL },
   };
+
+static fsm_trans_t LED_433_states[] = {
+  { LEDSP1_OFF, 	     		TxFlag433,    	LEDSP1_ON, 					LED_ON			 },
+  { LEDSP1_OFF, 	     		RxFlag433,    	LEDSP1_TOOGLE, 				LED_Toggle		 },
+  { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF		   	 },
+  { LEDSP1_TOOGLE, 	     		ACK_confirm,   	LEDSP1_OFF, 				LED_OFF			 },
+  {-1, NULL, -1, NULL },
+  };
+
+static fsm_trans_t LED_868_states[] = {
+  { LEDSP1_OFF, 	     		TxFlag868,    	LEDSP1_ON, 					LED_ON			 },
+  { LEDSP1_OFF, 	     		RxFlag868,    	LEDSP1_TOOGLE, 				LED_Toggle		 },
+  { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF			 },
+  { LEDSP1_TOOGLE, 	     		ACK_confirm,   	LEDSP1_OFF, 				LED_OFF			 },
+  {-1, NULL, -1, NULL },
+  };
+
+static fsm_trans_t LED1_states[] = {
+  { LEDSP1_ON, 		     		time_out_rx,    LEDSP1_ON, 					LED_Toggle		 },
+  {-1, NULL, -1, NULL },
+  };
+
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup S2LP_APPLI_Private_Functions
@@ -508,6 +586,9 @@ void HAL_Radio_Init(void)
 void P2P_Process(void)
 {
 	fsm_fire(radio_fsm);
+	fsm_fire(LED433_fsm);
+	fsm_fire(LED868_fsm);
+	fsm_fire(LED1_fsm);
 }
 
 /**
@@ -607,20 +688,26 @@ void P2P_Init(void)
 
   /*Configure 433 transceiver
    * It cant be tested on evaluation board*/
-//  selectedBand.conf_868 = RESET;
-//  selectedBand.conf_433 = SET;
-//  Spirit1RadioInit(&xRadioInit);
-//  Spirit1SetPower(POWER_INDEX, POWER_DBM);
-//  Spirit1PacketConfig();
-//  Spirit1EnableSQI();
-//  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
+  selectedBand.conf_868 = RESET;
+  selectedBand.conf_433 = SET;
+  Spirit1RadioInit(&xRadioInit);
+  Spirit1SetPower(POWER_INDEX, POWER_DBM);
+  Spirit1PacketConfig();
+  Spirit1EnableSQI();
+  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
 
 
-  radio_fsm = fsm_new (radio_states);
+  radio_fsm  = fsm_new (radio_states);
+  LED433_fsm = fsm_new (LED_433_states);
+  LED868_fsm = fsm_new (LED_868_states);
+  LED1_fsm   = fsm_new (LED1_states);
 
-  /*868MHz band as predetermined band*/
+  /*868MHz band as default band*/
   selectedBand.conf_433 = RESET;
   selectedBand.conf_868 = SET;
+
+  CCA_IT_flag = RESET;
+  CCAxItCount = 0;
 
 }
 
@@ -846,33 +933,52 @@ void read_data_recived(uint8_t* pRxBuff, uint8_t cRxlen)
 */
 void P2PInterruptHandler(void)
 {
-	SpiritIrqGetStatus(&xIrqStatus);
+
+  SpiritIrqGetStatus(&xIrqStatus);
   
   
   /* Check the SPIRIT1 TX_DATA_SENT IRQ flag */
-  if(
-     (xIrqStatus.IRQ_TX_DATA_SENT) 
-       
-#ifdef CSMA_ENABLE
-       ||(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
-#endif
-         )
+  if((xIrqStatus.IRQ_TX_DATA_SENT) ||(xIrqStatus.IRQ_MAX_BO_CCA_REACH))
   {
-#ifdef CSMA_ENABLE
+
+	xTxDoneFlag = SET;
+	/*This transceiver returns to RX state,
+	 * it needs to launch READY state again.*/
 	SpiritCsma(S_DISABLE);
 	SpiritRadioPersistenRx(S_ENABLE);	/*To comeback to RX state*/
 	SpiritRadioCsBlanking(S_ENABLE);
-    
-    if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
-    {
-    	SpiritCmdStrobeSabort();
-    }
-    SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
-    
-    
-#endif
-    
-    xTxDoneFlag = SET;
+
+	SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
+
+	SpiritCmdStrobeSabort();
+
+	if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
+	{
+		if(CCAxItCount < CCA_MAX_IT)
+		{
+			selectedBand.conf_433 = !(selectedBand.conf_433);
+			selectedBand.conf_868 = !(selectedBand.conf_868);
+			CCAxItFlag = SET;
+			xTxDoneFlag = RESET;
+			CCAxItCount++;
+		}
+		else
+		{
+			CCAxItCount = 0;
+			CCAxItFlag = RESET;
+			xTxDoneFlag = SET;
+
+			/*
+			 *
+			 *
+			 *
+			 * ERROR MSG!
+			 *
+			 *
+			 *
+			 * */
+
+		}
   }
   
   /* Check the S2LP RX_DATA_READY IRQ flag */

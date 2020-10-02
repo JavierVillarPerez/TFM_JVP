@@ -110,7 +110,6 @@ int main(void)
 //  BSP_LED_Init(LED2);
   HAL_Radio_Init();
   P2P_Init();
-  RadioGpioInit(RADIO_GPIO_3,RADIO_MODE_EXTI_IN);
   HAL_TIM_OC_Start_IT(&htim2,0);
 
   /* USER CODE END 2 */
@@ -272,7 +271,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, SPI1_S_CS_Pin|SPI1_H_CS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED1_GPIO_Port, LED1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, LED_868_Pin|LED_433_Pin|LED1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, GPIO_PIN_10, GPIO_PIN_RESET);
@@ -302,12 +301,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(SP1_868_IrQ_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : LED1_Pin */
-  GPIO_InitStruct.Pin = LED1_Pin;
+  /*Configure GPIO pins : LED_868_Pin LED_433_Pin LED1_Pin */
+  GPIO_InitStruct.Pin = LED_868_Pin|LED_433_Pin|LED1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(LED1_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PA10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;

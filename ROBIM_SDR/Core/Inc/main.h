@@ -73,6 +73,10 @@ void reset_RX_count(void);
 #define SP1_868_IrQ_Pin GPIO_PIN_10
 #define SP1_868_IrQ_GPIO_Port GPIOB
 #define SP1_868_IrQ_EXTI_IRQn EXTI15_10_IRQn
+#define LED_868_Pin GPIO_PIN_6
+#define LED_868_GPIO_Port GPIOC
+#define LED_433_Pin GPIO_PIN_7
+#define LED_433_GPIO_Port GPIOC
 #define LED1_Pin GPIO_PIN_8
 #define LED1_GPIO_Port GPIOC
 #define TMS_Pin GPIO_PIN_13

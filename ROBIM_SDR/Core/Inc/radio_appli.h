@@ -107,14 +107,14 @@
 #endif
 
 /* CSMA configuration parameters */
-  #define PERSISTENT_MODE_EN              S_DISABLE
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  #define CS_PERIOD                       TBIT_TIME_64
-  #define CS_TIMEOUT                      TCCA_TIME_3
-#endif
-  #define MAX_NB                          5
-  #define BU_COUNTER_SEED                 0xFA21
-  #define CU_PRESCALER                    32
+#define PERSISTENT_MODE_EN              S_DISABLE
+#define CS_PERIOD                       TBIT_TIME_64
+#define CS_TIMEOUT                      TCCA_TIME_3
+#define MAX_NB                          5
+#define BU_COUNTER_SEED                 0xFA21
+#define CU_PRESCALER                    32
+
+#define CCA_MAX_IT	4 /*Max iterations between channels. i.e. CCA_MAX_IT 4 => 2 transmissions for channel*/
 
 extern CsmaInit xCsmaInit;
  #endif
@@ -265,6 +265,18 @@ typedef enum {
    SM_STATE_DATA_RECEIVED,
    SM_STATE_IDLE=0xFF
 } SM_State_t;
+
+
+typedef enum {
+   LEDSP1_ON = 0,
+   LEDSP1_OFF,
+   LEDSP1_TOOGLE
+} LED_SP1_SM_t;
+
+typedef enum {
+   LED1_ON = 0,
+   LED1_TOOGLE
+} LED_1_SM_t;
 
 typedef struct sRadioDriver
 {
