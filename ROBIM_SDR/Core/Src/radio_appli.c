@@ -437,10 +437,6 @@ void send_ACK(fsm_t* this)
 	  AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
 }
 
-void clr_tx_flag(fsm_t* this)
-{
-	xTxDoneFlag = RESET;
-}
 
 void reset_state(fsm_t* this)
 {
@@ -538,17 +534,15 @@ static fsm_trans_t radio_states[] = {
 
 static fsm_trans_t LED_433_states[] = {
   { LEDSP1_OFF, 	     		TxFlag433,    	LEDSP1_ON, 					LED_ON			 },
-  { LEDSP1_OFF, 	     		RxFlag433,    	LEDSP1_TOOGLE, 				LED_Toggle		 },
+  { LEDSP1_OFF, 	     		RxFlag433,    	LEDSP1_OFF, 				LED_Toggle		 },
   { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF		   	 },
-  { LEDSP1_TOOGLE, 	     		ACK_confirm,   	LEDSP1_OFF, 				LED_OFF			 },
   {-1, NULL, -1, NULL },
   };
 
 static fsm_trans_t LED_868_states[] = {
   { LEDSP1_OFF, 	     		TxFlag868,    	LEDSP1_ON, 					LED_ON			 },
-  { LEDSP1_OFF, 	     		RxFlag868,    	LEDSP1_TOOGLE, 				LED_Toggle		 },
+  { LEDSP1_OFF, 	     		RxFlag868,    	LEDSP1_OFF, 				LED_Toggle		 },
   { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF			 },
-  { LEDSP1_TOOGLE, 	     		ACK_confirm,   	LEDSP1_OFF, 				LED_OFF			 },
   {-1, NULL, -1, NULL },
   };
 
