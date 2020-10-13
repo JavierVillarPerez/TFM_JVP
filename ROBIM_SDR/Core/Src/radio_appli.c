@@ -535,14 +535,12 @@ static fsm_trans_t radio_states[] = {
 static fsm_trans_t LED_433_states[] = {
   { LEDSP1_OFF, 	     		TxFlag433,    	LEDSP1_ON, 					LED_ON			 },
   { LEDSP1_OFF, 	     		RxFlag433,    	LEDSP1_OFF, 				LED_Toggle		 },
-  { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF		   	 },
   {-1, NULL, -1, NULL },
   };
 
 static fsm_trans_t LED_868_states[] = {
   { LEDSP1_OFF, 	     		TxFlag868,    	LEDSP1_ON, 					LED_ON			 },
   { LEDSP1_OFF, 	     		RxFlag868,    	LEDSP1_OFF, 				LED_Toggle		 },
-  { LEDSP1_ON, 		     		tx_done,    	LEDSP1_OFF, 				LED_OFF			 },
   {-1, NULL, -1, NULL },
   };
 
@@ -577,7 +575,7 @@ void HAL_Radio_Init(void)
 *         uint8_t cRxlen= length of aReceiveBuffer
 * @retval None.
 */
-void P2P_Process(void)
+void APP_Process(void)
 {
 	fsm_fire(radio_fsm);
 	fsm_fire(LED433_fsm);
@@ -660,12 +658,12 @@ void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen)
 }
 
 /**
-* @brief  This function initializes the protocol for point-to-point 
-* communication
+* @brief  This function initializes the SDR application for 2 channels
+* 		  communication
 * @param  None
 * @retval None
 */
-void P2P_Init(void)
+void APP_Init(void)
 {
   DestinationAddr = DESTINATION_ADDRESS;
 
@@ -700,7 +698,7 @@ void P2P_Init(void)
   selectedBand.conf_433 = RESET;
   selectedBand.conf_868 = SET;
 
-  CCA_IT_flag = RESET;
+  CCAxItFlag = RESET;
   CCAxItCount = 0;
 
 }
@@ -913,19 +911,13 @@ FlagStatus Rx_flag_status(void)
 }
 
 
-void read_data_recived(uint8_t* pRxBuff, uint8_t cRxlen)
-{
-
-}
-
-
 /**
 * @brief  This function handles External interrupt request. In this application it is used
 *         to manage the S2LP IRQ configured to be notified on the S2LP GPIO_3.
 * @param  None
 * @retval None
 */
-void P2PInterruptHandler(void)
+void APPInterruptHandler(void)
 {
 
   SpiritIrqGetStatus(&xIrqStatus);
@@ -973,6 +965,7 @@ void P2PInterruptHandler(void)
 			 * */
 
 		}
+	}
   }
   
   /* Check the S2LP RX_DATA_READY IRQ flag */
@@ -989,7 +982,7 @@ void P2PInterruptHandler(void)
     
   }
   
-  /* Check the S2LP RX_DATA_DISC IRQ flag */
+  /* Check the SPIRIT1 RX_DATA_DISC IRQ flag */
   if(xIrqStatus.IRQ_RX_DATA_DISC)
   {      
     /* RX command - to ensure the device will be ready for the next reception */
@@ -1083,8 +1076,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   dataSendCounter = DATA_SEND_TIME;
   dataSendCounter++;
 #endif
-  if(GPIO_Pin==USER_BUTTON_PIN)
-  {
+	if(GPIO_Pin==USER_BUTTON_PIN)
+	{
 
 	/*It will be an USB interrupt, not a button*/
 	tx_value = SET;
@@ -1093,12 +1086,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 	{
 		aTransmitBuffer[i] = i*2;
 	}
-  } 
+	}
 #if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
   else 
     if(GPIO_Pin==RADIO_GPIO_3_EXTI_LINE)
     {
-      P2PInterruptHandler();
+      APPInterruptHandler();
     }
   
 #endif

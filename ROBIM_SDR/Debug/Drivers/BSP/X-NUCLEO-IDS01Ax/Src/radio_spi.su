@@ -1,8 +1,8 @@
-radio_spi.c:128:6:RadioSpiInit	8	static
-radio_spi.c:162:13:SPI_Write	24	static
-radio_spi.c:183:13:SPI_Error	8	static
-radio_spi.c:200:13:RadioSpiWriteRegisters	48	static
-radio_spi.c:271:13:RadioSpiReadRegisters	48	static
-radio_spi.c:341:13:RadioSpiCommandStrobes	48	static
-radio_spi.c:404:13:RadioSpiWriteFifo	48	static
-radio_spi.c:474:13:RadioSpiReadFifo	48	static
+radio_spi.c:127:6:RadioSpiInit	8	static
+radio_spi.c:161:13:SPI_Write	24	static
+radio_spi.c:182:13:SPI_Error	8	static
+radio_spi.c:199:13:RadioSpiWriteRegisters	48	static
+radio_spi.c:270:13:RadioSpiReadRegisters	48	static
+radio_spi.c:340:13:RadioSpiCommandStrobes	48	static
+radio_spi.c:403:13:RadioSpiWriteFifo	48	static
+radio_spi.c:473:13:RadioSpiReadFifo	48	static

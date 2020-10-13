@@ -103,13 +103,8 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
-  /* Initialize LEDs*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-  RadioShieldLedInit(RADIO_SHIELD_LED);
-#endif
-//  BSP_LED_Init(LED2);
   HAL_Radio_Init();
-  P2P_Init();
+  APP_Init();
   HAL_TIM_OC_Start_IT(&htim2,0);
 
   /* USER CODE END 2 */
@@ -121,7 +116,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	P2P_Process();
+	APP_Process();
   }
   /* USER CODE END 3 */
 }
