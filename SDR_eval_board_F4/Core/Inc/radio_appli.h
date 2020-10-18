@@ -102,9 +102,7 @@
 #endif
 
 #ifdef CSMA_ENABLE
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
 #include "SPIRIT_Csma.h"
-#endif
 
 /* CSMA configuration parameters */
   #define PERSISTENT_MODE_EN              S_DISABLE
@@ -141,6 +139,19 @@ extern CsmaInit xCsmaInit;
 /* Exported constants --------------------------------------------------------*/
 
 /*  Radio configuration parameters  */
+
+/*	MESSAGE PARAMS*/
+
+/*CMD TYPE*/
+#define APPLI_CMD                       0x11
+
+/*CMD*/
+#define MSG_CMD 	                    0xff
+#define ACK_OK                          0x01
+
+
+
+
 #define XTAL_OFFSET_PPM             0
 #define INFINITE_TIMEOUT            0.0
 
@@ -223,10 +234,7 @@ extern CsmaInit xCsmaInit;
 
 
 #define PAYLOAD_LEN                     25 /*20 bytes data+tag+cmd_type+cmd+cmdlen+datalen*/
-#define APPLI_CMD                       0x11
 #define NWK_CMD                         0x22
-#define LED_TOGGLE                      0xff
-#define ACK_OK                          0x01
 #define MAX_BUFFER_LEN                  96
 #define TIME_TO_EXIT_RX                 3000
 #define DELAY_RX_LED_TOGGLE             100   

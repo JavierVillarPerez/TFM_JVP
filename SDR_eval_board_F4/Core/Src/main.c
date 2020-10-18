@@ -28,6 +28,10 @@
 
 #include "fsm.h"
 
+/*User interface includes*/
+#include <stdio.h>
+#include "retarget.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,6 +57,9 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 uint32_t Rx_count;
+
+uint8_t RxData[20];
+char buf[10];
 
 /* USER CODE END PV */
 
@@ -116,6 +123,11 @@ int main(void)
   P2P_Init();
   HAL_TIM_OC_Start_IT(&htim2,0);
 
+  RetargetInit(&huart2);
+  HAL_UART_Receive_IT(&huart2, RxData, 1);
+
+  printf("\r\nDispositivo SDR preparado\r\n");
+  printf("\r\nPara enviar un mensaje pulse cualquier tecla\r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -305,7 +317,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, NUCLEO_LED1_PIN_Pin|GPIO_PIN_10, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, NUCLEO_LED1_PIN_Pin|SDN_SP1_433_Pin|SDN_SP1_868_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, SPI1_S_CS_Pin|SPI1_H_CS_Pin, GPIO_PIN_RESET);
@@ -316,19 +328,19 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : NUCLEO_LED1_PIN_Pin */
-  GPIO_InitStruct.Pin = NUCLEO_LED1_PIN_Pin;
+  /*Configure GPIO pins : NUCLEO_LED1_PIN_Pin SDN_SP1_433_Pin */
+  GPIO_InitStruct.Pin = NUCLEO_LED1_PIN_Pin|SDN_SP1_433_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(NUCLEO_LED1_PIN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PA10 */
-  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  /*Configure GPIO pin : SDN_SP1_868_Pin */
+  GPIO_InitStruct.Pin = SDN_SP1_868_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+  HAL_GPIO_Init(SDN_SP1_868_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SPI1_S_CS_Pin SPI1_H_CS_Pin */
   GPIO_InitStruct.Pin = SPI1_S_CS_Pin|SPI1_H_CS_Pin;
@@ -375,6 +387,7 @@ void reset_RX_count(void)
 {
 	Rx_count = 0;
 }
+
 
 /* USER CODE END 4 */
 

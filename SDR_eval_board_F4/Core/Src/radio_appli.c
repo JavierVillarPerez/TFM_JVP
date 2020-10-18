@@ -60,6 +60,11 @@ by the user
 #endif
 
 
+/*User interface includes*/
+#include <stdio.h>
+#include <inttypes.h>
+#include "retarget.h"
+
 /** @addtogroup USER
 * @{
 */
@@ -253,13 +258,15 @@ CsmaInit xCsmaInit={
 /* Private macro -------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
+extern  UART_HandleTypeDef huart2;
+
+
 uint8_t TxLength = TX_BUFFER_SIZE;
 uint8_t RxLength = 0;
-uint8_t aTransmitBuffer[TX_BUFFER_SIZE] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,\
-  16,17,18,19,20};
+uint8_t aTransmitBuffer[TX_BUFFER_SIZE] = {0x00};
 uint8_t aReceiveBuffer[RX_BUFFER_SIZE] = {0x00};
 
-
+int a[20] = {0};
 
 RadioDriver_t *pRadioDriver;
 MCULowPowerMode_t *pMCU_LPM_Comm;
@@ -292,6 +299,8 @@ fsm_t* radio_fsm;
 radio_select_t selectedBand;
 
 /* Private function prototypes -----------------------------------------------*/
+
+
 static int time_out_rx(fsm_t* this)
 {
 
@@ -311,7 +320,7 @@ static int rx_flag(fsm_t* this)
 
 static int data_received(fsm_t* this)
 {
-	if(xRxFrame.Cmd == LED_TOGGLE) return 1;
+	if(xRxFrame.Cmd == MSG_CMD) return 1;
 	else return 0;
 }
 
@@ -361,22 +370,33 @@ void EN_Rx(fsm_t* this)
     ACK_Process = RESET;
     IDLE_Process = SET;
 
+    printf("\r\nDispositivo SDR preparado\r\n");
+    printf("\r\nPara enviar un mensaje pulse cualquier tecla\r\n");
 }
 
 void send_data(fsm_t* this)
 {
 	tx_value = RESET;
-	xTxFrame.Cmd = LED_TOGGLE;
+	xTxFrame.Cmd = MSG_CMD;
 	xTxFrame.CmdLen = 0x01;
 	xTxFrame.Cmdtag = txCounter++;
 	xTxFrame.CmdType = APPLI_CMD;
 	xTxFrame.DataBuff = aTransmitBuffer;
 	xTxFrame.DataLen = TxLength;
 	AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
+
+	printf("\r\n\r\nSe ha enviado el mensaje con los siguientes campos:\r\n");
+	printf("\r\nCampo CMD: %d\r\n", MSG_CMD);
+	printf("\r\nCampo CMD Tag: %d\r\n", txCounter);
+	printf("\r\nCampo CMD Type: %d\r\n", APPLI_CMD);
+	printf("\r\nComando: %d%d%d%d%d\r\n", aTransmitBuffer[0], aTransmitBuffer[1], aTransmitBuffer[2], aTransmitBuffer[3], aTransmitBuffer[4]);
+
 }
 
 void read_RX_Data(fsm_t* this)
 {
+	uint8_t msg_length = 0;
+
 	xRxDoneFlag = RESET;
 
 	Spirit1GetRxPacket(aReceiveBuffer,&RxLength);
@@ -393,6 +413,20 @@ void read_RX_Data(fsm_t* this)
 	{
 	  temp_DataBuff[xIndex] = aReceiveBuffer[xIndex];
 	}
+
+	printf("\r\nSe ha Recibido el siguiente mensaje:\r\n");
+	printf("\r\nCampo CMD: %d\r\n", aReceiveBuffer[0]);
+	printf("\r\nCampo CMD Tag: %d\r\n", aReceiveBuffer[2]);
+	printf("\r\nCampo CMD Type: %d\r\n", aReceiveBuffer[3]);
+	printf("\r\nComando: ");
+
+	msg_length = 5;
+	while (msg_length < RxLength)
+	{
+		printf("%d", aReceiveBuffer[msg_length]);
+		msg_length++;
+	}
+	printf("\r\n");
 
 	xRxFrame.DataBuff= temp_DataBuff;
 }
@@ -428,6 +462,8 @@ void LED_Toggle(fsm_t* this)
 #endif
     BSP_LED_Off(LED2);
 
+    printf("\r\nACK recibido, transmision completada.\r\n");
+
     ACK_Process = SET;
 }
 
@@ -440,6 +476,8 @@ void send_ACK(fsm_t* this)
 	  xTxFrame.DataBuff = aTransmitBuffer;
 	  xTxFrame.DataLen = TxLength;
 	  HAL_Delay(DELAY_TX_LED_GLOW);
+
+	  printf("\r\nEnviando ACK...\r\n");
 
 	  AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
 }
@@ -469,8 +507,8 @@ static fsm_trans_t radio_states[] = {
   { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data	 },
   { SM_STATE_SEND_DATA, 		tx_done,   	 	SM_STATE_START_RX,  	    EN_Rx	 	 },
   { SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data },
-  { SM_STATE_MSG_RECEIVED,      data_received,   SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
-  { SM_STATE_MSG_RECEIVED,      ack_received,    SM_STATE_ACK_RECEIVED, 	LED_Toggle   },
+  { SM_STATE_MSG_RECEIVED,      data_received,  SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
+  { SM_STATE_MSG_RECEIVED,      ack_received,   SM_STATE_ACK_RECEIVED, 		LED_Toggle   },
   { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx		 },
   { SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 	 },
   { SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 	 },
@@ -863,6 +901,8 @@ void P2PInterruptHandler(void)
     if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
     {
     	SpiritCmdStrobeSabort();
+        printf("\r\nNumero de retransmisiones maximas superadas,\r\nvolviendo al estado por defecto...\r\n");
+
     }
     SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
     
@@ -1000,6 +1040,71 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   
 #endif
   
+}
+
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+
+	printf("\r\n Teclee el primer parametro a enviar (uint8_t): ");
+    scanf("%d", &a[0]);
+
+    while (a[0] > 255)
+    {
+    	printf("\r\n Debe ser tipo uint8_t. \r\n");
+    	printf("\r\n Teclee el primer parametro a enviar (uint8_t): ");
+    	scanf("%d", &a[0]);
+    }
+
+	printf("\r\n\r\n Teclee el segundo parametro a enviar (uint8_t): ");
+    scanf("%d", &a[1]);
+
+    while (a[1] > 255)
+    {
+    	printf("\r\n Debe ser tipo uint8_t.\r\n");
+    	printf("\r\n\r\n Teclee el segundo parametro a enviar (uint8_t): ");
+    	scanf("%d", &a[1]);
+    }
+
+	printf("\r\n\r\n Teclee el tercer parametro a enviar (uint8_t): ");
+    scanf("%d", &a[2]);
+
+    while (a[2] > 255)
+    {
+    	printf("\r\n Debe ser tipo uint8_t.\r\n");
+    	printf("\r\n\r\n Teclee el tercer parametro a enviar (uint8_t): ");
+    	scanf("%d", &a[2]);
+    }
+
+	printf("\r\n\r\n Teclee el cuarto parametro a enviar (uint8_t): ");
+    scanf("%d", &a[3]);
+
+    while (a[3] > 255)
+    {
+    	printf("\r\n Debe ser tipo uint8_t.\r\n");
+    	printf("\r\n\r\n Teclee el cuarto parametro a enviar (uint8_t): ");
+    	scanf("%d", &a[3]);
+    }
+
+	printf("\r\n\r\n Teclee el quinto parametro a enviar (uint8_t): ");
+    scanf("%d", &a[4]);
+
+    while (a[4] > 255)
+    {
+    	printf("\r\n Debe ser tipo uint8_t.\r\n");
+    	printf("\r\n\r\n Teclee el primer parametro a enviar (uint8_t): ");
+    	scanf("%d", &a[4]);
+    }
+
+    aTransmitBuffer[0] = a[0];
+    aTransmitBuffer[1] = a[1];
+    aTransmitBuffer[2] = a[2];
+    aTransmitBuffer[3] = a[3];
+    aTransmitBuffer[4] = a[4];
+
+	tx_value = SET;
+
+	HAL_UART_Receive_IT(&huart2, aTransmitBuffer, 1);
 }
 /**
 * @}

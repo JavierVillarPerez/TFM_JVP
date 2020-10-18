@@ -57,6 +57,8 @@ void Error_Handler(void);
 void handle_TIM2(void);
 FlagStatus check_Rx_count(void);
 void reset_RX_count(void);
+void reset_UART_IT(void);
+
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -69,6 +71,10 @@ void reset_RX_count(void);
 #define USART_RX_GPIO_Port GPIOA
 #define NUCLEO_LED1_PIN_Pin GPIO_PIN_5
 #define NUCLEO_LED1_PIN_GPIO_Port GPIOA
+#define SDN_SP1_433_Pin GPIO_PIN_9
+#define SDN_SP1_433_GPIO_Port GPIOA
+#define SDN_SP1_868_Pin GPIO_PIN_10
+#define SDN_SP1_868_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14
