@@ -120,7 +120,7 @@ int main(void)
 #endif
   BSP_LED_Init(LED2);
   HAL_Radio_Init();
-  P2P_Init();
+  APP_Init();
   HAL_TIM_OC_Start_IT(&htim2,0);
 
   RetargetInit(&huart2);
@@ -137,7 +137,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	P2P_Process();
+	APP_Process();
   }
   /* USER CODE END 3 */
 }
@@ -376,6 +376,17 @@ FlagStatus check_Rx_count(void)
 {
 	FlagStatus retval = RESET;
 	if(Rx_count >= 100) //Debug value 100 for 10 secs. Final value 10000 for 10 secs.
+	{
+		retval = SET;
+		Rx_count = 0;
+	}
+	return retval;
+}
+
+FlagStatus check_Tx_count(void)
+{
+	FlagStatus retval = RESET;
+	if(Rx_count >= 50) //Debug value 100 for 10 secs. Final value 10000 for 10 secs.
 	{
 		retval = SET;
 		Rx_count = 0;

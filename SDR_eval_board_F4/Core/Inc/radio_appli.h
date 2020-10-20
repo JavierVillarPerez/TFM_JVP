@@ -149,6 +149,7 @@ extern CsmaInit xCsmaInit;
 #define MSG_CMD 	                    0xff
 #define ACK_OK                          0x01
 
+#define CCA_MAX_IT	4 /*Max iterations between channels. i.e. CCA_MAX_IT 4 => 2 transmissions for channel*/
 
 
 
@@ -274,6 +275,13 @@ typedef enum {
    SM_STATE_IDLE=0xFF
 } SM_State_t;
 
+
+typedef enum {
+   LEDSP1_ON = 0,
+   LEDSP1_OFF
+} LED_SP1_SM_t;
+
+
 typedef struct sRadioDriver
 {
     void ( *Init )( void );
@@ -338,7 +346,7 @@ typedef struct
 
 /* Exported functions ------------------------------------------------------- */
 void  HAL_Radio_Init(void);
-void P2P_Process(void);
+void APP_Process(void);
 void Enter_LP_mode(void);
 void Exit_LP_mode(void);
 void MCU_Enter_StopMode(void);
@@ -350,10 +358,10 @@ void RadioStandBy(void);
 void RadioSleep(void);
 void AppliSendBuff(AppliFrame_t *xTxFrame, uint8_t cTxlen);
 void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen);
-void P2P_Init(void);
+void APP_Init(void);
 void STackProtocolInit(void);
 void BasicProtocolInit(void);
-void P2PInterruptHandler(void);
+void APPInterruptHandler(void);
 void Set_KeyStatus(FlagStatus val);
 
 FlagStatus Rx_flag_status(void);

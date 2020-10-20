@@ -276,7 +276,7 @@ volatile FlagStatus xRxDoneFlag = RESET, xTxDoneFlag=RESET, cmdFlag=RESET;
 volatile FlagStatus xStartRx=RESET, Spirit1_RX_timeout=RESET, SW_RX_timeout=RESET;
 volatile FlagStatus PushButtonStatusWakeup=RESET;
 volatile FlagStatus PushButtonStatusData=RESET;
-FlagStatus ACK_Process, IDLE_Process, tx_value = RESET;
+FlagStatus ACK_Process, tx_value = RESET;
 /*IRQ status struct declaration*/
 SpiritIrqs xIrqStatus;
 
@@ -295,21 +295,37 @@ uint8_t temp_DataBuff[]={0x00};
 uint8_t  dest_addr;
 
 fsm_t* radio_fsm;
+fsm_t* LED433_fsm;
+fsm_t* LED868_fsm;
+fsm_t* LED1_fsm;
 
 radio_select_t selectedBand;
+
+
+uint8_t 	CCAxItCount;
+FlagStatus  CCAxItFlag;
+
+FlagStatus resetFlag;
+FlagStatus TxErrorFlag;
+FlagStatus LEDxOnFlag;
+FlagStatus LEDxOffFlag;
 
 /* Private function prototypes -----------------------------------------------*/
 
 
 static int time_out_rx(fsm_t* this)
 {
-
 	return ((Spirit1_RX_timeout)||(check_Rx_count()));
+}
+
+static int time_out_tx(fsm_t* this)
+{
+	return check_Tx_count();
 }
 
 static int tx_flag(fsm_t* this)
 {
-	return tx_value;
+	return (tx_value && LEDxOnFlag);
 }
 
 static int rx_flag(fsm_t* this)
@@ -345,11 +361,15 @@ static int address_known(fsm_t* this)
 
 }
 
-static int tx_done(fsm_t* this)
+static int END_Tx(fsm_t* this)
 {
-	return xTxDoneFlag;
+	return (xTxDoneFlag && LEDxOffFlag);
 }
 
+static int switch_channel(fsm_t* this)
+{
+	return CCAxItFlag;
+}
 
 static int ACK_confirm (fsm_t* this)
 {
@@ -358,22 +378,55 @@ static int ACK_confirm (fsm_t* this)
 
 void EN_Rx(fsm_t* this)
 {
+	selectedBand.conf_433 = !(selectedBand.conf_433);
+	selectedBand.conf_868 = !(selectedBand.conf_868);
+
     AppliReceiveBuff(aReceiveBuffer, RxLength);
     Spirit1_RX_timeout = RESET;
     reset_RX_count();
-    BSP_LED_Toggle(LED2);
+
+    resetFlag = SET;
 
 	xTxDoneFlag = RESET;
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOff(RADIO_SHIELD_LED);
-#endif
+	//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+    //RadioShieldLedOff(RADIO_SHIELD_LED);
     ACK_Process = RESET;
-    IDLE_Process = SET;
+
+    LEDxOffFlag = RESET;
 
     printf("\r\nDispositivo SDR preparado\r\n");
     printf("\r\nPara enviar un mensaje pulse cualquier tecla\r\n");
 }
 
+void Tx_Error(fsm_t* this)
+{
+	printf("\r\nError En la transmision por el canal ");
+	if 	 (selectedBand.conf_868 == SET) printf("868 MHz:\r\n");
+	else printf("433 MHz:\r\n");
+    printf("\r\nERROR AL INTENTAR CONECTAR CON EL TRANSCEPTOR \r\n");
+
+    AppliReceiveBuff(aReceiveBuffer, RxLength);
+    Spirit1_RX_timeout = RESET;
+    reset_RX_count();
+
+    resetFlag = SET;
+
+	xTxDoneFlag = RESET;
+	//HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
+   // RadioShieldLedOff(RADIO_SHIELD_LED);
+    ACK_Process = RESET;
+
+    TxErrorFlag = SET;
+	tx_value = RESET;
+
+    selectedBand.conf_433 = !(selectedBand.conf_433);
+	selectedBand.conf_868 = !(selectedBand.conf_868);
+
+	printf("\r\nDispositivo SDR preparado\r\n");
+    printf("\r\nPara enviar un mensaje pulse cualquier tecla\r\n");
+}
 void send_data(fsm_t* this)
 {
 	tx_value = RESET;
@@ -385,7 +438,13 @@ void send_data(fsm_t* this)
 	xTxFrame.DataLen = TxLength;
 	AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
 
-	printf("\r\n\r\nSe ha enviado el mensaje con los siguientes campos:\r\n");
+	reset_RX_count();
+
+    LEDxOnFlag = RESET;
+
+	printf("\r\n\r\nEnviando el siguiente mensaje por el canal ");
+	if 	 (selectedBand.conf_868 == SET) printf("868 MHz:\r\n");
+	else printf("433 MHz:\r\n");
 	printf("\r\nCampo CMD: %d\r\n", MSG_CMD);
 	printf("\r\nCampo CMD Tag: %d\r\n", txCounter);
 	printf("\r\nCampo CMD Type: %d\r\n", APPLI_CMD);
@@ -414,7 +473,9 @@ void read_RX_Data(fsm_t* this)
 	  temp_DataBuff[xIndex] = aReceiveBuffer[xIndex];
 	}
 
-	printf("\r\nSe ha Recibido el siguiente mensaje:\r\n");
+	printf("\r\nSe ha Recibido el siguiente mensaje a traves del canal ");
+	if 	 (selectedBand.conf_868 == SET)printf("868 MHz:\r\n");
+	else printf("433 MHz:\r\n");
 	printf("\r\nCampo CMD: %d\r\n", aReceiveBuffer[0]);
 	printf("\r\nCampo CMD Tag: %d\r\n", aReceiveBuffer[2]);
 	printf("\r\nCampo CMD Type: %d\r\n", aReceiveBuffer[3]);
@@ -431,39 +492,14 @@ void read_RX_Data(fsm_t* this)
 	xRxFrame.DataBuff= temp_DataBuff;
 }
 
-void LED_ON(fsm_t* this)
+void read_address(fsm_t* this)
 {
-	/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOn(RADIO_SHIELD_LED);
-#endif
     dest_addr = SpiritPktCommonGetReceivedDestAddress();
 }
 
-void LED_Toggle(fsm_t* this)
+void read_ACK_address(fsm_t* this)
 {
-	uint8_t ledToggleCtr = 0;
-
     dest_addr = SpiritPktCommonGetReceivedDestAddress();
-
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-	HAL_Delay(DELAY_TX_LED_GLOW);
-#endif
-	for(; ledToggleCtr<5; ledToggleCtr++)
-	{
-		/*IT WILL BE NECESSARY CHANGE IT TO PCB LED*/
-		#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-		RadioShieldLedToggle(RADIO_SHIELD_LED);
-		#endif
-		HAL_Delay(DELAY_RX_LED_TOGGLE);
-	}
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOff(RADIO_SHIELD_LED);
-#endif
-    BSP_LED_Off(LED2);
-
-    printf("\r\nACK recibido, transmision completada.\r\n");
-
     ACK_Process = SET;
 }
 
@@ -482,39 +518,166 @@ void send_ACK(fsm_t* this)
 	  AppliSendBuff(&xTxFrame, xTxFrame.DataLen);
 }
 
-void clr_tx_flag(fsm_t* this)
+/*LED IN/OUT STATE MACHINE*/
+static int TxFlag433(fsm_t* this)
 {
-	xTxDoneFlag = RESET;
+	return (tx_value && selectedBand.conf_433);
 }
 
-void reset_state(fsm_t* this)
+static int RxFlag433(fsm_t* this)
 {
-#if defined(X_NUCLEO_IDS01A4) || defined(X_NUCLEO_IDS01A5)
-    RadioShieldLedOff(RADIO_SHIELD_LED);
-#endif
-    BSP_LED_Off(LED2);
-
-    ACK_Process = RESET;
-    IDLE_Process = SET;
+	return (xRxDoneFlag && selectedBand.conf_433);
 }
 
+static int TxFlag868(fsm_t* this)
+{
+	return (tx_value && selectedBand.conf_868);
+}
+
+static int RxFlag868(fsm_t* this)
+{
+	return (xRxDoneFlag && selectedBand.conf_868);
+}
+
+
+static int time_in_flag(fsm_t* this)
+{
+	return !resetFlag;
+}
+
+static int time_out_flag(fsm_t* this)
+{
+	return resetFlag;
+}
+
+static int Tx_Error_flag(fsm_t* this)
+{
+	return TxErrorFlag;
+}
+
+static int tx_done(fsm_t* this)
+{
+	return xTxDoneFlag;
+}
+
+
+void LED_ON(fsm_t* this)
+{
+	if		(selectedBand.conf_433) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, SET);
+	else if (selectedBand.conf_868) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, SET);
+	else
+	{
+		/*BOTH LEDS ON IF ERROR*/
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+		//HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	}
+    LEDxOnFlag = SET;
+    LEDxOffFlag = RESET;
+}
+
+void LED_OFF(fsm_t* this)
+{
+	if		(selectedBand.conf_433) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, RESET);
+	else if (selectedBand.conf_868) HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, RESET);
+	else
+	{
+		/*BOTH LEDS ON IF ERROR*/
+		HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+		//HAL_GPIO_WritePin(GPIOB, GPIO_PIN_4, GPIO_PIN_RESET);
+	}
+    TxErrorFlag = RESET;
+    LEDxOffFlag = SET;
+    LEDxOnFlag = RESET;
+
+}
+
+void LED1_ON(fsm_t* this)
+{
+	BSP_LED_On(RADIO_SHIELD_LED);
+}
+
+void LED_Toggle(fsm_t* this)
+{
+	uint8_t ledToggleCtr = 0;
+
+    dest_addr = SpiritPktCommonGetReceivedDestAddress();
+
+	HAL_Delay(DELAY_TX_LED_GLOW);
+	for(; ledToggleCtr<5; ledToggleCtr++)
+	{
+		if		(selectedBand.conf_433) HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+		else if (selectedBand.conf_868) HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_4);
+
+		HAL_Delay(DELAY_RX_LED_TOGGLE);
+	}
+
+	RadioShieldLedOff(RADIO_SHIELD_LED);
+}
+
+void LED1_Toggle(fsm_t* this)
+{
+	uint8_t ledToggleCtr = 0;
+
+    dest_addr = SpiritPktCommonGetReceivedDestAddress();
+
+    reset_RX_count();
+
+	HAL_Delay(DELAY_TX_LED_GLOW);
+	for(; ledToggleCtr<5; ledToggleCtr++)
+	{
+	    BSP_LED_Toggle(LED2);
+
+		HAL_Delay(DELAY_RX_LED_TOGGLE);
+	}
+
+	BSP_LED_On(RADIO_SHIELD_LED);
+
+    resetFlag = RESET;
+}
 
 
 
 
 static fsm_trans_t radio_states[] = {
-  { SM_STATE_START_RX, 			time_out_rx,    SM_STATE_START_RX, 			EN_Rx		 },
-  { SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data	 },
-  { SM_STATE_SEND_DATA, 		tx_done,   	 	SM_STATE_START_RX,  	    EN_Rx	 	 },
-  { SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data },
-  { SM_STATE_MSG_RECEIVED,      data_received,  SM_STATE_DATA_RECEIVED, 	LED_ON 		 },
-  { SM_STATE_MSG_RECEIVED,      ack_received,   SM_STATE_ACK_RECEIVED, 		LED_Toggle   },
-  { SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx		 },
-  { SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 	 },
-  { SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 	 },
-  { SM_STATE_SEND_ACK,    		tx_done,		SM_STATE_START_RX, 			EN_Rx		 },
+{ SM_STATE_START_RX, 			time_out_rx,    SM_STATE_START_RX, 			EN_Rx			 },
+{ SM_STATE_START_RX, 			tx_flag,        SM_STATE_SEND_DATA, 		send_data		 },
+{ SM_STATE_SEND_DATA, 			END_Tx,   	 	SM_STATE_START_RX,  	    EN_Rx	 		 },
+{ SM_STATE_SEND_DATA, 			switch_channel, SM_STATE_START_RX,  	    send_data 		 },
+{ SM_STATE_SEND_DATA, 			time_out_tx,    SM_STATE_START_RX,  	    Tx_Error 		 },
+{ SM_STATE_START_RX, 			rx_flag,        SM_STATE_MSG_RECEIVED, 		read_RX_Data	 },
+{ SM_STATE_MSG_RECEIVED,      	data_received,  SM_STATE_DATA_RECEIVED, 	read_address 	 },
+{ SM_STATE_MSG_RECEIVED,      	ack_received,   SM_STATE_ACK_RECEIVED, 		read_ACK_address },
+{ SM_STATE_ACK_RECEIVED,    	ACK_confirm,   	SM_STATE_START_RX, 			EN_Rx			 },
+{ SM_STATE_DATA_RECEIVED,    	multicast,   	SM_STATE_START_RX, 			EN_Rx	 		 },
+{ SM_STATE_DATA_RECEIVED,    	address_known,  SM_STATE_SEND_ACK, 			send_ACK 		 },
+{ SM_STATE_SEND_ACK,    		tx_done,		SM_STATE_START_RX, 			EN_Rx			 },
+{-1, NULL, -1, NULL },
+};
+
+static fsm_trans_t LED_433_states[] = {
+  { LEDSP1_OFF, 	     		TxFlag433,    	LEDSP1_ON, 					LED_ON			 },
+  { LEDSP1_OFF, 	     		RxFlag433,    	LEDSP1_OFF, 				LED_Toggle		 },
+  { LEDSP1_ON, 	     			tx_done, 		LEDSP1_OFF, 				LED_OFF			 },
+  { LEDSP1_ON, 	     			Tx_Error_flag, 	LEDSP1_OFF, 				LED_OFF			 },
+  { LEDSP1_ON, 	     			TxFlag868, 		LEDSP1_OFF, 				LED_OFF			 },
   {-1, NULL, -1, NULL },
   };
+
+static fsm_trans_t LED_868_states[] = {
+  { LEDSP1_OFF, 	     		TxFlag868,    	LEDSP1_ON, 					LED_ON			 },
+  { LEDSP1_OFF, 	     		RxFlag868,    	LEDSP1_OFF, 				LED_Toggle		 },
+  { LEDSP1_ON, 	     			tx_done,	    LEDSP1_OFF, 				LED_OFF			 },
+  { LEDSP1_ON, 	     			Tx_Error_flag,  LEDSP1_OFF, 				LED_OFF			 },
+  { LEDSP1_ON, 	     			TxFlag433,  	LEDSP1_OFF, 				LED_OFF			 },
+  {-1, NULL, -1, NULL },
+  };
+
+static fsm_trans_t LED1_states[] = {
+  { LEDSP1_ON, 		     		time_in_flag,     LEDSP1_ON, 					LED1_ON		 },
+  { LEDSP1_ON, 		     		time_out_flag,    LEDSP1_ON, 					LED1_Toggle	 },
+  {-1, NULL, -1, NULL },
+  };
+
 /* Private functions ---------------------------------------------------------*/
 
 /** @defgroup S2LP_APPLI_Private_Functions
@@ -541,9 +704,12 @@ void HAL_Radio_Init(void)
 *         uint8_t cRxlen= length of aReceiveBuffer
 * @retval None.
 */
-void P2P_Process(void)
+void APP_Process(void)
 {
 	fsm_fire(radio_fsm);
+	fsm_fire(LED1_fsm);
+	fsm_fire(LED433_fsm);
+	fsm_fire(LED868_fsm);
 }
 
 /**
@@ -626,7 +792,7 @@ void AppliReceiveBuff(uint8_t *RxFrameBuff, uint8_t cRxlen)
 * @param  None
 * @retval None
 */
-void P2P_Init(void)
+void APP_Init(void)
 {
   DestinationAddr = DESTINATION_ADDRESS;
   pRadioDriver->GpioIrq(&xGpioIRQ);
@@ -642,21 +808,26 @@ void P2P_Init(void)
 
   /*Configure 433 transceiver
    * It cant be tested on evaluation board*/
-//  selectedBand.conf_868 = RESET;
-//  selectedBand.conf_433 = SET;
-//  Spirit1RadioInit(&xRadioInit);
-//  Spirit1SetPower(POWER_INDEX, POWER_DBM);
-//  Spirit1PacketConfig();
-//  Spirit1EnableSQI();
-//  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
+  /*selectedBand.conf_868 = RESET;
+  selectedBand.conf_433 = SET;
+  Spirit1RadioInit(&xRadioInit);
+  Spirit1SetPower(POWER_INDEX, POWER_DBM);
+  Spirit1PacketConfig();
+  Spirit1EnableSQI();
+  SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);*/
 
 
   radio_fsm = fsm_new (radio_states);
+  LED433_fsm = fsm_new (LED_433_states);
+  LED868_fsm = fsm_new (LED_868_states);
+  LED1_fsm   = fsm_new (LED1_states);
 
   /*868MHz band as predetermined band*/
   selectedBand.conf_433 = RESET;
   selectedBand.conf_868 = SET;
 
+  CCAxItFlag = RESET;
+  CCAxItCount = 0;
 }
 
 /**
@@ -879,37 +1050,46 @@ void read_data_recived(uint8_t* pRxBuff, uint8_t cRxlen)
 * @param  None
 * @retval None
 */
-void P2PInterruptHandler(void)
+void APPInterruptHandler(void)
 {
 	SpiritIrqGetStatus(&xIrqStatus);
   
   
   /* Check the SPIRIT1 TX_DATA_SENT IRQ flag */
-  if(
-     (xIrqStatus.IRQ_TX_DATA_SENT) 
-       
-#ifdef CSMA_ENABLE
-       ||(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
-#endif
-         )
+  if((xIrqStatus.IRQ_TX_DATA_SENT) || (xIrqStatus.IRQ_MAX_BO_CCA_REACH))
   {
-#ifdef CSMA_ENABLE
+	xTxDoneFlag = SET;
 	SpiritCsma(S_DISABLE);
 	SpiritRadioPersistenRx(S_ENABLE);	/*To comeback to RX state*/
 	SpiritRadioCsBlanking(S_ENABLE);
-    
-    if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
-    {
-    	SpiritCmdStrobeSabort();
-        printf("\r\nNumero de retransmisiones maximas superadas,\r\nvolviendo al estado por defecto...\r\n");
 
-    }
     SpiritQiSetRssiThresholddBm(RSSI_THRESHOLD);
-    
-    
-#endif
-    
-    xTxDoneFlag = SET;
+	SpiritCmdStrobeSabort();
+
+	if(xIrqStatus.IRQ_MAX_BO_CCA_REACH)
+	{
+		if(CCAxItCount < CCA_MAX_IT)
+		{
+			selectedBand.conf_433 = !(selectedBand.conf_433);
+			selectedBand.conf_868 = !(selectedBand.conf_868);
+			CCAxItFlag = SET;
+			xTxDoneFlag = RESET;
+			CCAxItCount++;
+
+			printf("\r\nNo ha sido posible transmitir el mensaje a través del canal ");
+			if (selectedBand.conf_433) printf("433 MHz\r\nReintentando transmision por el canal 868 MHz\r\n");
+			else printf("868 MHz\r\nReintentando transmision por el canal 433 MHz\r\n");
+		}
+		else
+		{
+			CCAxItCount = 0;
+			CCAxItFlag = RESET;
+			xTxDoneFlag = SET;
+			// ERROR MSG!
+	        printf("\r\nNumero de retransmisiones maximas superadas,\r\nvolviendo al estado por defecto...\r\n");
+		}
+	}
+
   }
   
   /* Check the S2LP RX_DATA_READY IRQ flag */
@@ -1035,7 +1215,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
   else 
     if(GPIO_Pin==RADIO_GPIO_3_EXTI_LINE)
     {
-      P2PInterruptHandler();
+      APPInterruptHandler();
     }
   
 #endif

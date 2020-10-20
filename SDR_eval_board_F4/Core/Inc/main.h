@@ -56,6 +56,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN EFP */
 void handle_TIM2(void);
 FlagStatus check_Rx_count(void);
+FlagStatus check_Tx_count(void);
 void reset_RX_count(void);
 void reset_UART_IT(void);
 
