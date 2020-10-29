@@ -6,8 +6,6 @@
 *.exe
 *.o
 *.so
-*.d
-*.mk
 
 
 # Logs and databases #
@@ -26,6 +24,5 @@
 ehthumbs.db
 Thumbs.db
 .metadata
-.cproject
 .xml
 .pdom
